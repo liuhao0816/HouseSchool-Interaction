@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.modules.sys.mapper.LeaveListMapper">
+
+    <select id="queryLeaveListAll1" resultType="leaveList">
+    SELECT l.id,s.student_name,c.class_grade,l.type,l.start_time,l.end_time,l.reason,l.sponsor,l.launch_time
+    FROM leave_list l,student s,class_table c
+    WHERE l.student_id=s.id AND s.class_id=c.class_id
+    </select>
+</mapper>

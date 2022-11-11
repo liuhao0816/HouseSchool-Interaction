@@ -9,19 +9,21 @@ import com.gxa.modules.sys.entity.User;
 import com.gxa.modules.sys.mapper.UserMapper;
 import com.gxa.modules.sys.service.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
 
+
     @Override
     public User queryByUsername(String username) {
         User user = baseMapper.selectOne(new QueryWrapper<User>().eq("username", username));
         return user;
+
     }
 
     @Override
