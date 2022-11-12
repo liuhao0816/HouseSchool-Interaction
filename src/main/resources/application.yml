@@ -30,6 +30,16 @@ spring:
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: com.gxa.modules.*.entity
+
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+  global-config:
+    db-config:
+      logic-delete-value: 2
+      logic-not-delete-value: 1
+
 #存储配置
 storage:
   config:

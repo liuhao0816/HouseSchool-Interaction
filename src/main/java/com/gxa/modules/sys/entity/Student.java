@@ -1,40 +1,24 @@
 package com.gxa.modules.sys.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("student")
+@ApiModel(value = "学生")
 public class Student {
+    @ApiModelProperty(value = "学籍号",name = "studentId")
+    private int studentId;
 
+    @ApiModelProperty(value = "学生名称",name = "studentName")
+    private int studentName;
 
-    @ApiModelProperty("student_name")
-    @TableField("学生姓名")
-    private String studentName;
+    @ApiModelProperty(value = "所属班级",name = "classGrade")
+    private ClassGrade classGrade;
 
-    @ApiModelProperty("student_id")
-    @TableField("学籍号")
-    private Integer studentId ;
+    @ApiModelProperty(value = "性别",name = "gender")
+    private int gender;
 
-    @ApiModelProperty("class_id")
-    @TableField("班级")
-    private String classId;
-
-    @ApiModelProperty("gender")
-    @TableField("性别")
-    private String gender;
-
-    @ApiModelProperty("Id_card")
-    @TableField("身份证号")
-    private String IdCard;
-
- /*   @ApiModelProperty("school_study")
-    @TableField("所属学校")
-    private String schoolStudy;*/
-
-    @ApiModelProperty("is_deleted")
-    @TableField("用户状态")
-    private Integer isDeleted ;
+    @ApiModelProperty(value = "身份证号",name = "idCard")
+    private String idCard;
 }

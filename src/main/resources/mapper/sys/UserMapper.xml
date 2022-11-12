@@ -6,4 +6,15 @@
     <select id="queryByUsername01"  resultType="com.gxa.modules.sys.entity.User">
         SELECT * FROM t_user WHERE user_name =#{username}
     </select>
+
+    <resultMap id="userResultMap" type="user">
+        <result property="school.schoolName" column="school_name"/>
+    </resultMap>
+
+    <select id="queryByPage" resultMap="userResultMap">
+        SELECT u.user_id,u.user_name,s.school_name
+        FROM user u,school s
+        WHERE u.school_id = s.school_id
+    </select>
+
 </mapper>

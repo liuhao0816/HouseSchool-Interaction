@@ -8,6 +8,7 @@ import com.gxa.common.utils.Query;
 import com.gxa.modules.sys.entity.User;
 import com.gxa.modules.sys.mapper.UserMapper;
 import com.gxa.modules.sys.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
 
@@ -33,6 +35,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    public PageUtils queryByPage(Map<String, Object> params) {
+        List<User> users = baseMapper.queryByPage(params);
+
+        log.info("---查询用户：   {}",users);
+
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+
+        IPage<User> page = this.page(new Query<User>().getPage(params));
+
+        PageUtils pageUtils = new PageUtils(page);
+        return pageUtils;
+    }
+
+    @Override
     public PageUtils queryByPage01(Map<String, Object> params) {
         IPage<User> page = this.page(new Query<User>().getPage(params));
         PageUtils pageUtils = new PageUtils(page);
@@ -41,7 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public PageUtils queryByPage02(Map<String, Object> params) {
-        String username = (String)params.get("username");
+        String username = (String)params.get("user_name");
         String id = (String)params.get("id");
 
 

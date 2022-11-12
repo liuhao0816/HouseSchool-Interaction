@@ -1,33 +1,24 @@
 package com.gxa.modules.sys.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-
 @Data
-@TableName("class_grade")
+@ApiModel(value = "班级")
 public class ClassGrade {
-    @ApiModelProperty("class_id")
-    @TableField("班级id")
-    private Integer classId ;
+    @ApiModelProperty(value = "班级编号",name = "classId")
+    private int classId;
 
-    @ApiModelProperty("class_grade_name")
-    @TableField("班级年纪")
+    @ApiModelProperty(value = "班级名称",name = "classGradeName")
     private String classGradeName;
 
-    @ApiModelProperty("class_school_id")
-    @TableField("学校id")
-    private Integer classSchoolId;
+    @ApiModelProperty(value = "班主任",name = "teacher")
+    private Object teacher;
 
-    @ApiModelProperty("class_teacher")
-    @TableField("班主任")
-    private Integer classTeacher;
+    @ApiModelProperty(value = "所属学校",name = "school")
+    private School school;
 
-    @ApiModelProperty("remarks")
-    @TableField("删除备注")
+    @ApiModelProperty(value = "备注",name = "remarks")
     private String remarks;
-
-
 }
