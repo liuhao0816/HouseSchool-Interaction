@@ -4,7 +4,7 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.gxa.modules.pay.config.AliPayProperties;
-import com.gxa.modules.sys.entity.Order;
+import com.gxa.modules.sys.entity.UserPower;
 import com.ijpay.alipay.AliPayApi;
 import com.ijpay.alipay.AliPayApiConfig;
 import com.ijpay.alipay.AliPayApiConfigKit;
@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * @author shelei
  */
-@RestController
+/*@RestController
 @RequestMapping("pay/alipay")
 public class AliPayController extends AbstractAliPayApiController {
     @Autowired
@@ -54,13 +54,13 @@ public class AliPayController extends AbstractAliPayApiController {
         return aliPayApiConfig;
     }
 
-    /**
+    *//**
      * Web支付
-     */
+     *//*
     @RequestMapping(value = "/webPay/{orderId}")
     public void webPay(HttpServletResponse response,@PathVariable Long orderId) throws Exception {
         //demo
-        Order order = new Order();
+        UserPower order = new UserPower();
         order.setId(String.valueOf(orderId));
         order.setName("测试支付");
         order.setPrice(new BigDecimal("20"));
@@ -99,9 +99,9 @@ public class AliPayController extends AbstractAliPayApiController {
     }
 
 
-    /**
+    *//**
      * 支付宝异步通知接口
-     */
+     *//*
     @PostMapping("notify_url")
     public String notifyUrl(HttpServletRequest request) throws Exception {
         //支付宝异步通知内容
@@ -132,5 +132,5 @@ public class AliPayController extends AbstractAliPayApiController {
         return "success";
     }
 
-}
+}*/
  
