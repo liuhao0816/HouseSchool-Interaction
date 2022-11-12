@@ -233,6 +233,12 @@
             <artifactId>IJPay-AliPay</artifactId>
             <version>${IJPay.version}</version>
         </dependency>
+        <!--    添加mybatis的分页插件 pagehelper依赖-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.3.1</version>
+        </dependency>
     </dependencies>
 
     <build>
