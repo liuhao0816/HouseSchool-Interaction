@@ -17,6 +17,13 @@ public interface UserService extends IService<User> {
      * @param params
      * @return
      */
+    PageUtils queryByPage(Map<String,Object> params);
+
+    /**
+     * 只是单独的分页，不带查询条件
+     * @param params
+     * @return
+     */
     PageUtils queryByPage01(Map<String,Object> params);
 
     /**

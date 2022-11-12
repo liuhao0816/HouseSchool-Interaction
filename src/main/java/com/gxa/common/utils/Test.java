@@ -6,7 +6,7 @@ import org.apache.shiro.util.ByteSource;
 public class Test {
 	public static void main(String[] args) {
 		String hashAlgorithmName = "MD5";
-		Object credentials = "admin";
+		Object credentials = "123456";
 		
 		
 //		Object result = new SimpleHash(hashAlgorithmName,credentials);
@@ -20,4 +20,6 @@ public class Test {
 		Object result = new SimpleHash(hashAlgorithmName, credentials, salt, 1024);
 		System.out.println(result);
 	}
+
+
 }
