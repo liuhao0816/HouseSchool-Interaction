@@ -1,15 +1,14 @@
 package com.gxa.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
+@TableName("student")
 public class Student {
 
-    @ApiModelProperty("id")
-    @TableField("id")
-    private Integer id ;
 
     @ApiModelProperty("student_name")
     @TableField("学生姓名")
@@ -31,9 +30,9 @@ public class Student {
     @TableField("身份证号")
     private String IdCard;
 
-    @ApiModelProperty("school_study")
+ /*   @ApiModelProperty("school_study")
     @TableField("所属学校")
-    private String schoolStudy;
+    private String schoolStudy;*/
 
     @ApiModelProperty("is_deleted")
     @TableField("用户状态")

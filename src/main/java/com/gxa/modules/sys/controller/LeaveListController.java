@@ -1,6 +1,7 @@
 package com.gxa.modules.sys.controller;
 
 import com.gxa.common.utils.Result;
+import com.gxa.modules.sys.dto.LeaveListDto;
 import com.gxa.modules.sys.entity.LeaveList;
 import com.gxa.modules.sys.service.LeaveListService;
 import io.swagger.annotations.Api;
@@ -27,9 +28,19 @@ public class LeaveListController {
 
             List<LeaveList> leaveLists=leaveListService.queryLeaveListAll1();
             Result<List<LeaveList>> result=new Result().ok(leaveLists);
-        System.out.println(leaveLists);
+
             return result;
 
+    }
+
+    @GetMapping("/leaveList")
+    @ApiOperation("多条件查询")
+    public Result<List<LeaveList>> queryLeaveListBy(LeaveListDto leaveListDto){
+
+        List<LeaveList> leaveLists=leaveListService.queryLeaveListBy(leaveListDto);
+        Result<List<LeaveList>> result=new Result().ok(leaveLists);
+
+        return result;
 
     }
 

@@ -21,7 +21,7 @@ public class LeaveList {
 
     @ApiModelProperty("launch_time")
     @TableField("请假时间")
-    private Date lanuchTime;
+    private Date launchTime;
 
     @ApiModelProperty("type")
     @TableField("请假类型")
@@ -52,8 +52,10 @@ public class LeaveList {
     private String parentsConfirm;
 
     @ApiModelProperty("remarks")
-    @TableField("删除备注")
+    @TableField("请假状态")
     private String remarks;
 
-
+    @ApiModelProperty("is_deleted")
+    @TableField("是否删除")
+    private Integer isDeleted;
 }
