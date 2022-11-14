@@ -19,4 +19,6 @@ public class StudentParent {
 
     @ApiModelProperty(value = "关系",name = "relation")
     private String relation;
+
+
 }
