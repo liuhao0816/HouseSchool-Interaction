@@ -56,7 +56,7 @@ public class LeaveListController {
             return null;
     }
 
-    @GetMapping("/leaveList/{id}")
+    @GetMapping("/leaveLists/{id}")
     @ResponseBody
     @ApiOperation("根据id查询")
     public Result<LeaveList> queryById(@PathVariable("id") Integer id){
