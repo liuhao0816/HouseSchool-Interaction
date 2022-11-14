@@ -20,14 +20,28 @@ public class Result<T> implements Serializable {
      */
     @ApiModelProperty(value = "消息内容")
     private String msg = "success";
+
+    /**
+     * 返回条数
+     */
+    @ApiModelProperty(value = "总条数")
+    private long total;
+
     /**
      * 响应数据
      */
     @ApiModelProperty(value = "响应数据")
     private T data;
 
+
     public Result<T> ok(T data) {
         this.setData(data);
+        return this;
+    }
+
+    public Result<T> ok(T data,long total) {
+        this.setData(data);
+        this.setTotal(total);
         return this;
     }
     public Result<T> ok() {

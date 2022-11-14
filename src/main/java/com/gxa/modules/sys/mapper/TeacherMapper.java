@@ -4,14 +4,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gxa.modules.sys.entity.Student;
-import com.gxa.modules.sys.entity.User;
+import com.gxa.modules.sys.entity.Teacher;
 
-import java.util.List;
 import java.util.Map;
 
 
-public interface UserMapper extends BaseMapper<User> {
+public interface TeacherMapper extends BaseMapper<Teacher> {
 
-    public IPage<User> queryByPage(Page<User> page, Map<String, Object> params);
-
+    public IPage<Teacher> queryTeacherByPage(Page<Teacher> page, Map<String, Object> params);
 }
