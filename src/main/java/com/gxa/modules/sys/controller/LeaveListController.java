@@ -26,30 +26,30 @@ public class LeaveListController {
 
     @GetMapping("/LeaveList")
     @ApiOperation("查询所有记录")
-    public Result<List<AllLeaveListDto>> queryLeaveListAll1(){
+    public Result<List<AllLeaveListDto>> queryLeaveListAll1() {
 
-            List<AllLeaveListDto> allLeaveListDtos=leaveListService.queryLeaveListAll1();
-            Result<List<AllLeaveListDto>> result=new Result().ok(allLeaveListDtos);
-            return result;
+        List<AllLeaveListDto> allLeaveListDtos = leaveListService.queryLeaveListAll1();
+        Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos);
+        return result;
     }
 
-    @GetMapping("/leaveList")
+    @PostMapping("/leaveList")
     @ApiOperation("多条件查询")
-    public Result<List<AllLeaveListDto>> queryLeaveListBy(@RequestBody LeaveListDto leaveListDto){
+    public Result<List<AllLeaveListDto>> queryLeaveListBy(@RequestBody LeaveListDto leaveListDto) {
 
-        List<AllLeaveListDto> allLeaveListDtos=leaveListService.queryLeaveListBy(leaveListDto);
-        Result<List<AllLeaveListDto>> result=new Result().ok(allLeaveListDtos);
+        List<AllLeaveListDto> allLeaveListDtos = leaveListService.queryLeaveListBy(leaveListDto);
+        Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos);
         return result;
     }
 
 
     @PostMapping("/addLeaveList")
     @ApiOperation("添加请假")
-    public Result addLeaveList(@RequestBody LeaveList leaveList){
+    public Result addLeaveList(@RequestBody LeaveList leaveList) {
 
-        log.debug("----{}---",leaveList);
-        List<LeaveList> leaveLists=leaveListService.addLeaveList(leaveList);
-        Result<List<LeaveList>> result=new Result().ok(leaveLists);
+        log.debug("----{}---", leaveList);
+        List<LeaveList> leaveLists = leaveListService.addLeaveList(leaveList);
+        Result<List<LeaveList>> result = new Result().ok(leaveLists);
         return result;
 
   /*  this.leaveListService.addLeaveList(leaveList);
@@ -58,37 +58,45 @@ public class LeaveListController {
     }
 
 
-//    @PutMapping("/leaveList")
+    //    @PutMapping("/leaveList")
 //    @ApiOperation("撤销")
 //    public Result updateLeaveList(){
 //
 //            return null;
 //    }
-    @ApiOperation(value="删除")
+    @ApiOperation(value = "删除")
     @PostMapping("/leaveLists")
-    public Result delete(Integer id){
-    return this.leaveListService.delete(id);
-}
+    public Result delete(Integer id) {
+        return this.leaveListService.delete(id);
+    }
 
     @GetMapping("/leaveLists/{id}")
     @ResponseBody
     @ApiOperation("根据id查询")
-    public Result<List<AllLeaveListDto>> queryById(@PathVariable("id") Integer id){
+    public Result<List<AllLeaveListDto>> queryById(@PathVariable("id") Integer id) {
 
-        List<AllLeaveListDto> allLeaveListDtos=leaveListService.queryById(id);
-        Result<List<AllLeaveListDto>> result=new Result().ok(allLeaveListDtos);
+        List<AllLeaveListDto> allLeaveListDtos = leaveListService.queryById(id);
+        Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos);
         return result;
     }
 
     @GetMapping("/AddLeaveList/{user_id}")
     @ResponseBody
     @ApiOperation("根据id查询学生id和姓名")
-    public Result<List<AllLeaveListDto>> queryByUserId(@PathVariable("user_id") Integer user_id){
+    public Result<List<AllLeaveListDto>> queryByUserId(@PathVariable("user_id") Integer user_id) {
 
-        List<AllLeaveListDto> allLeaveListDtos=leaveListService.queryByUserId(user_id);
-        Result<List<AllLeaveListDto>> result=new Result().ok(allLeaveListDtos);
+        List<AllLeaveListDto> allLeaveListDtos = leaveListService.queryByUserId(user_id);
+        Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos);
         return result;
     }
+
+
+    @PutMapping("/leaveLists")
+    @ApiOperation("审核")
+    public Result updateLeaveList(@RequestBody LeaveList leaveList) {
+        return this.leaveListService.updateLeaveList(leaveList);
+    }
+
 
 
 }

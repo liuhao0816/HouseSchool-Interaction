@@ -9,32 +9,15 @@
     </insert>-->
 
     <select id="queryLeaveListAll1" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
-     SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks,l.is_deleted
+     SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks
     FROM leave_list l,student s,class_grade c
-    WHERE l.student_id=s.student_id AND s.class_id=c.class_id
+    WHERE l.student_id=s.student_id AND s.class_id=c.class_id AND deleted=1
     </select>
-    <select id="queryLeaveListBy" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
-        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks,l.is_deleted
-        FROM leave_list l,student s,class_grade c
-        <where>
-            <if test="startTime!=null and endTime!=null">
-                AND (l.end_time<![CDATA[>=]]>#{startTime} OR l.start_time<![CDATA[<=]]>#{endTime})
-            </if>
-            <if test="leaveType!=null">
-                AND l.leave_type=#{leaveType}
-            </if>
-            <if test="remarks!=null">
-                AND l.remarks=#{remarks}
-            </if>
-            <if test="classGrade!=null">
-                AND c.class_grade_name=#{classGrade}
-            </if>
-        </where>
-    </select>
+
     <select id="queryById" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
-        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks,l.is_deleted
+        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks
         FROM leave_list l,student s,class_grade c
-        WHERE l.student_id=s.student_id AND s.class_id=c.class_id
+        WHERE l.student_id=s.student_id AND s.class_id=c.class_id AND deleted=1
         <if test="id!=null">
             AND l.id=#{id}
         </if>
@@ -43,11 +26,31 @@
     <select id="queryByUserId" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
         SELECT t.user_id,s.student_id,student_name
         FROM teacher t, teacher_class tc, student s
-        WHERE t.teacher_jobno = tc.teacher_jobno AND s.class_id = tc.class_id
+        WHERE t.teacher_jobno = tc.teacher_jobno AND s.class_id = tc.class_id AND deleted=1
         <if test="user_id!=null">
             AND t.user_id=#{user_id}
         </if>
 
+    </select>
+    <select id="queryLeaveListBy" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
+        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks
+        FROM leave_list l,student s,class_grade c
+        WHERE l.student_id=s.student_id AND s.class_id=c.class_id AND deleted=1
+            <if test="startTime!=null and startTime!='' ">
+                AND l.start_time &gt;=#{startTime}
+            </if>
+            <if test="endTime!=null and endTime!='' ">
+               AND l.end_time &lt;=#{endTime}
+            </if>
+            <if test="leaveType!=null">
+                AND l.leave_type=#{leaveType}
+            </if>
+            <if test="remarks!=null">
+                AND l.remarks=#{remarks}
+            </if>
+            <if test="classGradeName!=null and classGradeName!='' ">
+                AND  class_grade.classGradeName=#{classGradeName}
+            </if>
     </select>
 
 

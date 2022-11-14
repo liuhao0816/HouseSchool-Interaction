@@ -1,6 +1,7 @@
 package com.gxa.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -65,7 +66,6 @@ public class LeaveList {
     @TableField("remarks")
     private String remarks;
 
-    @ApiModelProperty("是否删除")
-    @TableField("is_deleted")
-    private Integer isDeleted;
+    @TableLogic
+    private Integer deleted;
 }

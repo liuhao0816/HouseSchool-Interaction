@@ -22,4 +22,6 @@ public interface LeaveListService  extends IService<LeaveList> {
     List<LeaveList> addLeaveList(LeaveList leaveList);
     //根据id删除
     Result delete(Integer id);
+    //审核
+    Result updateLeaveList(LeaveList leaveList);
 }

@@ -13,14 +13,14 @@ import java.util.Date;
 public class LeaveListDto {
 
     @ApiModelProperty("开始时间")
-/*    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")*/
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     @TableField("start_time")
-    private String startTime;
+    private long startTime;
 
     @ApiModelProperty("结束时间")
-/*    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")*/
+   @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     @TableField("end_time")
-    private String endTime;
+    private long endTime;
 
     @ApiModelProperty("请假类型")
     @TableField("leave_type")
@@ -31,6 +31,6 @@ public class LeaveListDto {
     private String remarks;
 
     @ApiModelProperty("年假班级")
-    @TableField("class_grade")
-    private String classGrade;
+    @TableField("class_grade_name")
+    private String classGradeName;
 }
