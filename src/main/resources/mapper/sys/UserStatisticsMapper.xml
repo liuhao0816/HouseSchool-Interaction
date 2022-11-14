@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.modules.sys.mapper.UserStatisticsMapper">
+
+    <select id="userStatisticsList" resultType="userStatistics">
+        SELECT s.school_address schoolAddress, s.school_name schoolName, v1.teachers, v2.students, v3.parents
+        FROM school s,
+             (SELECT v.school_id,COUNT(v.teacher_jobno) teachers
+              FROM (SELECT s.school_id, u.user_id, t.teacher_jobno
+                    FROM school s LEFT JOIN user u ON s.school_id = u.school_id LEFT JOIN teacher t ON t.user_id = u.user_id) v
+              GROUP BY v.school_id) v1,
+             (SELECT v.school_id,COUNT(v.student_id) students
+              FROM (SELECT s.school_id, st.student_id
+                    FROM school s LEFT JOIN class_grade cg ON s.school_id = cg.school_id LEFT JOIN student st ON cg.class_id = st.class_id) v
+              GROUP BY v.school_id) v2,
+             (SELECT v.school_id,COUNT(v.user_id) parents
+              FROM (SELECT s.school_id, v.user_id
+                    FROM school s LEFT JOIN
+                         (SELECT sp.user_id,u.school_id
+                          FROM student_parent sp ,user u
+                          WHERE sp.user_id = u.user_id
+                          GROUP BY sp.user_id) v ON s.school_id = v.school_id) v
+              GROUP BY v.school_id) v3
+        WHERE	s.school_id = v1.school_id AND s.school_id = v2.school_id AND s.school_id = v3.school_id
+    </select>
+
+</mapper>

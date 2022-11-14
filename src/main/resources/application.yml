@@ -27,6 +27,7 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 
+
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: com.gxa.modules.*.entity
@@ -87,8 +88,17 @@ fdfs:
   tracker-list:            #TrackerList参数,支持多个
     - 192.168.10.10:22122
 
+<<<<<<< HEAD
 #pagehelper:
 #  helper-dialect: mysql
 #  reasonable: true
 #  support-methods-arguments: true
 #  params: count=countSql
+=======
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+>>>>>>> 4ec9042b7a1a5e6fe338f915d4ad3bb0f03161cb

@@ -11,7 +11,7 @@ public class Student {
     private int studentId;
 
     @ApiModelProperty(value = "学生名称",name = "studentName")
-    private int studentName;
+    private String studentName;
 
     @ApiModelProperty(value = "所属班级",name = "classGrade")
     private ClassGrade classGrade;
