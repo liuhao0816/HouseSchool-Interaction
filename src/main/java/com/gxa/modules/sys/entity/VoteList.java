@@ -20,8 +20,8 @@ public class VoteList {
     private String voteScope;
     @ApiModelProperty(value = "参与对象",name = "voteRoles")
     private List<Role> voteRoles;
-    @ApiModelProperty(value = "发布者",name = "voteName")
-    private String voteName;
+    @ApiModelProperty(value = "发布者",name = "user")
+    private User user;
     @ApiModelProperty(value = "发布时间",name = "voteStartTime")
     private Date voteStartTime;
 

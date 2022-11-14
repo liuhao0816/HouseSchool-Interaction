@@ -11,7 +11,7 @@ import java.util.List;
 public class VoteSubmitForm {
     @ApiModelProperty(value = "当前投票活动ID",name = "voteId")
     private Integer voteId;
-    @ApiModelProperty(value = "当前投票活动发起人ID",name = "userId")
+    @ApiModelProperty(value = "当前登录用户ID",name = "userId")
     private Integer userId;
     @ApiModelProperty(value = "投票选项选中ID",name = "voteOptionIds")
     private List<Integer> voteOptionIds;
