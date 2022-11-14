@@ -11,4 +11,6 @@ public interface LeaveListService  extends IService<LeaveList> {
     List<LeaveList> queryLeaveListAll1();
     //多条件查询
     List<LeaveList> queryLeaveListBy(LeaveListDto leaveListDto);
+    //根据id查询
+    List<LeaveList> queryById(Integer id);
 }

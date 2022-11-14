@@ -29,4 +29,10 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
         List<LeaveList> leaveLists = baseMapper.queryLeaveListBy(leaveListDto);
         return leaveLists;
     }
+
+    @Override
+    public List<LeaveList> queryById(Integer id) {
+        List<LeaveList> leaveList=baseMapper.queryById(id);
+        return leaveList;
+    }
 }

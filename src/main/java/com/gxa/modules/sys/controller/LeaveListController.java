@@ -59,12 +59,11 @@ public class LeaveListController {
     @GetMapping("/leaveLists/{id}")
     @ResponseBody
     @ApiOperation("根据id查询")
-    public Result<LeaveList> queryById(@PathVariable("id") Integer id){
+    public Result<List<LeaveList>> queryById(@PathVariable("id") Integer id){
 
-//            LeaveList leaveList=leaveListService.queryById(id);
-//            return Result.success(leaveList);
-//
-        return null;
+        List<LeaveList> leaveList=leaveListService.queryById(id);
+        Result<List<LeaveList>> result=new Result().ok(leaveList);
+        return result;
     }
 
 

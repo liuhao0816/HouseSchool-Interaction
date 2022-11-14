@@ -29,5 +29,14 @@
         </if>
     </where>
     </select>
+    <select id="queryById" resultType="com.gxa.modules.sys.entity.LeaveList">
+    SELECT l.id,s.student_name,c.class_grade_name,l.type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.is_deleted
+    FROM leave_list l,student s,class_grade c
+    WHERE l.student_id=s.student_id AND s.class_id=c.class_id
+    <if test="id!=null">
+        AND l.id=#{id}
+    </if>
+
+    </select>
 
 </mapper>
