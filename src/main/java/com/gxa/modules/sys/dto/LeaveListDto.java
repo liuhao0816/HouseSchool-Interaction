@@ -15,12 +15,12 @@ public class LeaveListDto {
     @ApiModelProperty("开始时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     @TableField("start_time")
-    private long startTime;
+    private Date startTime;
 
     @ApiModelProperty("结束时间")
    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     @TableField("end_time")
-    private long endTime;
+    private Date endTime;
 
     @ApiModelProperty("请假类型")
     @TableField("leave_type")
