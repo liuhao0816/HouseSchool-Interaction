@@ -6,16 +6,15 @@ import com.gxa.modules.sys.entity.LeaveList;
 import com.gxa.modules.sys.service.LeaveListService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Api(tags = "请假记录")
 @RestController
-
+@Slf4j
 public class LeaveListController {
 
 
@@ -28,9 +27,7 @@ public class LeaveListController {
 
             List<LeaveList> leaveLists=leaveListService.queryLeaveListAll1();
             Result<List<LeaveList>> result=new Result().ok(leaveLists);
-
             return result;
-
     }
 
     @GetMapping("/leaveList")
@@ -39,9 +36,38 @@ public class LeaveListController {
 
         List<LeaveList> leaveLists=leaveListService.queryLeaveListBy(leaveListDto);
         Result<List<LeaveList>> result=new Result().ok(leaveLists);
-
+        System.out.println(leaveListDto);
         return result;
-
     }
+
+
+    @PostMapping("/leaveList")
+    @ApiOperation("添加请假")
+    public Result addLeaveList(){
+
+            return null;
+    }
+
+
+    @PutMapping("/leaveList")
+    @ApiOperation("撤销")
+    public Result updateLeaveList(){
+
+            return null;
+    }
+
+    @GetMapping("/leaveList/{id}")
+    @ResponseBody
+    @ApiOperation("根据id查询")
+    public Result<LeaveList> queryById(@PathVariable("id") Integer id){
+
+//            LeaveList leaveList=leaveListService.queryById(id);
+//            return Result.success(leaveList);
+//
+        return null;
+    }
+
+
+
 
 }

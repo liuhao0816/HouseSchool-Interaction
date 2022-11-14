@@ -4,17 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.modules.sys.mapper.LeaveListMapper">
 
+
     <select id="queryLeaveListAll1" resultType="leaveList">
-    SELECT l.id,s.student_name,c.class_grade_name,l.type,l.start_time,l.end_time,l.reason,l.sponsor,l.launch_time,l.is_deleted
+    SELECT l.id,s.student_name,c.class_grade_name,l.type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.is_deleted
     FROM leave_list l,student s,class_grade c
     WHERE l.student_id=s.student_id AND s.class_id=c.class_id
     </select>
     <select id="queryLeaveListBy" resultType="com.gxa.modules.sys.entity.LeaveList" parameterType="com.gxa.modules.sys.dto.LeaveListDto">
-    SELECT l.id,s.student_name,c.class_grade_name,l.type,l.start_time,l.end_time,l.reason,l.sponsor,l.launch_time,l.is_deleted
-    FROM leave_list l,student s,class_grade c
-    WHERE l.student_id=s.student_id AND s.class_id=c.class_id
+        SELECT l.id,s.student_name,c.class_grade_name,l.type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.is_deleted
+        FROM leave_list l,student s,class_grade c
+        <where>
+       l.student_id=s.student_id AND s.class_id=c.class_id
         <if test="startTime!=null and endTime!=null">
-            AND (l.end_time &gt;= #{startTime} OR l.start_time &lt;=#{endTime})
+            AND (l.end_time<![CDATA[>=]]>#{startTime} OR l.start_time<![CDATA[<=]]>#{endTime})
         </if>
         <if test="type!=null">
             AND l.type=#{type}
@@ -23,9 +25,9 @@
             AND l.remarks=#{remarks}
         </if>
         <if test="classGrade!=null">
-            AND c.class_grade=#{classGrade}
+            AND c.class_grade_name=#{classGrade}
         </if>
-
+    </where>
     </select>
 
 </mapper>

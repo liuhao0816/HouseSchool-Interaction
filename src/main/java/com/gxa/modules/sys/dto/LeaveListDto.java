@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -11,23 +12,25 @@ import java.util.Date;
 @ApiModel("请假多条件查询")
 public class LeaveListDto {
 
-    @ApiModelProperty("start_time")
-    @TableField("开始时间")
-    private Date startTime;
+    @ApiModelProperty("开始时间")
+/*    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")*/
+    @TableField("start_time")
+    private String startTime;
 
-    @ApiModelProperty("end_time")
-    @TableField("结束时间")
-    private Date endTime;
+    @ApiModelProperty("结束时间")
+/*    @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")*/
+    @TableField("end_time")
+    private String endTime;
 
-    @ApiModelProperty("type")
-    @TableField("请假类型")
+    @ApiModelProperty("请假类型")
+    @TableField("type")
     private String type;
 
-    @ApiModelProperty("remarks")
-    @TableField("请假状态")
+    @ApiModelProperty("请假状态")
+    @TableField("remarks")
     private String remarks;
 
-    @ApiModelProperty("class_grade")
-    @TableField("年假班级")
+    @ApiModelProperty("年假班级")
+    @TableField("class_grade")
     private String classGrade;
 }
