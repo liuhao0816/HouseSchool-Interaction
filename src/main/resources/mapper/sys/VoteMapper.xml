@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.modules.sys.mapper.VoteMapper">
+    <resultMap id="queryNoResultMap" type="voteList">
+        <id property="voteId" column="vote_id"/>
+        <result property="voteTitle" column="vote_title"/>
+        <result property="voteStatus" column="vote_status"/>
+        <result property="voteScope" column="vote_scope"/>
+        <result property="voteName" column="vote_name"/>
+        <result property="voteStartTime" column="vote_start_time"/>
+        <collection property="voteRoles" ofType="com.gxa.modules.sys.entity.Role">
+            <id property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+        </collection>
+    </resultMap>
+    <select id="queryNo" resultMap="queryNoResultMap">
+        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,vt.vote_name,vt.vote_start_time,r.role_id,r.role_name
+        FROM vote_table vt,vote_role vr,role r
+        WHERE vt.vote_id=vr.vote_id AND vr.role_id=r.role_id
+    </select>
+
+    <select id="queryAllVote" resultMap="queryNoResultMap" parameterType="com.gxa.modules.sys.form.VoteForm">
+        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,vt.vote_name,vt.vote_start_time,r.role_id,r.role_name
+        FROM vote_table vt,vote_role vr,role r
+        WHERE vt.vote_id=vr.vote_id AND vr.role_id=r.role_id
+            <if test="voteStartTime != null">
+                <![CDATA[ AND DATE_FORMAT(vt.vote_start_time,'%Y-%m-%d')>=DATE_FORMAT(#{voteStartTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="voteEndTime != null and voteEndTime != '' ">
+                <![CDATA[ AND DATE_FORMAT(vt.vote_start_time,'%Y-%m-%d')<=DATE_FORMAT(#{voteEndTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="voteStatus != null and voteStatus != '' ">
+                AND vt.vote_status=#{voteStatus}
+            </if>
+            <if test="voteTitleOrName != null and voteTitleOrName != '' ">
+                AND (vt.vote_title like '%'+#{voteTitleOrName}+'%' OR vt.vote_name like '%'+#{voteTitleOrName}+'%')
+            </if>
+    </select>
+</mapper>

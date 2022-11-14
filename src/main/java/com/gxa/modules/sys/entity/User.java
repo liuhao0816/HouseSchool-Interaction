@@ -5,24 +5,34 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.gxa.common.validator.group.AddGroup;
 import com.gxa.common.validator.group.UpdateGroup;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data
-@TableName("t_user")
+@TableName("user")
+@ApiModel(value = "用户")
 public class User implements Serializable {
+    @ApiModelProperty(value = "用户账号",name = "userId")
+    private int userId;
 
-    private Integer id;
+    @ApiModelProperty(value = "用户姓名",name = "username")
+    private String userName;
 
-    @TableField("username")
-    @NotBlank(message="用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
-    private String username;
+    @ApiModelProperty(value = "用户性别",name = "gender")
+    private String gender;
 
-    @NotBlank(message="密码不能为空", groups = AddGroup.class)
     private String pwd;
-    private String salt;
 
+    @ApiModelProperty(value = "用户电话",name = "phone")
+    private String phone;
+
+    @ApiModelProperty(value = "用户所属学校",name = "school")
+    private School school;
+
+    private String salt;
 
 }

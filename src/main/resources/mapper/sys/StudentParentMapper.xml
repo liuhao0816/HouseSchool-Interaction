@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.modules.sys.mapper.StudentParentMapper">
+
+    <resultMap id="studentParentResultMap" type="studentParent">
+        <result property="user.userId" column="user_id"/>
+        <result property="user.userName" column="user_name"/>
+        <result property="user.gender" column="gender"/>
+        <result property="user.phone" column="phone"/>
+        <result property="relation" column="relation"/>
+        <result property="user.school.schoolName" column="school_name"/>
+        <collection property="students" javaType="java.util.Set" ofType="student" >
+            <result property="studentName" column="student_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryStudentParentByPage" resultMap="studentParentResultMap">
+        SELECT u.user_id,u.user_name,u.gender,u.phone,sp.relation,s.school_name,st.student_id,st.student_name
+        FROM student_parent sp, user u ,school s, student st
+        WHERE u.user_id = sp.user_id AND u.school_id = s.school_id AND st.student_id = sp.student_id
+    </select>
+
+</mapper>
