@@ -9,31 +9,26 @@ import java.util.Map;
 
 public interface UserService extends IService<User> {
 
+    /**
+     * 根据用户名查询用户
+     * @param username
+     * @return
+     */
     User queryByUsername(String username);
-    User queryByUsername01(String username);
 
     /**
-     * 只是单独的分页，不带查询条件
+     * 用户带条件分页查询
      * @param params
      * @return
      */
     PageUtils queryByPage(Map<String,Object> params);
 
-    /**
-     * 只是单独的分页，不带查询条件
+  /**
+     * 用户统计
      * @param params
      * @return
      */
-    PageUtils queryByPage01(Map<String,Object> params);
-
-    /**
-     * 带条件查询的分页
-     *  查询的条件和 分页的相关信息都在 params中
-     * @param params
-     * @return
-     */
-    PageUtils queryByPage02(Map<String,Object> params);
-
+    PageUtils userStatisticsList(Map<String,Object> params);
 
 
 }
