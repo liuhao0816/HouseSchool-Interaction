@@ -23,8 +23,8 @@ public class LeaveListDto {
     private String endTime;
 
     @ApiModelProperty("请假类型")
-    @TableField("type")
-    private String type;
+    @TableField("leave_type")
+    private String leaveType;
 
     @ApiModelProperty("请假状态")
     @TableField("remarks")

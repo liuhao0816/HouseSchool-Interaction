@@ -1,37 +1,27 @@
-package com.gxa.modules.sys.entity;
+package com.gxa.modules.sys.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-//@TableName("leave_list")
-public class LeaveList {
-
+@ApiModel("添加")
+public class AddLeaveListDto {
     @ApiModelProperty("id")
     @TableField("id")
     private Integer id ;
-
-/*
-    @ApiModelProperty("学生姓名")
-    @TableField("student_name")
-    private String studentName;
-
-    @ApiModelProperty("年级班级")
-    @TableField("class_grade_name")
-    private String classGradeName;
-*/
 
     @ApiModelProperty("学生id")
     @TableField("student_id")
     private String studentId;
 
+
     @ApiModelProperty("请假时间")
     @TableField("launch_time")
-    private Date launchTime;
+    private String launchTime;
 
     @ApiModelProperty("请假类型")
     @TableField("leave_type")
@@ -47,11 +37,11 @@ public class LeaveList {
 
     @ApiModelProperty("开始时间")
     @TableField("start_time")
-    private Date startTime;
+    private String startTime;
 
     @ApiModelProperty("结束时间")
     @TableField("end_time")
-    private Date endTime;
+    private String endTime;
 
     @ApiModelProperty("发起人")
     @TableField("sponsor")

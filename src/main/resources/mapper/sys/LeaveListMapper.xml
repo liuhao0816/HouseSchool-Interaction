@@ -3,40 +3,52 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.modules.sys.mapper.LeaveListMapper">
+<!--    <insert id="addLeaveList" parameterType="com.gxa.modules.sys.dto.AddLeaveListDto">
+     INSERT INTO leave_list (id,studentId,leaveType,startTime,endTime,reason,teacherApprove,parentsConfirm,sponsor,launchTime,remarks,isDeleted)
+     VALUES (#{id},#{studentId},#{leaveType},#{startTime},#{endTime},#{reason},#{teacherApprove},#{parentsConfirm},#{sponsor},#{launchTime},#{remarks},#{isDeleted})
+    </insert>-->
 
-
-    <select id="queryLeaveListAll1" resultType="leaveList">
-    SELECT l.id,s.student_name,c.class_grade_name,l.type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.is_deleted
+    <select id="queryLeaveListAll1" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
+     SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks,l.is_deleted
     FROM leave_list l,student s,class_grade c
     WHERE l.student_id=s.student_id AND s.class_id=c.class_id
     </select>
-    <select id="queryLeaveListBy" resultType="com.gxa.modules.sys.entity.LeaveList" parameterType="com.gxa.modules.sys.dto.LeaveListDto">
-        SELECT l.id,s.student_name,c.class_grade_name,l.type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.is_deleted
+    <select id="queryLeaveListBy" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
+        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks,l.is_deleted
         FROM leave_list l,student s,class_grade c
         <where>
-       l.student_id=s.student_id AND s.class_id=c.class_id
-        <if test="startTime!=null and endTime!=null">
-            AND (l.end_time<![CDATA[>=]]>#{startTime} OR l.start_time<![CDATA[<=]]>#{endTime})
-        </if>
-        <if test="type!=null">
-            AND l.type=#{type}
-        </if>
-        <if test="remarks!=null">
-            AND l.remarks=#{remarks}
-        </if>
-        <if test="classGrade!=null">
-            AND c.class_grade_name=#{classGrade}
-        </if>
-    </where>
+            <if test="startTime!=null and endTime!=null">
+                AND (l.end_time<![CDATA[>=]]>#{startTime} OR l.start_time<![CDATA[<=]]>#{endTime})
+            </if>
+            <if test="leaveType!=null">
+                AND l.leave_type=#{leaveType}
+            </if>
+            <if test="remarks!=null">
+                AND l.remarks=#{remarks}
+            </if>
+            <if test="classGrade!=null">
+                AND c.class_grade_name=#{classGrade}
+            </if>
+        </where>
     </select>
-    <select id="queryById" resultType="com.gxa.modules.sys.entity.LeaveList">
-    SELECT l.id,s.student_name,c.class_grade_name,l.type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.is_deleted
-    FROM leave_list l,student s,class_grade c
-    WHERE l.student_id=s.student_id AND s.class_id=c.class_id
-    <if test="id!=null">
-        AND l.id=#{id}
-    </if>
+    <select id="queryById" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
+        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks,l.is_deleted
+        FROM leave_list l,student s,class_grade c
+        WHERE l.student_id=s.student_id AND s.class_id=c.class_id
+        <if test="id!=null">
+            AND l.id=#{id}
+        </if>
 
     </select>
+    <select id="queryByUserId" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
+        SELECT t.user_id,s.student_id,student_name
+        FROM teacher t, teacher_class tc, student s
+        WHERE t.teacher_jobno = tc.teacher_jobno AND s.class_id = tc.class_id
+        <if test="user_id!=null">
+            AND t.user_id=#{user_id}
+        </if>
+
+    </select>
+
 
 </mapper>

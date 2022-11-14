@@ -1,21 +1,16 @@
-package com.gxa.modules.sys.entity;
+package com.gxa.modules.sys.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
-
 @Data
-//@TableName("leave_list")
-public class LeaveList {
-
+public class AllLeaveListDto {
     @ApiModelProperty("id")
     @TableField("id")
     private Integer id ;
 
-/*
     @ApiModelProperty("学生姓名")
     @TableField("student_name")
     private String studentName;
@@ -23,9 +18,8 @@ public class LeaveList {
     @ApiModelProperty("年级班级")
     @TableField("class_grade_name")
     private String classGradeName;
-*/
 
-    @ApiModelProperty("学生id")
+    @ApiModelProperty("学生姓名")
     @TableField("student_id")
     private String studentId;
 
