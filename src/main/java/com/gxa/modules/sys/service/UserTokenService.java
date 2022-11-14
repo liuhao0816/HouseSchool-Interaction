@@ -6,6 +6,9 @@ import com.gxa.modules.sys.entity.UserPower;
 
 public interface UserTokenService {
     Result createToken(UserPower userPower);
+    String verificationCodeNo(String resultValue);
+
+    String queryByCaptch(String uuid);
 
     User validateToken(String token);
 }
