@@ -43,7 +43,7 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
 
     @Override
     public List<LeaveList> addLeaveList(LeaveList leaveList) {
-
+        leaveList.setIsDeleted(1);
         this.baseMapper.insert(leaveList);
         return null;
     }
@@ -57,8 +57,9 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
     }
 
     @Override
-    public  Result updateLeaveList(LeaveList leaveList) {
-    int result=baseMapper.updateById(leaveList);
-    return new Result().ok(result);
+    public  Result updateById(Integer id){
+
+    this.baseMapper.updateById(id);
+    return null;
     }
 }

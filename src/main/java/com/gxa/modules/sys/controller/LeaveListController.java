@@ -51,19 +51,10 @@ public class LeaveListController {
         List<LeaveList> leaveLists = leaveListService.addLeaveList(leaveList);
         Result<List<LeaveList>> result = new Result().ok(leaveLists);
         return result;
-
-  /*  this.leaveListService.addLeaveList(leaveList);
-        Result result=new Result().ok();*/
-
     }
 
 
-    //    @PutMapping("/leaveList")
-//    @ApiOperation("撤销")
-//    public Result updateLeaveList(){
-//
-//            return null;
-//    }
+
     @ApiOperation(value = "删除")
     @PostMapping("/leaveLists")
     public Result delete(Integer id) {
@@ -91,10 +82,11 @@ public class LeaveListController {
     }
 
 
-    @PutMapping("/leaveLists")
+    @PutMapping("/leaveLists/{id}")
     @ApiOperation("审核")
-    public Result updateLeaveList(@RequestBody LeaveList leaveList) {
-        return this.leaveListService.updateLeaveList(leaveList);
+    public Result updateLeaveList(@PathVariable("id") Integer id) {
+        this.leaveListService.updateById(id);
+        return new Result<>().ok("审核通过");
     }
 
 

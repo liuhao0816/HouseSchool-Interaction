@@ -2,7 +2,6 @@ package com.gxa.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gxa.common.utils.Result;
-import com.gxa.modules.sys.dto.AddLeaveListDto;
 import com.gxa.modules.sys.dto.AllLeaveListDto;
 import com.gxa.modules.sys.dto.LeaveListDto;
 import com.gxa.modules.sys.entity.LeaveList;
@@ -23,5 +22,7 @@ public interface LeaveListService  extends IService<LeaveList> {
     //根据id删除
     Result delete(Integer id);
     //审核
-    Result updateLeaveList(LeaveList leaveList);
+    Result updateById(Integer id);
+    //导出Excel
+
 }
