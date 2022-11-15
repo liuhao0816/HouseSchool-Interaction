@@ -1,5 +1,8 @@
 package com.gxa.modules.sys.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Result;
 import com.gxa.modules.sys.dto.AddLeaveListDto;
 import com.gxa.modules.sys.dto.AllLeaveListDto;
@@ -27,7 +30,6 @@ public class LeaveListController {
     @GetMapping("/LeaveList")
     @ApiOperation("查询所有记录")
     public Result<List<AllLeaveListDto>> queryLeaveListAll1() {
-
         List<AllLeaveListDto> allLeaveListDtos = leaveListService.queryLeaveListAll1();
         Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos);
         return result;
@@ -36,9 +38,15 @@ public class LeaveListController {
     @PostMapping("/leaveList")
     @ApiOperation("多条件查询")
     public Result<List<AllLeaveListDto>> queryLeaveListBy(@RequestBody LeaveListDto leaveListDto) {
+        Integer page = leaveListDto.getPage();
+        Integer limit = leaveListDto.getLimit();
 
+        PageHelper.startPage(page,limit);
         List<AllLeaveListDto> allLeaveListDtos = leaveListService.queryLeaveListBy(leaveListDto);
-        Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos);
+
+        PageInfo<AllLeaveListDto> pageInfo = new PageInfo<>(allLeaveListDtos);
+        long total = pageInfo.getTotal();
+        Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos,total);
         return result;
     }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gxa.modules.sys.mapper.AttendanceDateMapper">
+
+    <select id="queryByGradeName" resultType="com.gxa.modules.sys.dto.AttendanceDateDto">
+    SELECT a.id,s.student_name,c.class_grade_name,s.gender,s.student_id,a.attendance_status,u.phone
+    FROM attendance a,student s,class_grade c,user u,student_parent sp
+    WHERE a.student_id=s.student_id AND s.class_id=c.class_id AND s.student_id=sp.student_id AND sp.user_id=u.user_id
+
+    <if test="classGradeName!=null and classGradeName!='' ">
+        AND class_grade_name=#{classGradeName}
+    </if>
+
+
+
+
+    </select>
+</mapper>

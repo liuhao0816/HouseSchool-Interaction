@@ -2,6 +2,9 @@ package com.gxa.modules.sys.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Result;
 import com.gxa.modules.sys.dto.AllLeaveListDto;
 import com.gxa.modules.sys.dto.LeaveListDto;
@@ -11,6 +14,7 @@ import com.gxa.modules.sys.mapper.LeaveListMapper;
 import com.gxa.modules.sys.service.LeaveListService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList> implements LeaveListService {
@@ -25,7 +29,12 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
 
     @Override
     public List<AllLeaveListDto> queryLeaveListBy(LeaveListDto leaveListDto) {
+
+
         List<AllLeaveListDto> allLeaveListDtos = baseMapper.queryLeaveListBy(leaveListDto);
+
+
+
         return allLeaveListDtos;
     }
 
@@ -62,4 +71,6 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
     this.baseMapper.updateById(id);
     return null;
     }
+
+
 }

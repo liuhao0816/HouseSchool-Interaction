@@ -12,6 +12,11 @@ import java.util.Date;
 @ApiModel("请假多条件查询")
 public class LeaveListDto {
 
+    @ApiModelProperty(value = "当前页码",name = "page")
+    private Integer page;
+    @ApiModelProperty(value = "每页记录数",name = "limit")
+    private Integer limit;
+
     @ApiModelProperty("开始时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     @TableField("start_time")
