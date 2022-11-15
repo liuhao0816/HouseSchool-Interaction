@@ -43,34 +43,6 @@ public class UserController {
     @Autowired
     private UserStatisticsService userStatisticsService;
 
-/*
-
-    @ApiOperation("验证码接口")
-    @GetMapping("/sys/validateCode")
-    public void validateCode(HttpServletResponse response) {
-
-
-        ValidateCode validateCode = new ValidateCode();
-        Map<String, Object> map = validateCode.validateCode();
-
-        String resultValue = (String)map.get("resultValue");
-        RenderedImage image =(RenderedImage) map.get("image");
-
-
-        String  uuid = this.userTokenService.verificationCodeNo(resultValue);
-
-
-       try {
-            OutputStream os = response.getOutputStream();
-            // 输出图像到页面
-            ImageIO.write(image, "JPEG", os);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-*/
-
     @ApiOperation("验证码接口")
     @GetMapping("/sys/validateCode")
     public Result validateCode() throws IOException {
@@ -89,15 +61,12 @@ public class UserController {
         ByteArrayOutputStream os = new ByteArrayOutputStream();//新建流。
         ImageIO.write(image,"JPEG", os);//利用ImageIO类提供的write方法，将bi以jpeg图片的数据模式写入流。
         byte bs[] = os.toByteArray();//从流中获取数据数组。
-        String s = bs.toString();
-        log.info("----{}---",s);
 
-//        String encode = Base64Utils.encode();
+        String encode = Base64Utils.encode(bs);
 
         Map<String,Object> hashMap = new HashMap<>();
 
-//        hashMap.put("image",bs);
-        hashMap.put("image",bs);
+        hashMap.put("image",encode);
         hashMap.put("uuid",uuid);
         result.ok(hashMap);
 
