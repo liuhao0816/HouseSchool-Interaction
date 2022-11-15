@@ -1,4 +1,4 @@
-package com.gxa.entity;/**
+package com.gxa.modules.sys.entity.dto;/**
  * @author ${RenMuQiao}.
  * adate 2022/11/11
  * atime 16:33.
@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,17 +25,19 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ApiModel(value = "学校")
 public class School implements Serializable {
 
-    @ApiModelProperty(hidden = true)
-    private int schoolId;//学校id
+    @ApiModelProperty(value = "学校编号",name = "schoolId")
+    private int schoolId;
 
-    @ApiModelProperty(name = "school_name",value = "学校名称", required = true )
-    private String schoolName;//学校名称
+    @ApiModelProperty(value = "学校名称",name = "schoolName")
+    private String schoolName;
 
-    private String schoolAddress;//学校地址
+    @ApiModelProperty(value = "学校地址",name = "schoolAddress")
+    private String schoolAddress;
 
-    private String remarks;//备注
-
+    @ApiModelProperty(value = "备注",name = "remarks")
+    private String remarks;
 
 }

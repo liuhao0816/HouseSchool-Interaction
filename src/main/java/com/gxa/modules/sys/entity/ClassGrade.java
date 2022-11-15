@@ -1,5 +1,6 @@
 package com.gxa.modules.sys.entity;
 
+import com.gxa.modules.sys.entity.dto.School;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
