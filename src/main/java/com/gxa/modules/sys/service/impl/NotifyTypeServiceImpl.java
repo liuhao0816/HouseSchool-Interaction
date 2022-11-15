@@ -30,6 +30,8 @@ import java.util.Map;
 public class NotifyTypeServiceImpl extends ServiceImpl<NotifyTypeMapper, NotifyType> implements NotifyTypeService   {
 
 
+    @Autowired
+   NotifyTypeMapper notifyTypeMapper;
 
     @Override
     public PageUtils queryByPage(Map<String, Object> params) {
@@ -136,5 +138,13 @@ public class NotifyTypeServiceImpl extends ServiceImpl<NotifyTypeMapper, NotifyT
             return new Result().ok("通知类型添加成功。");
         }
         return new Result().error("通知类型添加失败。");
+    }
+
+    @Override
+    public Map selectByType() {
+        Map<Object, Object> hashMap = new HashMap<>();
+        int selectByType = notifyTypeMapper.selectByType().size();
+        hashMap.put("selectByType", selectByType);
+        return hashMap;
     }
 }
