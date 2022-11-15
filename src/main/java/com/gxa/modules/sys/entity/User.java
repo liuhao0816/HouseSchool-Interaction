@@ -1,6 +1,7 @@
 package com.gxa.modules.sys.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.gxa.modules.sys.entity.dto.School;
 import io.swagger.annotations.ApiModel;

@@ -32,22 +32,22 @@ import java.util.Map;
 @RequestMapping("//notifyContent")
 public class NotifyContentController {
 
-    @Autowired
-    NotifyTypeMapper notifyTypeMapper;
-    @ApiOperation(value="查询所有通知消息")
+    //@Autowired
+    //NotifyTypeMapper notifyTypeMapper;
+    //@ApiOperation(value="查询所有通知消息")
 
-    public Map selectAllMessage(Integer id){
-        LambdaQueryWrapper<NOtifyContent> lambda = Wrappers.lambdaQuery(NOtifyContent.class);
-        lambda.eq(NOtifyContent::getId,id );
-        List<NOtifyContent> nOtifyContentList = NotifyContentService.list(lambda);
+    //public Map selectAllMessage(Integer id){
+    //    LambdaQueryWrapper<NOtifyContent> lambda = Wrappers.lambdaQuery(NOtifyContent.class);
+    //    lambda.eq(NOtifyContent::getId,id );
+    //    List<NOtifyContent> nOtifyContentList = NotifyContentService.list(lambda);
 
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setCode("200");
-        jsonResult.setMsg("查找成功");
-        jsonResult.setData(nOtifyContentList);
-        return jsonResult.getMap();
+        //JsonResult jsonResult = new JsonResult();
+        //jsonResult.setCode("200");
+        //jsonResult.setMsg("查找成功");
+        //jsonResult.setData(nOtifyContentList);
+        //return jsonResult.getMap();
 
-    }
+    //}
 
 
 

@@ -20,8 +20,8 @@ import java.util.List;
 public class NotifyContentServiceImpl extends ServiceImpl<NotifyContentMapper, NOtifyContent> implements NotifyContentService {
     @Override
     public List selectAll() {
-        List<NotifyContent> list = this.list();
-        return list;
+        //List<NotifyContent> list = this.list();
+        return null;
     }
 }
 
