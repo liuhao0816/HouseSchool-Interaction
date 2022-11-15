@@ -34,11 +34,21 @@ public class AppraiseController {
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok",response = Appraise.class)
     })
-    public Result appraiseList(){
-        List<Appraise> appraises = this.appraiseService.queryAll();
-        Map map = new HashMap();
-        map.put("appraises",appraises);
-        return new Result<>().ok(map);
+    public Result appraiseList(@RequestParam String userName){
+        AppraisePermissions appraisePermissions = this.appPermissionsService.queryByTeacherType();
+        int  otherTeacher = appraisePermissions.getOtherTeacher();
+        if (otherTeacher == 1){
+            List<Appraise> appraises = this.appraiseService.queryAll01(userName);
+            Map map = new HashMap();
+            map.put("appraises", appraises);
+            return new Result<>().ok(map);
+        }else if (otherTeacher == 2){
+            List<Appraise> appraises = this.appraiseService.queryAll();
+            Map map = new HashMap();
+            map.put("appraises", appraises);
+            return new Result<>().ok(map);
+        }
+        return new Result<>().ok();
     }
 
     @PostMapping("/appraise/add")
@@ -178,7 +188,7 @@ public class AppraiseController {
     @GetMapping("/appraise/recipient01")
     @ResponseBody
     @ApiOperation(value = "查找接口",notes = "添加处查询用户孩子班级",httpMethod = "GET")
-    public Result healthyRecipient01(@RequestParam int userId){
+    public Result appraiseRecipient01(@RequestParam int userId){
 
         AppraisePermissions appraisePermissions = this.appPermissionsService.queryByTeacherType();
         int teacherType = appraisePermissions.getTeacher();
@@ -188,7 +198,11 @@ public class AppraiseController {
         List<ClassGrade> healthyClass = this.healthyService.queryByHealthyClass(userId);
         Map map = new HashMap();
         map.put("healthyClass", healthyClass);
-        if (teacherType == 2 || userId == appraiseUserId){
+        if (userId == appraiseUserId){
+            List<ClassGrade> appraiseUser = this.appPermissionsService.queryByPermissionsappraiseUser(userId);
+            map.put("appraiseUser", appraiseUser);
+            return new Result<>().ok(map);
+        }else if (teacherType == 2 ){
             //通过老师查询
             List<ClassGrade> headteacher = this.appPermissionsService.queryByPermissionsHeadteacher(userId);
             map.put("headteacher", headteacher);
@@ -202,5 +216,13 @@ public class AppraiseController {
             return new  Result<>().ok();
         }
 
+    }
+
+    @GetMapping("/appraise/recipient02")
+    @ResponseBody
+    @ApiOperation(value = "查找接口",notes = "添加处根据班级查询学生名字",httpMethod = "GET")
+    public Result appraiseRecipient02(@RequestParam int classId){
+        List<User> appraiseStudent = this.appPermissionsService.queryByAppraiseStudent(classId);
+        return new  Result<>().ok(appraiseStudent);
     }
 }

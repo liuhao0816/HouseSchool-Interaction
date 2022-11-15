@@ -1,14 +1,13 @@
 package com.gxa.modules.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Query;
-import com.gxa.modules.sys.entity.Appraise;
-import com.gxa.modules.sys.entity.AppraiseDto;
-import com.gxa.modules.sys.entity.AppraisePermissions;
-import com.gxa.modules.sys.entity.User;
+import com.gxa.modules.sys.entity.*;
 import com.gxa.modules.sys.mapper.AppraiseMapper;
 import com.gxa.modules.sys.service.AppraiseService;
 import org.springframework.stereotype.Service;
@@ -82,7 +81,11 @@ public class AppraiseServiceImpl extends ServiceImpl<AppraiseMapper, Appraise> i
         return teacher;
     }
 
-
-
-
+    @Override
+    public List<Appraise> queryAll01(String userName) {
+        QueryWrapper<Appraise> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_name",userName);
+        List<Appraise> appraise= this.baseMapper.selectList(wrapper);
+        return appraise;
+    }
 }

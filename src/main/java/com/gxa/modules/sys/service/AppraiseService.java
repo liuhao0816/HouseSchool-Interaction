@@ -2,10 +2,7 @@ package com.gxa.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gxa.common.utils.PageUtils;
-import com.gxa.modules.sys.entity.Appraise;
-import com.gxa.modules.sys.entity.AppraiseDto;
-import com.gxa.modules.sys.entity.AppraisePermissions;
-import com.gxa.modules.sys.entity.User;
+import com.gxa.modules.sys.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -29,4 +26,5 @@ public interface AppraiseService extends IService<Appraise>{
     List<User> queryByPermissionsTeacher();
 
 
+    List<Appraise> queryAll01(String userName);
 }

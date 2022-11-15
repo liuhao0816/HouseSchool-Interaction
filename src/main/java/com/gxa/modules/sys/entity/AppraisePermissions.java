@@ -21,5 +21,7 @@ public class AppraisePermissions {
     private Integer teacher;
     @ApiModelProperty(name = "userId",value = "指定老师（传用户user_id）")
     private Integer userId;
+    @ApiModelProperty(name = "otherTeacher",value = "班主任可见班级内其他老师发布的评语（1：为不勾选，2为勾选）")
+    private Integer otherTeacher;
 }
 

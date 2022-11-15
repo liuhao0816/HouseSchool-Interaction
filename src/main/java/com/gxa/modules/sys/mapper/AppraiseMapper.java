@@ -16,4 +16,5 @@ public interface AppraiseMapper extends BaseMapper<Appraise> {
     List<Appraise> queryByAppraiseDto02(@Param("studentName")String studentName,@Param("gradeClass")String gradeClass);
 
     List<User> queryByPermissionsTeacher();
+
 }
