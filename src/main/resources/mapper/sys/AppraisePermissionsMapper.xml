@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gxa.modules.sys.mapper.AppraisePermissionsMapper">
     <resultMap id="healthyClassResultMap" type="com.gxa.modules.sys.entity.ClassGrade">
+        <id property="classId" column="class_id"/>
         <result property="classGradeName" column="class_grade_name"/>
     </resultMap>
 
@@ -25,5 +26,17 @@
               FROM teacher
               WHERE user_id = #{userId}) t
         WHERE cg.class_teacher = t.teacher_jobno
+    </select>
+    <select id="queryByAppraiseUser" resultMap="healthyClassResultMap" >
+        SELECT class_id,class_grade_name
+        FROM class_grade
+    </select>
+    <resultMap id="healthyTeacherResultMap" type="com.gxa.modules.sys.entity.Student">
+        <result property="studentName" column="student_name"/>
+    </resultMap>
+    <select id="queryByAppraiseStudent" resultMap="healthyTeacherResultMap" >
+        SELECT student_name
+        FROM student
+        WHERE class_id = #{classId}
     </select>
 </mapper>
