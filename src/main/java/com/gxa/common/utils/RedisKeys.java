@@ -39,8 +39,8 @@ public class RedisKeys {
      * 用户登录的key
      * @return
      */
-    public static String getSysUserTokenKey(String username,String token){
-        return "sys:user:"+username + ":"+token;
+    public static String getSysUserTokenKey(int userId,String uuid){
+        return "sys:user:"+userId + ":"+uuid;
     }
     public static String getSysUserTokenKey(String token){
         return "sys:user:"+token;

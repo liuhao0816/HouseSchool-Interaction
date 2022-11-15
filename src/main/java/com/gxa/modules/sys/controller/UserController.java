@@ -78,8 +78,6 @@ public class UserController {
     @PostMapping("/sys/login")
     public Result login(@RequestBody UserForm userFrom){
 
-        log.info("user------->{}",userFrom);
-
 
         String uuid = userFrom.getUuid();
         String captch = userFrom.getCaptch();

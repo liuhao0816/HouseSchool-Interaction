@@ -19,10 +19,9 @@ public class UserTokenServiceImpl  implements UserTokenService {
     @Override
     public Result createToken(UserPower userPower) {
         //生成token
-        String token = TokenGenerator.generateValue();
-
-        sysUserRedis.addToken(token,userPower);
-        String encodeToken = Base64Utils.encode(userPower.getUserName()+":"+token);
+        String uuid = TokenGenerator.generateValue();
+        String token = sysUserRedis.addToken(uuid, userPower);
+        String encodeToken = Base64Utils.encode(token);
         return new Result().ok(encodeToken);
     }
 

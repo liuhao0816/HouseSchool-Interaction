@@ -33,19 +33,14 @@ public class SysUserRedis {
 
     /**
      * 用户信息存入
-     * @param token
+     * @param uuid
      * @param userPower
      */
-    public void addToken(String token, UserPower userPower){
+    public String addToken(String uuid, UserPower userPower){
 
-        //token --- user
-        //1111--user
-        /**
-         * sys:user:username:1111  ---user
-         * sys:user:username:2222 ----user
-         * sys:user:username:3333 ----user
-         */
-        this.redisUtils.set(RedisKeys.getSysUserTokenKey(userPower.getUserName(),token),userPower);
+        String token = RedisKeys.getSysUserTokenKey(userPower.getUserId(), uuid);
+        this.redisUtils.set(token,userPower);
+        return token;
     }
 
     /**
