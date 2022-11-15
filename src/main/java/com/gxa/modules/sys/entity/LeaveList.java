@@ -71,5 +71,5 @@ public class LeaveList {
     private String remarks;
 
     @TableLogic
-    private Integer deleted;
+    private Integer isDeleted;
 }

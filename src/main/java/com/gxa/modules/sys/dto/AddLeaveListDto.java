@@ -61,5 +61,5 @@ public class AddLeaveListDto {
     private String remarks;
 
     @TableLogic
-    private Integer deleted;
+    private Integer isDeleted;
 }
