@@ -8,34 +8,122 @@
         <result property="voteTitle" column="vote_title"/>
         <result property="voteStatus" column="vote_status"/>
         <result property="voteScope" column="vote_scope"/>
-        <result property="voteName" column="vote_name"/>
+        <result property="user.userId" column="user_id"/>
+        <result property="user.userName" column="user_name"/>
         <result property="voteStartTime" column="vote_start_time"/>
+
+    </resultMap>
+    <select id="queryNo" resultMap="queryNoResultMap">
+        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,u.user_id,u.user_name,vt.vote_start_time
+        FROM vote_table vt,user u
+        WHERE vt.vote_user_id=u.user_id AND vt.vote_isdelete=1
+    </select>
+
+    <select id="queryAllVote" resultMap="queryNoResultMap">
+        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,u.user_id,u.user_name,vt.vote_start_time
+        FROM vote_table vt,user u
+        WHERE vt.vote_user_id=u.user_id AND vt.vote_isdelete=1
+            <if test="voteForm.voteStartTime != null">
+                <![CDATA[ AND DATE_FORMAT(vt.vote_start_time,'%Y-%m-%d')>=DATE_FORMAT(#{voteForm.voteStartTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="voteForm.voteEndTime != null">
+                <![CDATA[ AND DATE_FORMAT(vt.vote_start_time,'%Y-%m-%d')<=DATE_FORMAT(#{voteForm.voteEndTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="voteForm.voteStatus != null and voteForm.voteStatus != '' ">
+                AND vt.vote_status=#{voteForm.voteStatus}
+            </if>
+            <if test="voteForm.voteTitleOrName != null and voteForm.voteTitleOrName != '' ">
+                AND CONCAT(vt.vote_title,u.user_name) LIKE CONCAT('%',#{voteForm.voteTitleOrName},'%')
+            </if>
+    </select>
+
+    <resultMap id="queryByVoteIdResult" type="voteList">
+        <id property="voteId" column="vote_id"/>
+        <result property="voteTitle" column="vote_title"/>
+        <result property="user.userId" column="user_id"/>
+        <result property="user.userName" column="user_name"/>
+        <result property="voteStartTime" column="vote_start_time"/>
+        <result property="voteEndTime" column="vote_end_time"/>
+        <result property="voteExplain" column="vote_explain"/>
+        <result property="voteType" column="vote_type"/>
+        <result property="voteScope" column="vote_scope"/>
+        <result property="voteIsopen" column="vote_isopen"/>
         <collection property="voteRoles" ofType="com.gxa.modules.sys.entity.Role">
             <id property="roleId" column="role_id"/>
             <result property="roleName" column="role_name"/>
         </collection>
+        <collection property="voteOptions" ofType="com.gxa.modules.sys.entity.VoteOption">
+            <id property="id" column="void"/>
+            <result property="voteOption" column="vote_option"/>
+        </collection>
     </resultMap>
-    <select id="queryNo" resultMap="queryNoResultMap">
-        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,vt.vote_name,vt.vote_start_time,r.role_id,r.role_name
-        FROM vote_table vt,vote_role vr,role r
-        WHERE vt.vote_id=vr.vote_id AND vr.role_id=r.role_id
+    <select id="queryByVoteId" resultMap="queryByVoteIdResult">
+        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_isopen,vt.vote_scope,u.user_id,u.user_name,vt.vote_start_time,vt.vote_end_time,vt.vote_explain,vt.vote_type,r.role_id,r.role_name,vo.id void,vo.vote_option
+        FROM vote_table vt,vote_role vr,role r,user u,vote_options vo
+        WHERE vt.vote_id=vr.vote_id AND vr.role_id=r.role_id AND vt.vote_user_id=u.user_id AND vt.vote_id=vo.vote_id AND vt.vote_isdelete=1 AND vt.vote_id=#{voteId}
+    </select>
+    <select id="countOptionPoll" resultType="java.lang.Integer">
+        SELECT COUNT(vo.id)
+        FROM vote_option_poll vop,vote_options vo,vote_table vt
+        WHERE vop.option_id = vo.id AND vo.vote_id = vt.vote_id  AND vo.id=#{voteOptionId}
+        GROUP BY vop.option_id
     </select>
 
-    <select id="queryAllVote" resultMap="queryNoResultMap" parameterType="com.gxa.modules.sys.form.VoteForm">
-        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,vt.vote_name,vt.vote_start_time,r.role_id,r.role_name
-        FROM vote_table vt,vote_role vr,role r
-        WHERE vt.vote_id=vr.vote_id AND vr.role_id=r.role_id
-            <if test="voteStartTime != null">
-                <![CDATA[ AND DATE_FORMAT(vt.vote_start_time,'%Y-%m-%d')>=DATE_FORMAT(#{voteStartTime},'%Y-%m-%d')]]>
-            </if>
-            <if test="voteEndTime != null and voteEndTime != '' ">
-                <![CDATA[ AND DATE_FORMAT(vt.vote_start_time,'%Y-%m-%d')<=DATE_FORMAT(#{voteEndTime},'%Y-%m-%d')]]>
-            </if>
-            <if test="voteStatus != null and voteStatus != '' ">
-                AND vt.vote_status=#{voteStatus}
-            </if>
-            <if test="voteTitleOrName != null and voteTitleOrName != '' ">
-                AND (vt.vote_title like '%'+#{voteTitleOrName}+'%' OR vt.vote_name like '%'+#{voteTitleOrName}+'%')
-            </if>
+    <resultMap id="queryByUserIdTeacher" type="teacher">
+        <result property="user.userId" column="user_id"/>
+        <result property="course" column="course"/>
+    </resultMap>
+    <select id="queryByUserId" resultMap="queryByUserIdTeacher">
+        SELECT t.user_id,t.course
+        FROM teacher t
+        WHERE t.user_id=#{userId}
+    </select>
+    <resultMap id="queryByParentUserIdResult" type="studentParent">
+        <result property="user.userId" column="user_id"/>
+        <result property="relation" column="relation"/>
+    </resultMap>
+    <select id="queryByParentUserId" resultMap="queryByParentUserIdResult">
+        SELECT user_id,relation FROM student_parent WHERE user_id=#{userId}
+    </select>
+
+    <select id="queryIsPoll" resultType="java.lang.Integer">
+        SELECT vop.user_id
+        FROM vote_options vo,vote_option_poll vop
+        WHERE vo.id=vop.option_id AND vote_id=#{voteId} AND vop.user_id=#{userId}
+    </select>
+
+    <resultMap id="queryRoleResult" type="role">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+    </resultMap>
+    <select id="queryRole" resultMap="queryRoleResult">
+        SELECT r.role_id,r.role_name
+        FROM vote_role vr,role r
+        WHERE vr.role_id=r.role_id AND vr.vote_id=#{voteId}
+    </select>
+
+    <insert id="addSubmitVote" >
+        INSERT INTO vote_option_poll(option_id,user_id,poll_status)
+        VALUES(#{voteOptionId},#{userId},1)
+    </insert>
+
+    <update id="updateVoteIsDelete">
+        UPDATE vote_table
+        SET vote_isdelete=2
+        WHERE vote_id=#{voteId}
+    </update>
+
+    <resultMap id="queryByUderIdResult" type="voteList">
+    <id property="voteId" column="vote_id"/>
+    <result property="voteTitle" column="vote_title"/>
+    <result property="user.userId" column="user_id"/>
+    <result property="user.userName" column="user_name"/>
+    <result property="voteEndTime" column="vote_end_time"/>
+    <result property="voteStatus" column="vote_status"/>
+    </resultMap>
+    <select id="queryVoteByUserId" resultMap="queryByUderIdResult">
+        SELECT vt.vote_id,vt.vote_title,vt.vote_status,u.user_id,u.user_name,vt.vote_end_time
+        FROM vote_table vt,user u
+        WHERE vt.vote_user_id=u.user_id AND vt.vote_isdelete=1 AND vt.vote_user_id=#{userId}
     </select>
 </mapper>

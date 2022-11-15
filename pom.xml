@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.gxa.springboot</groupId>
-    <artifactId>springboot-mp</artifactId>
+    <artifactId>houseSchool</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot-mp</name>
+    <name>houseSchool</name>
     <description>springboot-mp</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -246,6 +246,12 @@
             <artifactId>pagehelper</artifactId>
             <version>5.3.1</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.pagehelper</groupId>-->
+<!--            <artifactId>pagehelper-spring-boot-starter</artifactId>-->
+<!--            <version>1.2.12</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>

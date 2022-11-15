@@ -27,6 +27,7 @@ public class User implements Serializable {
     @ApiModelProperty(value = "用户电话",name = "phone")
     private String phone;
 
+    @TableField(exist = false)
     @ApiModelProperty(value = "用户所属学校",name = "school")
     private School school;
 

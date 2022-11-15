@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.modules.sys.mapper.HealthyMapper">
+    <resultMap id="healthyResultMap" type="com.gxa.modules.sys.entity.Healthy">
+        <id property="id" column="id"/>
+        <result property="studentName" column="student_name"/>
+        <result property="gradeClass" column="grade_class"/>
+        <result property="content" column="content"/>
+        <result property="healthyTime" column="healthy_time"/>
+        <result property="userName" column="user_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="recipient" column="recipient"/>
+        <result property="image" column="image"/>
+    </resultMap>
+
+    <delete id="queryByPublisherTime" parameterType="healthy">
+        delete from healthy
+        where user_name = #{userName} and create_time = #{createTime}
+    </delete>
+    <select id="queryByPublisher01" resultMap="healthyResultMap" resultType="com.gxa.modules.sys.entity.Healthy">
+        SELECT * FROM healthy
+        WHERE user_name = #{userName} and create_time = #{createTime}
+    </select>
+    <select id="queryByHealthyDto01" resultMap="healthyResultMap" parameterType="healthy">
+        SELECT * FROM healthy
+        <where>
+            <if test="studentName !=null and studentName !=''" >
+                and  student_name like concat('%',#{studentName},'%')
+            </if>
+            <if test="gradeClass !=null and gradeClass !=''">
+                and grade_class like concat('%',#{gradeClass},'%')
+            </if>
+            <if test="createTime !=null and createTime !=''" >
+                and create_time &gt;= #{firstTime} and create_time &lt;= #{lastTime}
+            </if>
+        </where>
+    </select>
+    <select id="queryByHealthyDto02" resultMap="healthyResultMap" parameterType="healthy">
+        SELECT * FROM healthy
+        <where>
+            <if test="studentName !=null and studentName !=''" >
+                and  student_name like concat('%',#{studentName},'%')
+            </if>
+            <if test="gradeClass !=null and gradeClass !=''">
+                and grade_class like concat('%',#{gradeClass},'%')
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="healthyClassResultMap" type="com.gxa.modules.sys.entity.ClassGrade">
+        <result property="classGradeName" column="class_grade_name"/>
+    </resultMap>
+
+    <select id="queryByHealthyClass" resultMap="healthyClassResultMap" >
+        SELECT cg.class_id,class_grade_name
+        FROM class_grade cg,(
+            SELECT class_id
+            FROM student s,(
+                SELECT student_id
+                FROM student_parent
+                WHERE user_id = #{userId}) v
+            where s.student_id = v.student_id
+            GROUP BY class_id) v
+        where v.class_id = cg.class_id
+    </select>
+
+    <resultMap id="healthyTeacherResultMap" type="com.gxa.modules.sys.entity.User">
+        <result property="userName" column="user_name"/>
+    </resultMap>
+
+    <select id="queryByHealthyTeacher" resultMap="healthyTeacherResultMap" >
+        SELECT user_name
+        FROM `user` u,(
+            SELECT user_id
+            FROM teacher t,
+                 (SELECT teacher_jobno
+                  FROM teacher_class
+                  ) r
+            WHERE t.teacher_jobno = r.teacher_jobno
+        ) v
+        WHERE u.user_id = v.user_id
+    </select>
+</mapper>
