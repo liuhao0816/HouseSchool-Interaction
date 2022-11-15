@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gxa.modules.sys.mapper.SchoolMapper">
+    <select id="searchAddressByType"  parameterType="string" resultType="com.gxa.modules.sys.entity.dto.School">
+       SELECT * FROM school WHERE school_address='武侯' OR school_address='高新' OR school_address='双流';
+
+    </select>
+
+
+</mapper>
