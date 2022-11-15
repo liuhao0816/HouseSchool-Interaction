@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.modules.sys.mapper.AppraiseMapper">
+    <resultMap id="appraiseResultMap" type="com.gxa.modules.sys.entity.Appraise">
+        <id property="id" column="id"/>
+        <result property="studentName" column="student_name"/>
+        <result property="gradeClass" column="grade_class"/>
+        <result property="type" column="type"/>
+        <result property="content" column="content"/>
+        <result property="score" column="score"/>
+        <result property="image" column="image"/>
+        <result property="publisher" column="publisher"/>
+        <result property="appraiseTime" column="appraise_time"/>
+    </resultMap>
+
+    <delete id="queryByPublisherTime" parameterType="com.gxa.modules.sys.entity.Appraise">
+        delete from appraise
+        where publisher = #{publisher} and appraise_time = #{appraiseTime}
+    </delete>
+
+    <select id="queryByPublisher01" resultMap="appraiseResultMap" resultType="com.gxa.modules.sys.entity.Appraise">
+        SELECT * FROM appraise
+        WHERE publisher = #{publisher} and appraise_time = #{appraiseTime}
+    </select>
+
+    <select id="queryByAppraiseDto01" resultMap="appraiseResultMap" parameterType="appraise">
+        SELECT * FROM appraise
+        <where>
+            <if test="studentName !=null and studentName !=''" >
+                and  student_name like concat('%',#{studentName},'%')
+            </if>
+            <if test="gradeClass !=null and gradeClass !=''">
+                and grade_class like concat('%',#{gradeClass},'%')
+            </if>
+            <if test="appraiseTime !=null and appraiseTime !=''" >
+                and appraise_time &gt;= #{firstTime} and appraise_time &lt;= #{lastTime}
+            </if>
+        </where>
+    </select>
+    <select id="queryByAppraiseDto02" resultMap="appraiseResultMap" parameterType="appraise">
+        SELECT * FROM appraise
+        <where>
+            <if test="studentName !=null and studentName !=''" >
+                and  student_name like concat('%',#{studentName},'%')
+            </if>
+            <if test="gradeClass !=null and gradeClass !=''">
+                and grade_class like concat('%',#{gradeClass},'%')
+            </if>
+        </where>
+    </select>
+    <resultMap id="healthyTeacherResultMap" type="com.gxa.modules.sys.entity.User">
+        <result property="userName" column="user_name"/>
+    </resultMap>
+    <select id="queryByPermissionsTeacher" resultMap="healthyTeacherResultMap">
+        SELECT user_name,v.user_id
+        FROM `user` u,(
+            SELECT user_id
+            FROM teacher t,
+                 (SELECT teacher_jobno
+                  FROM teacher_class) r
+            WHERE t.teacher_jobno = r.teacher_jobno
+            GROUP BY user_id) v
+        WHERE u.user_id = v.user_id
+    </select>
+</mapper>

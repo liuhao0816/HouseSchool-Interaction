@@ -88,6 +88,7 @@ fdfs:
   tracker-list:            #TrackerList参数,支持多个
     - 192.168.10.10:22122
 
+
 pagehelper:
   helper-dialect: mysql
   reasonable: true
