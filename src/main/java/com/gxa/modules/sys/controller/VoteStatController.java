@@ -4,18 +4,13 @@ package com.gxa.modules.sys.controller;/**
  * atime 8:54.
  */
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.gxa.common.utils.JsonResult;
-import com.gxa.common.utils.Result;
-import com.gxa.modules.sys.entity.dto.NOtifyContent;
-import com.gxa.modules.sys.form.NotifyTypeForm;
-import com.gxa.modules.sys.mapper.NotifyTypeMapper;
 import com.gxa.modules.sys.service.NotifyContentService;
+import com.gxa.modules.sys.service.NotifyTypeService;
+import com.gxa.modules.sys.service.VoteStatService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,17 +25,19 @@ import java.util.Map;
  */
 @Api(tags = "消息统计接口")
 @RestController
-@RequestMapping("/notifyContent")
-public class NotifyContentController {
+@RequestMapping("/voteStat")
+public class VoteStatController {
 
     @Autowired
+    VoteStatService voteStatService;
 
-    NotifyContentService notifyContentService;
+    @Autowired
+    NotifyTypeService notifyTypeService;
 
-    @ApiOperation(value="查询所有通知发布")
+    @ApiOperation(value="查询所有投票发布")
     @PostMapping("/selectAll")
     public Map selectAll() {
-        List list = notifyContentService.selectAll();
+        List list = voteStatService.selectAll();
         JsonResult jsonResult=new JsonResult();
         jsonResult.setData(list);
         jsonResult.setCode("200");
@@ -48,7 +45,16 @@ public class NotifyContentController {
         return jsonResult.getMap();
 
     }
-
+    @ApiOperation(value = "消息发布列表")
+    @PostMapping("/type")
+    public Map selectByType() {
+        Map map1 = notifyTypeService.selectByType();
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setCode("200");
+        jsonResult.setMsg("查询成功");
+        jsonResult.setData(map1);
+        return jsonResult.getMap();
+    }
 
 
 

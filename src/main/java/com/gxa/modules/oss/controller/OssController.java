@@ -35,8 +35,7 @@ public class OssController {
 
         //上传文件
         String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        suffix = "file/" + suffix;
-        String url = OSSFactory.build().uploadSuffix(file.getBytes(), suffix);
+        String url = OSSFactory.build().uploadSuffix(file.getBytes(),"文件," + suffix);
 
         Map map = new HashMap();
         map.put("url",url);
@@ -53,8 +52,7 @@ public class OssController {
 
         //上传文件
         String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        suffix = "img/" + suffix;
-        String url = OSSFactory.build().uploadSuffix(file.getBytes(), suffix);
+        String url = OSSFactory.build().uploadSuffix(file.getBytes(),"img," + suffix);
 
         Map map = new HashMap();
         map.put("url",url);

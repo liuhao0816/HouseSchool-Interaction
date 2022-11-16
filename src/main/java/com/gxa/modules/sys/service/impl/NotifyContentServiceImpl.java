@@ -18,10 +18,15 @@ import java.util.List;
 @Service("NotifyContentService")
 @Transactional(rollbackFor = Throwable.class)
 public class NotifyContentServiceImpl extends ServiceImpl<NotifyContentMapper, NOtifyContent> implements NotifyContentService {
+
+
     @Override
     public List selectAll() {
-        //List<NotifyContent> list = this.list();
-        return null;
+        List<NOtifyContent> list = this.list();
+        return list;
     }
+
 }
+
+
 

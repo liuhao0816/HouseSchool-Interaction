@@ -8,6 +8,7 @@ import com.gxa.modules.sys.entity.NotifyType;
 import com.gxa.modules.sys.form.NotifyTypeForm;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +30,8 @@ public interface NotifyTypeService extends IService<NotifyType> {
     Result updateStatus(Integer id);
 
     Result add(NotifyTypeForm notifyTypeForm);
+
+    Map selectByType ();
 
 
 }
