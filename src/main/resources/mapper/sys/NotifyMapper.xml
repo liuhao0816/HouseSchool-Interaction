@@ -78,7 +78,9 @@
         select c.id,t.type,c.title,c.writer,c.release_time
         from notify_list l,notify_type t,notify_content c,notify_scope s
         where l.type_id = t.id and l.content_id = c.id and c.id = s.content_id
-        and c.writer=#{userName}
+        <if test="userName != null and userName!=''">
+            and c.writer=#{userName}
+        </if>
         and l.is_delete=1
     </select>
 
