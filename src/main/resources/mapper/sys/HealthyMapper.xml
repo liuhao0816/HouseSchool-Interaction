@@ -71,7 +71,7 @@
     </resultMap>
 
     <select id="queryByHealthyTeacher" resultMap="healthyTeacherResultMap" >
-        SELECT user_name
+        SELECT user_name,u.user_id
         FROM `user` u,(
             SELECT user_id
             FROM teacher t,
@@ -79,6 +79,7 @@
                   FROM teacher_class
                   ) r
             WHERE t.teacher_jobno = r.teacher_jobno
+            GROUP BY user_id
         ) v
         WHERE u.user_id = v.user_id
     </select>

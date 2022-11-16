@@ -32,10 +32,12 @@
         FROM class_grade
     </select>
     <resultMap id="healthyTeacherResultMap" type="com.gxa.modules.sys.entity.Student">
+        <id column="student_id" property="studentId"/>
         <result property="studentName" column="student_name"/>
+
     </resultMap>
     <select id="queryByAppraiseStudent" resultMap="healthyTeacherResultMap" >
-        SELECT student_name
+        SELECT student_name,student_id
         FROM student
         WHERE class_id = #{classId}
     </select>

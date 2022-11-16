@@ -33,5 +33,4 @@ public interface NotifyTypeService extends IService<NotifyType> {
 
     Map selectByType ();
 
-
 }

@@ -37,6 +37,8 @@ public class VoteList {
     private int voteIsopen;
     @ApiModelProperty(value = "参与对象字符串",name = "roleStr")
     private String roleStr;
+    @ApiModelProperty(value = "参与对象ID集合",name = "roleIds")
+    private List<Integer> roleIds;
 
 
 }

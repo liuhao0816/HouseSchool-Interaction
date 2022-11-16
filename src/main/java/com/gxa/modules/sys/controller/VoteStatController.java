@@ -1,10 +1,7 @@
-package com.gxa.modules.sys.controller;/**
- * @author ${RenMuQiao}.
- * adate 2022/11/15
- * atime 8:54.
- */
+package com.gxa.modules.sys.controller;
 
 import com.gxa.common.utils.JsonResult;
+import com.gxa.common.utils.Result;
 import com.gxa.modules.sys.service.NotifyContentService;
 import com.gxa.modules.sys.service.NotifyTypeService;
 import com.gxa.modules.sys.service.VoteStatService;
@@ -47,15 +44,8 @@ public class VoteStatController {
     }
     @ApiOperation(value = "消息发布列表")
     @PostMapping("/type")
-    public Map selectByType() {
-        Map map1 = notifyTypeService.selectByType();
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setCode("200");
-        jsonResult.setMsg("查询成功");
-        jsonResult.setData(map1);
-        return jsonResult.getMap();
+    public Result selectByType() {
+        return this.voteStatService.selectNewsList();
     }
-
-
 
 }
