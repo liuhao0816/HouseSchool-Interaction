@@ -13,6 +13,12 @@
         SELECT st.student_id, st.student_name, st.gender, st.id_card, cg.class_grade_name, s.school_name
         FROM student st, class_grade cg, school s
         WHERE st.class_id = cg.class_id AND cg.school_id = s.school_id
+            <if test="params.studentName != null and params.studentName != '' ">
+                AND st.student_name=#{params.studentName}
+            </if>
+            <if test="params.number != null and params.number != '' ">
+                AND CONCAT(st.student_id,st.id_card) LIKE CONCAT('%',#{params.number},'%')
+            </if>
     </select>
 
 </mapper>

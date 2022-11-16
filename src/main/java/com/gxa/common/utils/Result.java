@@ -40,7 +40,7 @@ public class Result<T> implements Serializable {
     }
 
     public Result<T> ok(T data,long total) {
-        this.setData(data);
+            this.setData(data);
         this.setTotal(total);
         return this;
     }

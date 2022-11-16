@@ -11,7 +11,7 @@
         <result property="user.userId" column="user_id"/>
         <result property="user.userName" column="user_name"/>
         <result property="voteStartTime" column="vote_start_time"/>
-
+        <result property="voteEndTime" column="vote_end_time"/>
     </resultMap>
     <select id="queryNo" resultMap="queryNoResultMap">
         SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,u.user_id,u.user_name,vt.vote_start_time
@@ -20,7 +20,7 @@
     </select>
 
     <select id="queryAllVote" resultMap="queryNoResultMap">
-        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,u.user_id,u.user_name,vt.vote_start_time
+        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,u.user_id,u.user_name,vt.vote_start_time,vt.vote_end_time
         FROM vote_table vt,user u
         WHERE vt.vote_user_id=u.user_id AND vt.vote_isdelete=1
             <if test="voteForm.voteStartTime != null">
@@ -126,4 +126,37 @@
         FROM vote_table vt,user u
         WHERE vt.vote_user_id=u.user_id AND vt.vote_isdelete=1 AND vt.vote_user_id=#{userId}
     </select>
+
+    <select id="queryUserIdByVoteId" resultType="java.lang.Integer">
+        SELECT vote_user_id
+        FROM vote_table
+        WHERE vote_id=#{voteId}
+    </select>
+
+    <select id="queryUserIdsByUserId" resultType="java.lang.Integer">
+        SELECT sp.user_id
+        FROM teacher t,class_grade cg,student s,student_parent sp
+        WHERE t.teacher_jobno=cg.class_teacher AND cg.class_id=s.class_id AND s.student_id=sp.student_id AND t.user_id=#{teacherUserId}
+    </select>
+
+    <select id="queryVoteIdMax" resultType="java.lang.Integer">
+        SELECT max(vote_id)
+        FROM vote_table
+    </select>
+
+    <insert id="addVoteTable" parameterType="voteList">
+        INSERT INTO vote_table(vote_id,vote_title,vote_explain,vote_type,vote_start_time,vote_end_time,vote_scope,vote_isopen,vote_user_id,vote_status,vote_isdelete)
+        VALUES(#{voteId},#{voteTitle},#{voteExplain},#{voteType},#{voteStartTime},#{voteEndTime},#{voteScope},#{voteIsopen},#{user.userId},#{voteStatus},1)
+    </insert>
+
+    <insert id="addVoteOption">
+        INSERT INTO vote_options(vote_id,vote_option)
+        VALUES(#{voteId},#{voteOption})
+    </insert>
+
+    <insert id="addVoteRole">
+        INSERT INTO vote_role(vote_id,role_id)
+        VALUES(#{voteId},#{roleId})
+    </insert>
+
 </mapper>

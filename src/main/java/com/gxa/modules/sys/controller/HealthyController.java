@@ -23,7 +23,7 @@ public class HealthyController {
 
     @GetMapping("/healthy01")
     @ResponseBody
-    @ApiOperation(value = "查找接口",notes = "查找全部信息",httpMethod = "GET")
+    @ApiOperation(value = "查找全部信息",notes = "查找接口",httpMethod = "GET")
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok",response = Healthy.class)
     })
@@ -35,7 +35,7 @@ public class HealthyController {
     }
     @GetMapping("/healthy02")
     @ResponseBody
-    @ApiOperation(value = "查找接口",notes = "单个遍历查询",httpMethod = "GET")
+    @ApiOperation(value = "单个遍历查询",notes = "查找接口",httpMethod = "GET")
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok",response = Appraise.class)
     })
@@ -47,7 +47,7 @@ public class HealthyController {
     }
     @GetMapping("/healthy/recipient01")
     @ResponseBody
-    @ApiOperation(value = "查找接口",notes = "添加处查询用户孩子班级",httpMethod = "GET")
+    @ApiOperation(value = "添加处查询用户孩子班级",notes = "查找接口",httpMethod = "GET")
     public Result healthyRecipient01(@RequestParam int userId){
         List<ClassGrade> healthyClass = this.healthyService.queryByHealthyClass(userId);
 
@@ -55,7 +55,7 @@ public class HealthyController {
     }
     @GetMapping("/healthy/recipient02")
     @ResponseBody
-    @ApiOperation(value = "查找接口",notes = "添加处根据班级查询老师名",httpMethod = "GET")
+    @ApiOperation(value = "添加处根据班级查询老师名",notes = "查找接口",httpMethod = "GET")
     public Result healthyRecipient02(@RequestParam int classId){
         List<User> healthyTeacher = this.healthyService.queryByHealthyTeacher(classId);
         return new  Result<>().ok(healthyTeacher);
@@ -64,7 +64,7 @@ public class HealthyController {
 
     @PostMapping("/healthy/add")
     @ResponseBody
-    @ApiOperation(value = "添加",notes = "添加健康提醒",httpMethod = "POST")
+    @ApiOperation(value = "添加健康提醒",notes = "添加",httpMethod = "POST")
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok",response = Healthy.class)
     })
@@ -78,7 +78,7 @@ public class HealthyController {
         return new Result<>().ok("succes");
     }
     @DeleteMapping("/healthy/delete")
-    @ApiOperation(value = "删除接口",notes = "健康通知删除",httpMethod = "DELETE")
+    @ApiOperation(value = "健康通知删除",notes = "删除接口",httpMethod = "DELETE")
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok")
     })
@@ -93,7 +93,7 @@ public class HealthyController {
     }
     @PostMapping("/healthy/search")
     @ResponseBody
-    @ApiOperation(value = "查询接口",notes = "搜索查询",httpMethod = "POST")
+    @ApiOperation(value = "搜索查询",notes = "查询接口",httpMethod = "POST")
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok",response = Healthy.class)
     })
