@@ -2,6 +2,7 @@ package com.gxa.modules.sys.controller;
 
 import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Result;
+import com.gxa.modules.sys.entity.dto.HealthyDto;
 import com.gxa.modules.sys.entity.*;
 import com.gxa.modules.sys.service.HealthyService;
 import io.swagger.annotations.*;
@@ -69,6 +70,7 @@ public class HealthyController {
             @ApiResponse(code = 0,message = "ok",response = Healthy.class)
     })
     public Result healthyAdd(@RequestBody Healthy healthy){
+        healthy.setId(0);
         try {
             this.healthyService.add(healthy);
         } catch (Exception e) {

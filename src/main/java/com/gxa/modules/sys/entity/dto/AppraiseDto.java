@@ -1,4 +1,4 @@
-package com.gxa.modules.sys.entity;
+package com.gxa.modules.sys.entity.dto;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
