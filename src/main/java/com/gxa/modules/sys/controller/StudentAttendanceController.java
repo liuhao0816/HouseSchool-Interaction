@@ -1,5 +1,6 @@
 package com.gxa.modules.sys.controller;
 
+import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Result;
 import com.gxa.modules.sys.entity.StudentAttendance;
 import com.gxa.modules.sys.entity.StudentAttendanceRate;
@@ -51,28 +52,16 @@ public class StudentAttendanceController {
     })
     @PostMapping(value = "/sys/studentAttendance/list")
     @ApiOperation(value = "出勤确认-今日点名列表接口")
-    public Result<List<StudentAttendance>> queryAllStudentAttendance(@RequestParam @ApiIgnore Map<String,Object> map){
-        List<StudentAttendance> studentAttendances = new ArrayList<>();
+    public Result<PageUtils> queryAllStudentAttendance(@RequestParam @ApiIgnore Map<String,Object> map){
 
-        StudentAttendance studentAttendance1 = new StudentAttendance();
-        studentAttendance1.setStudentId(6001);
-        studentAttendance1.setStudentClass("一年级一班");
-        studentAttendance1.setStudentName("张三");
-        studentAttendance1.setStudentSex(1);
-        studentAttendance1.setPhoneNumber("11111111");
-        studentAttendance1.setStudengAttendanceStatus("正常");
+        Result<PageUtils> result = new Result<PageUtils>().error();
 
-        StudentAttendance studentAttendance2 = new StudentAttendance();
-        studentAttendance2.setStudentId(6002);
-        studentAttendance2.setStudentClass("一年级一班");
-        studentAttendance2.setStudentName("李四");
-        studentAttendance2.setStudentSex(2);
-        studentAttendance2.setPhoneNumber("22222222");
-        studentAttendance2.setStudengAttendanceStatus("迟到");
-
-        studentAttendances.add(studentAttendance1);
-        studentAttendances.add(studentAttendance2);
-        Result<List<StudentAttendance>> result = new Result<List<StudentAttendance>>().ok(studentAttendances);
+        try {
+            PageUtils pageUtils = this.studentAttendanceService.queryAllStudentBy(map);
+            result = new Result<PageUtils>().ok(pageUtils);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return result;
     }
 
