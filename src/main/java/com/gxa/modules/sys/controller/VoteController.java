@@ -124,4 +124,12 @@ public class VoteController {
         }
         return result;
     }
+
+    @ApiOperation(value = "投票管理-小程序-投票列表")
+    @GetMapping(value = "/app/vote/nocondition")
+    public Result<List<VoteList>> queryAllVoteNo(){
+        List<VoteList> voteLists = this.voteService.queryNo();
+        Result<List<VoteList>> result = new Result<List<VoteList>>().ok(voteLists);
+        return result;
+    }
 }

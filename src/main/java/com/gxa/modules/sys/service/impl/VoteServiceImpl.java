@@ -31,14 +31,6 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
     @Override
     public List<VoteList> queryNo() {
         List<VoteList> voteLists = baseMapper.queryNo();
-//        log.info("---查询结果---{}---",voteLists);
-//        for (int i = 0;i < voteLists.size();i++){
-//            VoteList voteList = voteLists.get(i);
-//            String voteExplain = voteList.getVoteExplain();
-//
-//            String str = HtmlUtils.htmlUnescape(voteExplain);
-//            voteList.setVoteExplain(str);
-//        }
         return voteLists;
     }
 
