@@ -35,6 +35,8 @@ public class VoteList {
     private Date voteEndTime;
     @ApiModelProperty(value = "投票结果   1-公开/2-不公开",name = "voteIsopen")
     private int voteIsopen;
+    @ApiModelProperty(value = "参与对象字符串",name = "roleStr")
+    private String roleStr;
 
 
 }
