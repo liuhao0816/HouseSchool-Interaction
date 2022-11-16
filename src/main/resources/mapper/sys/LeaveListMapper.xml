@@ -38,10 +38,10 @@
         FROM leave_list l,student s,class_grade c
         WHERE l.student_id=s.student_id AND s.class_id=c.class_id AND l.is_deleted=1
             <if test="startTime!=null">
-             AND l.start_time &gt;= #{startTime}
+                <![CDATA[ AND DATE_FORMAT(l.start_time,'%Y-%m-%d')>=DATE_FORMAT(#{startTime},'%Y-%m-%d')]]>
             </if>
             <if test="endTime!=null">
-             AND l.end_time &lt;= #{endTime}
+                <![CDATA[ AND DATE_FORMAT(l.end_time,'%Y-%m-%d')<=DATE_FORMAT(#{endTime},'%Y-%m-%d')]]>
             </if>
             <if test="leaveType!=null and leaveType!='' ">
                 AND l.leave_type=#{leaveType}
@@ -50,7 +50,7 @@
                 AND l.remarks=#{remarks}
             </if>
             <if test="classGradeName!=null and classGradeName!='' ">
-                AND  class_grade.classGradeName=#{classGradeName}
+                AND  c.class_grade_name=#{classGradeName}
             </if>
     </select>
 
