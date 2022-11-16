@@ -1,6 +1,7 @@
 package com.gxa.modules.sys.controller;
 
 import com.gxa.common.utils.PageUtils;
+import com.gxa.modules.sys.entity.dto.AppraiseDto;
 import com.gxa.modules.sys.entity.*;
 import com.gxa.modules.sys.service.AppPermissionsService;
 import com.gxa.modules.sys.service.AppraiseService;
@@ -58,6 +59,7 @@ public class AppraiseController {
             @ApiResponse(code = 0,message = "ok",response = Appraise.class)
     })
     public Result appraiseAdd(@RequestBody Appraise appraise){
+        appraise.setId(0);
         try {
             this.appraiseService.add(appraise);
         } catch (Exception e) {

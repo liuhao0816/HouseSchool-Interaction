@@ -1,5 +1,6 @@
 package com.gxa.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @ApiModel("健康信息实体")
 public class Healthy {
+//    @TableField(exist = false)
     @ApiModelProperty(name = "id",value = "序号")
     private Integer id;
     @ApiModelProperty(name = "studentName",value = "学生姓名")

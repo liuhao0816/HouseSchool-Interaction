@@ -17,8 +17,14 @@ public interface LeaveListMapper extends BaseMapper<LeaveList> {
 
     List<AllLeaveListDto> queryById(Integer id);
 
-    List<AllLeaveListDto> queryByUserId(Integer id);
+    List<AllLeaveListDto> queryByUserId(Integer user_id);
+
+    //判断角色
+    List<Integer> queryRole(Integer user_id);
 
     void updateById(Integer id);
 
+    void updateByIdP(Integer id);
+
+    void updateStatus();
 }
