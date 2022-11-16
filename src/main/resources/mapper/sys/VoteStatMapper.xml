@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.modules.sys.mapper.VoteStatMapper">
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM notify_content
+    </select>
+    <select id="typeCount" resultType="java.lang.Integer">
+        SELECT count(l.id)
+        FROM notify_list l,notify_type t
+        WHERE l.type_id=t.id and t.id=#{id}
+    </select>
+    <select id="selectType" resultType="com.gxa.modules.sys.entity.NotifyType">
+        select id,type
+        from notify_type
+        where is_delete=1 and status="启用"
+    </select>
+</mapper>

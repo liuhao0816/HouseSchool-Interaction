@@ -7,6 +7,7 @@ import com.gxa.modules.sys.dto.AllLeaveListDto;
 import com.gxa.modules.sys.dto.LeaveListDto;
 import com.gxa.modules.sys.entity.LeaveList;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,5 @@ public interface LeaveListService  extends IService<LeaveList> {
     Result delete(Integer id);
     //审核
     Result updateById(Integer id);
-    //
 
 }

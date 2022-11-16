@@ -12,7 +12,20 @@ import com.gxa.modules.sys.entity.LeaveList;
 import com.gxa.modules.sys.mapper.LeaveListMapper;
 
 import com.gxa.modules.sys.service.LeaveListService;
+import lombok.SneakyThrows;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +84,7 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
     this.baseMapper.updateById(id);
     return null;
     }
+
 
 
 }

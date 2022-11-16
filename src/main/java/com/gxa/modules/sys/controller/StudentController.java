@@ -26,7 +26,7 @@ public class StudentController {
             @ApiImplicitParam(paramType = "query",name = "page",value ="当前是第几页",dataType ="int"),
             @ApiImplicitParam(paramType = "query",name = "limit",value ="每页显示多少条",dataType ="int"),
             @ApiImplicitParam(paramType = "query",name = "studentName",value ="学生姓名",dataType ="String"),
-            @ApiImplicitParam(paramType = "query",name = "number",value ="学籍号或证件号",dataType ="String"),
+            @ApiImplicitParam(paramType = "query",name = "number",value ="学籍号",dataType ="String"),
     })
     @GetMapping("/student/list")
     public Result<PageUtils> studentList(@RequestParam @ApiIgnore Map<String,Object> params){
