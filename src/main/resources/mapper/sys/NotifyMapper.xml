@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxa.modules.sys.mapper.NotifyMapper">
+
+    <resultMap id="pageMap" type="notify">
+        <id column="id" property="id"/>
+        <result column="type" property="notifyType.type"/>
+        <result column="title" property="content.title"/>
+        <result column="writer" property="content.writer"/>
+        <result column="release_time" property="content.releaseTime"/>
+    </resultMap>
+
+
+    <update id="deleteById">
+        update notify_list set is_delete=2 where id=#{id} and is_delete = 1
+    </update>
+
+    <select id="queryByPage" resultMap="pageMap">
+        select l.id,t.type,c.title,c.writer,c.release_time
+        from notify_list l,notify_type t,notify_content c,notify_scope s
+        <where>
+            l.type_id = t.id and l.content_id = c.id and c.id = s.content_id
+            <if test="notifyForm != null">
+                <if test="notifyForm.startTime != null">
+                    and c.release_time &gt; #{notifyForm.startTime}
+                </if>
+
+                <if test="notifyForm.endTime != null">
+                    and c.release_time &lt; #{notifyForm.endTime}
+                </if>
+
+                <if test="notifyForm.type != null and notifyForm.type != '' ">
+                    and t.type=#{notifyForm.type}
+                </if>
+                <if test="notifyForm.scope != null and notifyForm.scope != '' ">
+                    and s.notify_scope=#{notifyForm.scope}
+                </if>
+
+                <if test="notifyForm.publisher != null and notifyForm.publisher != '' ">
+                    and c.writer=#{notifyForm.publisher}
+                </if>
+            </if>
+            and l.is_delete=1
+            LIMIT #{page},#{limit}
+        </where>
+
+    </select>
+
+    <select id="queryScopeById" resultType="com.gxa.modules.sys.entity.Scope">
+        SELECT notify_scope FROM notify_scope WHERE content_id=#{contentId}
+    </select>
+
+    <resultMap id="contentMap" type="notify">
+        <id column="id" property="id"/>
+        <result column="title" property="content.title"/>
+        <result column="content" property="content.content"/>
+        <result column="writer" property="content.writer"/>
+        <result column="enclosure" property="content.enclosure"/>
+        <result column="picture" property="content.picture"/>
+        <result column="release_time" property="content.releaseTime"/>
+    </resultMap>
+
+    <select id="queryContentByTitle" resultMap="contentMap">
+        select id,title,content,writer,enclosure,picture,release_time
+        from notify_content
+        where title=#{title}
+        and is_delete = 1
+    </select>
+
+    <select id="getType" resultType="com.gxa.modules.sys.entity.NotifyType">
+        select id,type from notify_type where type=#{type}
+    </select>
+
+
+    <select id="queryNotifyByUser" resultMap="pageMap">
+        select c.id,t.type,c.title,c.writer,c.release_time
+        from notify_list l,notify_type t,notify_content c,notify_scope s
+        where l.type_id = t.id and l.content_id = c.id and c.id = s.content_id
+        and c.writer=#{userName}
+        and l.is_delete=1
+    </select>
+
+    <select id="readList" resultType="com.gxa.modules.sys.form.ReadForm">
+        SELECT cs.student_name,cg.class_grade_name
+        FROM content_student cs,class_grade cg,student s,notify_scope ns,notify_list l
+        WHERE cs.content_id = #{contentId} and cs.student_name=s.student_name and s.class_id =cg.class_id and ns.content_id=cs.content_id and l.content_id=ns.content_id
+    </select>
+
+    <select id="queryAllClass" resultType="com.gxa.modules.sys.form.ClassForm">
+        select class_id,class_grade_name
+        FROM class_grade
+    </select>
+    <select id="selectRead" resultType="com.gxa.modules.sys.form.ReadForm">
+        select cs.content_id,cs.student_name
+        from content_student cs
+        where cs.content_id = #{contentId} and cs.student_name=#{studentName}
+    </select>
+
+
+    <insert id="addNotifyContent" >
+        insert into notify_content(title,content,writer,enclosure,picture,release_time,is_delete)
+        values (#{title}, #{content},#{publisher}, #{enclosure},
+                #{picture}, #{startTime},1)
+    </insert>
+
+    <insert id="addScope" >
+        insert into notify_scope(content_id,notify_scope)
+        values (#{contentId}, #{scope})
+    </insert>
+
+    <insert id="addNotify">
+        insert  into notify_list(type_id,content_id,is_delete)
+        values (#{type}, #{content},1)
+    </insert>
+
+    <insert id="addContent">
+        insert into content_student(content_id,student_name)
+        values (#{contentId}, #{studentName})
+    </insert>
+
+</mapper>

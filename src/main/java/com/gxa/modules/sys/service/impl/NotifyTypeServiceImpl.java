@@ -14,6 +14,7 @@ import com.gxa.modules.sys.entity.User;
 import com.gxa.modules.sys.form.NotifyTypeForm;
 import com.gxa.modules.sys.mapper.NotifyTypeMapper;
 import com.gxa.modules.sys.service.NotifyTypeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ import java.util.Map;
  * 通知类型
  */
 @Service
+@Slf4j
 public class NotifyTypeServiceImpl extends ServiceImpl<NotifyTypeMapper, NotifyType> implements NotifyTypeService   {
 
 
@@ -37,8 +39,7 @@ public class NotifyTypeServiceImpl extends ServiceImpl<NotifyTypeMapper, NotifyT
     public PageUtils queryByPage(Map<String, Object> params) {
         IPage<NotifyType> page = page(new Query<NotifyType>().getPage(params));
         PageUtils pageUtils = new PageUtils(page);
-        int totalPage = pageUtils.getTotalPage();
-        System.out.println(totalPage);
+
         List<NotifyType> list = (List<NotifyType>) pageUtils.getList();
         ArrayList<Object> notifyTypeFormList = new ArrayList<>();
         for (NotifyType notifyType : list) {
@@ -64,6 +65,7 @@ public class NotifyTypeServiceImpl extends ServiceImpl<NotifyTypeMapper, NotifyT
         if (notifyType != null){
             return new Result().ok(notifyTypeForm);
         }
+
         return new Result().error("未查询到数据或通知查询失败。");
 
 
@@ -79,6 +81,7 @@ public class NotifyTypeServiceImpl extends ServiceImpl<NotifyTypeMapper, NotifyT
         if (result != 0){
             return new Result().ok("通知类型修改成功。");
         }
+
         return new Result().error("未查询到数据或通知类型修改失败。");
     }
 
