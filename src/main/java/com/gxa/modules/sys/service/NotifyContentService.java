@@ -6,8 +6,8 @@ package com.gxa.modules.sys.service;/**
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.gxa.modules.sys.entity.dto.NOtifyContent;
-import com.gxa.modules.sys.entity.dto.School;
+import com.gxa.modules.sys.entity.NOtifyContent;
+
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ import java.util.List;
  *
  */
 public interface NotifyContentService extends IService<NOtifyContent>  {
+    //查询所有
     List selectAll();
 
 }

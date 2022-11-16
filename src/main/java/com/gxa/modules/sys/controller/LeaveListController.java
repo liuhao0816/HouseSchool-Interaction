@@ -2,23 +2,20 @@ package com.gxa.modules.sys.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Result;
-import com.gxa.modules.sys.dto.AddLeaveListDto;
 import com.gxa.modules.sys.dto.AllLeaveListDto;
 import com.gxa.modules.sys.dto.LeaveListDto;
 import com.gxa.modules.sys.entity.LeaveList;
 import com.gxa.modules.sys.service.LeaveListService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+
 import java.util.List;
-import java.util.Map;
+
 
 @Api(tags = "请假记录")
 @RestController
@@ -81,10 +78,10 @@ public class LeaveListController {
         return result;
     }
 
-    @GetMapping("/AddLeaveList/{user_id}")
+    @GetMapping("/AddLeaveList")
     @ResponseBody
     @ApiOperation("根据id查询学生id和姓名")
-    public Result<List<AllLeaveListDto>> queryByUserId(@PathVariable("user_id") Integer user_id) {
+    public Result<List<AllLeaveListDto>> queryByUserId(@RequestParam Integer user_id) {
 
         List<AllLeaveListDto> allLeaveListDtos = leaveListService.queryByUserId(user_id);
         Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos);
@@ -92,10 +89,10 @@ public class LeaveListController {
     }
 
 
-    @PutMapping("/leaveLists/{id}")
+    @PutMapping("/leaveLists/{id}/{user_id}/")
     @ApiOperation("审核")
-    public Result updateLeaveList(@PathVariable("id") Integer id) {
-        this.leaveListService.updateById(id);
+    public Result updateByIdAll(@PathVariable("id") Integer id,@PathVariable("user_id") Integer user_id) {
+        this.leaveListService.updateByIdAll(id,user_id);
         return new Result<>().ok("审核通过");
     }
 

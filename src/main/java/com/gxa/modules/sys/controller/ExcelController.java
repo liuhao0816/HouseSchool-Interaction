@@ -1,6 +1,8 @@
 package com.gxa.modules.sys.controller;
 
-import cn.hutool.poi.excel.ExcelUtil;
+
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import com.gxa.common.utils.ExcelUtils;
 import com.gxa.modules.sys.dto.AllLeaveListDto;
 import com.gxa.modules.sys.service.LeaveListService;
@@ -16,6 +18,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Date;
 
 @RestController
 @Api(tags = "请假Excel导出")
@@ -44,7 +47,7 @@ public class ExcelController {
         String sheetName = "学生请假";
 
         String[][] content = new String[list.size()][20];
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (int i = 0; i < list.size(); i++) {
             content[i] = new String[title.length];
             AllLeaveListDto allLeaveListDto = list.get(i);
@@ -53,19 +56,27 @@ public class ExcelController {
             content[i][2] = allLeaveListDto.getClassGradeName();
             content[i][3] = allLeaveListDto.getLeaveType();
             if (allLeaveListDto.getStartTime()!=null){
-                content[i][4] = sdf.format(allLeaveListDto.getStartTime());
+//                content[i][4] = sdf.format(allLeaveListDto.getStartTime());
+//                content[i][4] = String.valueOf(allLeaveListDto.getStartTime());
+                content[i][4] =String.valueOf(DateUtil.format(allLeaveListDto.getStartTime(), DatePattern.NORM_DATE_FORMATTER));
+
             }else {
                 content[i][4] = " ";
             }
             if (allLeaveListDto.getEndTime()!=null){
-                content[i][5] = sdf.format(allLeaveListDto.getEndTime());
+//                content[i][5] = sdf.format(allLeaveListDto.getEndTime());
+                content[i][5] =String.valueOf(DateUtil.format(allLeaveListDto.getEndTime(), DatePattern.NORM_DATE_FORMATTER));
+//                content[i][5] = String.valueOf(allLeaveListDto.getEndTime());
             }else {
                 content[i][5] = " ";
             }
             content[i][6] = allLeaveListDto.getReason();
             content[i][7] = allLeaveListDto.getSponsor();
             if (allLeaveListDto.getEndTime()!=null){
-                content[i][8] = sdf.format(allLeaveListDto.getLaunchTime());
+//                content[i][8] = sdf.format(allLeaveListDto.getLaunchTime());
+//                content[i][8] = String.valueOf(allLeaveListDto.getLaunchTime());
+                content[i][8] =String.valueOf(DateUtil.format(allLeaveListDto.getLaunchTime(), DatePattern.NORM_DATE_FORMATTER));
+
             }else {
                 content[i][8] = " ";
             }

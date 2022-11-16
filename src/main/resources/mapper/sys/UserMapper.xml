@@ -14,4 +14,12 @@
         WHERE u.school_id = s.school_id
     </select>
 
+    <select id="getReadForm" resultType="com.gxa.modules.sys.form.ReadForm">
+        select s.student_name ,cg.class_grade_name
+        FROM user u,student s,student_parent sp,class_grade cg
+        WHERE u.user_id=sp.user_id and sp.student_id=s.student_id and cg.class_id=s.class_id
+          and u.user_name=#{userName}
+    </select>
+
+
 </mapper>

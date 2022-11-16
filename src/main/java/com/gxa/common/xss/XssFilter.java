@@ -19,6 +19,7 @@ public class XssFilter implements Filter {
   //将富文本保存的编辑接口添加到忽略列表中
   public XssFilter(){
     ignoreXSSURIList.add("/sys/vote/add");
+    ignoreXSSURIList.add("/sys//notify/add");
 
   }
   @Override

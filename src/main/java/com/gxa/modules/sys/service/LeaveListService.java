@@ -25,6 +25,7 @@ public interface LeaveListService  extends IService<LeaveList> {
     //根据id删除
     Result delete(Integer id);
     //审核
-    Result updateById(Integer id);
+    Result updateByIdAll(Integer id,Integer user_id);
+
 
 }

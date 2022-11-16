@@ -7,7 +7,7 @@ package com.gxa.modules.sys.service.impl;
  */
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gxa.modules.sys.entity.dto.NOtifyContent;
+import com.gxa.modules.sys.entity.NOtifyContent;
 import com.gxa.modules.sys.mapper.NotifyContentMapper;
 import com.gxa.modules.sys.service.NotifyContentService;
 import org.springframework.stereotype.Service;
@@ -18,10 +18,15 @@ import java.util.List;
 @Service("NotifyContentService")
 @Transactional(rollbackFor = Throwable.class)
 public class NotifyContentServiceImpl extends ServiceImpl<NotifyContentMapper, NOtifyContent> implements NotifyContentService {
+
+
     @Override
     public List selectAll() {
-        //List<NotifyContent> list = this.list();
-        return null;
+        List<NOtifyContent> list = this.list();
+        return list;
     }
+
 }
+
+
 

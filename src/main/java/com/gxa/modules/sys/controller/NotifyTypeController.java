@@ -27,7 +27,6 @@ import java.util.Map;
  */
 @Api(tags = "通知类型接口")
 @RestController
-@Slf4j
 @RequestMapping("/notifyType")
 public class NotifyTypeController {
 
@@ -88,6 +87,7 @@ public class NotifyTypeController {
     @ApiOperation(value="查询所有通知类型接口")
     @GetMapping("/queryTypeName")
     public Result<NotifyTypeForm> queryTypeName(){
+
         return this.notifyTypeService.queryTypeName();
     }
 

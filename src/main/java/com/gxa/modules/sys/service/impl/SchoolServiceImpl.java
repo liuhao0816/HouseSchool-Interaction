@@ -4,9 +4,8 @@ package com.gxa.modules.sys.service.impl;/**
  * atime 10:18.
  */
 
-import com.alipay.api.domain.Article;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gxa.modules.sys.entity.dto.School;
+import com.gxa.modules.sys.entity.School;
 import com.gxa.modules.sys.mapper.SchoolMapper;
 import com.gxa.modules.sys.service.SchoolService;
 import org.springframework.stereotype.Service;

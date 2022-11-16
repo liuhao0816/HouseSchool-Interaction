@@ -6,13 +6,15 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
 通知类型
  */
 
 @Data
 @TableName("notify_type")
-public class NotifyType {
+public class NotifyType implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Integer id;

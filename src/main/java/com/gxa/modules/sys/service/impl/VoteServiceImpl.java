@@ -31,14 +31,6 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
     @Override
     public List<VoteList> queryNo() {
         List<VoteList> voteLists = baseMapper.queryNo();
-//        log.info("---查询结果---{}---",voteLists);
-//        for (int i = 0;i < voteLists.size();i++){
-//            VoteList voteList = voteLists.get(i);
-//            String voteExplain = voteList.getVoteExplain();
-//
-//            String str = HtmlUtils.htmlUnescape(voteExplain);
-//            voteList.setVoteExplain(str);
-//        }
         return voteLists;
     }
 
@@ -89,6 +81,34 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
     @Override
     public VoteList queryByVoteId(Integer voteId) {
         VoteList voteList = this.baseMapper.queryByVoteId(voteId);
+
+        List<Role> roles = voteList.getVoteRoles();
+
+        List<String> roleNames = new ArrayList<>();
+        for(int j = 0;j < roles.size();j++){
+            Role role = roles.get(j);
+            String roleName = role.getRoleName();
+            roleNames.add(roleName);
+        }
+        //将该数组转换成字符串
+        String str = StringUtils.join(roleNames,",");
+        voteList.setRoleStr(str);
+
+        //获取现在的时间戳
+        Date date = new Date();
+        Long nowTime = date.getTime();
+
+        //获取该条活动的截止时间
+        Date voteEndTime = voteList.getVoteEndTime();
+        long endTime = voteEndTime.getTime();
+
+        //判断该活动状态为进行中还是已经结束
+        if(nowTime <= endTime){
+            voteList.setVoteStatus(1);
+        }else {
+            voteList.setVoteStatus(2);
+        }
+
         List<VoteOption> voteOptions = voteList.getVoteOptions();
 
         for(int i = 0;i < voteOptions.size();i++){
@@ -100,6 +120,10 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
             voteOption.setVoteOptionPoll(integer);
         }
 
+//        String voteExplain = voteList.getVoteExplain();
+//        String str111 = HtmlUtils.htmlUnescape(voteExplain);
+//
+//        voteList.setVoteExplain(str111);
         return voteList;
     }
 
@@ -130,7 +154,6 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
 
                             VoteList voteList01 = this.baseMapper.queryByVoteId(voteId);
                             List<VoteOption> voteOptionss = voteList01.getVoteOptions();
-
                             for(int i = 0;i < voteOptionss.size();i++){
                                 VoteOption voteOption = voteOptionss.get(i);
                                 int id = voteOption.getId();
@@ -158,6 +181,7 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
                             }
 
                             VoteList voteList01 = this.baseMapper.queryByVoteId(voteId);
+
                             List<VoteOption> voteOptions = voteList01.getVoteOptions();
 
                             for(int i = 0;i < voteOptions.size();i++){
@@ -194,6 +218,7 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
                         }
 
                         VoteList voteList01 = this.baseMapper.queryByVoteId(voteId);
+
                         List<VoteOption> voteOptions = voteList01.getVoteOptions();
 
                         for(int i = 0;i < voteOptions.size();i++){
@@ -222,6 +247,7 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
                 }
 
                 VoteList voteList01 = this.baseMapper.queryByVoteId(voteId);
+
                 List<VoteOption> voteOptionss = voteList01.getVoteOptions();
 
                 for(int i = 0;i < voteOptionss.size();i++){
@@ -253,19 +279,16 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
     }
 
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Result addVoteTable(VoteList voteList) {
         Result result = new Result<>().error();
         //获取投票选项
         List<VoteOption> voteOptions = voteList.getVoteOptions();
         //获取参与对象
-        List<Role> voteRoles = voteList.getVoteRoles();
+        List<Integer> voteRoles = voteList.getRoleIds();
 
         voteList.setVoteStatus(1);
-
-//        String voteExplain = voteList.getVoteExplain();
-//        String str = HtmlUtils.htmlEscapeHex(voteExplain);
-//        voteList.setVoteExplain(str);
 
         //获取当前的时间
         Date date = new Date();
@@ -287,8 +310,7 @@ public class VoteServiceImpl extends ServiceImpl<VoteMapper,VoteList> implements
                 this.baseMapper.addVoteOption(voteOption,voteId);
             }
             for(int j = 0;j < voteRoles.size();j++){
-                Role role111 = voteRoles.get(j);
-                int roleId = role111.getRoleId();
+                int roleId = voteRoles.get(j);
                 this.baseMapper.addVoteRole(voteId,roleId);
             }
             result = new Result<>().ok();
