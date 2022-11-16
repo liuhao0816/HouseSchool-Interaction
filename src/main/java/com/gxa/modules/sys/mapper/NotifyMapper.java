@@ -52,5 +52,5 @@ public interface NotifyMapper extends BaseMapper<Notify> {
     /**查询班级列表*/
     List<ClassForm> queryAllClass();
 
-
+    NotifyType getTypeByContentId(Integer contentId);
 }

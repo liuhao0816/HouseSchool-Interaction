@@ -33,8 +33,8 @@ public class NotifyController {
             @ApiImplicitParam(paramType = "query",name = "limit",value ="每页显示多少条",dataType ="int",required = true),
             @ApiImplicitParam(paramType = "query",name = "startTime",value ="开始日期",dataType ="String"),
             @ApiImplicitParam(paramType = "query",name = "endTime",value ="结束日期",dataType ="String"),
-            @ApiImplicitParam(paramType = "query",name = "type",value ="类型",dataType ="String"),
-            @ApiImplicitParam(paramType = "query",name = "scope",value ="发送范围",dataType ="String"),
+            @ApiImplicitParam(paramType = "query",name = "id",value ="编号",dataType ="int"),
+            @ApiImplicitParam(paramType = "query",name = "title",value ="标题",dataType ="String"),
             @ApiImplicitParam(paramType = "query",name = "publisher",value ="发布者",dataType ="String"),
 
     })
