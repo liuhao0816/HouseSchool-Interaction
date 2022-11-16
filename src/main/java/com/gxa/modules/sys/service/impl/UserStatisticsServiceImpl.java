@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gxa.common.utils.PageUtils;
 import com.gxa.modules.sys.entity.*;
+import com.gxa.modules.sys.form.UserPowerFrom;
 import com.gxa.modules.sys.form.UserRoleForm;
 import com.gxa.modules.sys.mapper.UserStatisticsMapper;
 import com.gxa.modules.sys.service.UserStatisticsService;
@@ -58,9 +59,9 @@ public class UserStatisticsServiceImpl implements UserStatisticsService {
     }
 
     @Override
-    public UserPower userPowerByUserIdAndRoleId(UserRoleForm userRoleForm) {
-        userStatisticsMapper.queryClassGradeName(userRoleForm);
-        return null;
+    public UserPowerFrom userPowerFromByUserIdAndRoleId(UserRoleForm userRoleForm) {
+        UserPowerFrom userPowerFrom = userStatisticsMapper.userPowerFromByUserIdAndRoleId(userRoleForm);
+        return userPowerFrom;
     }
 
 }
