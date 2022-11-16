@@ -6,6 +6,7 @@ import com.gxa.modules.sys.entity.User;
 import com.gxa.modules.sys.entity.UserPower;
 import com.gxa.modules.sys.entity.UserStatistics;
 import com.gxa.modules.sys.form.UserForm;
+import com.gxa.modules.sys.form.UserRoleForm;
 import com.gxa.modules.sys.form.VerificationCodeForm;
 import com.gxa.modules.sys.service.UserService;
 import com.gxa.modules.sys.service.UserStatisticsService;
@@ -106,7 +107,10 @@ public class UserController {
             return new Result().error(ErrorCode.ACCOUNT_PASSWORD_ERROR,"用户名或密码不正确");
         }
 
-        UserPower userPower = new UserPower();
+        UserPower userPower = userStatisticsService.userPowerByUserId(user.getUserId());
+
+
+
         //4、一致     生成token 保存redis中 返回Result.ok()
         Result result = this.userTokenService.createToken(userPower);
         Map map = new HashMap();
@@ -126,6 +130,15 @@ public class UserController {
         log.info("----params-----{}----",params);
         PageUtils pageUtils = this.userService.queryByPage(params);
         return new Result<PageUtils>().ok(pageUtils);
+    }
+
+    @ApiOperation(value="根据用户账号查询用户角色信息")
+    @GetMapping("/user/role")
+    public Result<UserPower> list(@RequestParam("userId")  int userId){
+        Result<UserPower> r = new Result<>();
+        UserPower userPower = userStatisticsService.userPowerByUserId(userId);
+         r.ok(userPower,1);
+         return r;
     }
 
 

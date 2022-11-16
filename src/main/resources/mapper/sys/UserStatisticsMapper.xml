@@ -26,4 +26,56 @@
         WHERE	s.school_id = v1.school_id AND s.school_id = v2.school_id AND s.school_id = v3.school_id
     </select>
 
+    <resultMap id="userPowerResultMap" type="userPower">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userAvatar" column="user_avatar"/>
+        <collection property="roles" javaType="java.util.Set" ofType="role">
+            <result property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+            <result property="schoolName" column="school_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="userPowerByUserId" resultMap="userPowerResultMap">
+        SELECT u.user_id,u.user_name,u.user_avatar,r.role_id,r.role_name,s.school_name
+        FROM user u, user_role ur, role r, school s
+        WHERE u.user_id = ur.user_id AND ur.role_id = r.role_id AND u.school_id = s.school_id AND u.user_id = #{userId}
+    </select>
+
+    <select id="queryClassGradeName" resultType="java.lang.String">
+        <choose>
+            <when test="roleId == 2">
+                SELECT cg.class_grade_name
+                FROM teacher_class tc,class_grade cg,teacher t, user u
+                WHERE tc.class_id = cg.class_id AND t.user_id = u.user_id AND t.teacher_jobno = tc.teacher_jobno AND u.user_id = #{userId}
+            </when>
+
+            <when test="roleId == 3">
+                SELECT cg.class_grade_name
+                FROM user u, student_parent sp, student s, class_grade cg
+                WHERE u.user_id = sp.user_id AND  sp.student_id = s.student_id AND s.class_id = cg.class_id AND u.user_id = #{userId}
+            </when>
+
+            <otherwise>
+                SELECT class_grade_name
+                FROM class_grade
+                WHERE class_id = 0
+            </otherwise>
+
+        </choose>
+    </select>
+
+    <resultMap id="studentResultMap" type="student">
+        <result property="classGrade.classGradeName" column="class_grade_name"/>
+        <result property="classGrade.school.schoolName" column="school_name"/>
+    </resultMap>
+
+
+    <select id="queryStudentByUserId" resultMap="studentResultMap">
+        SELECT st.student_id, st.student_name, cg.class_grade_name, s.school_name
+        FROM student st, class_grade cg, school s, student_parent sp
+        WHERE st.class_id = cg.class_id AND cg.school_id = s.school_id AND sp.student_id = st.student_id AND sp.user_id = #{userId}
+    </select>
+
 </mapper>

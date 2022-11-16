@@ -61,7 +61,8 @@ public class MinioCloudStorageService extends AbstractStorageService {
 
     @Override
     public String uploadSuffix(byte[] data, String suffix) {
-        return upload(data, getPath(config.getMinioPrefix(), suffix));
+        String[] split = suffix.split(",");
+        return upload(data, getPath(config.getMinioPrefix() + "/" + split[0], split[1]));
     }
 
     @Override
