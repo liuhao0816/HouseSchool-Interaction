@@ -20,6 +20,12 @@
         SELECT u.user_id,u.user_name,u.gender,u.phone,sp.relation,s.school_name,st.student_id,st.student_name
         FROM student_parent sp, user u ,school s, student st
         WHERE u.user_id = sp.user_id AND u.school_id = s.school_id AND st.student_id = sp.student_id
+            <if test="params.studentParentName != null and params.studentParentName != '' ">
+                AND u.user_name=#{params.studentParentName}
+            </if>
+            <if test="params.number != null and params.number != '' ">
+                AND u.user_id=#{params.number}
+            </if>
     </select>
 
 </mapper>

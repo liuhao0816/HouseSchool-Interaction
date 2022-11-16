@@ -3,10 +3,7 @@ package com.gxa.modules.sys.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.gxa.modules.sys.entity.Role;
-import com.gxa.modules.sys.entity.StudentParent;
-import com.gxa.modules.sys.entity.Teacher;
-import com.gxa.modules.sys.entity.VoteList;
+import com.gxa.modules.sys.entity.*;
 import com.gxa.modules.sys.form.VoteForm;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +27,15 @@ public interface VoteMapper extends BaseMapper<VoteList> {
     public List<Role> queryRole(Integer voteId);
     public void updateVoteIsDelete(Integer voteId);
     public List<VoteList> queryVoteByUserId(Integer userId);
+    //根据投票活动的id，查询发起活动人的userId
+    public Integer queryUserIdByVoteId(Integer voteId);
+    //根据发布者用户id，查询该老师所在班级，查询该班级所有家长的id
+    public List<Integer> queryUserIdsByUserId(Integer teacherUserId);
+    //获取vote_table表vote_id最大值
+    public Integer queryVoteIdMax();
+
+    public void addVoteTable(VoteList voteList);
+    public void addVoteOption(@Param("voteOption") String voteOption,@Param("voteId") Integer voteId);
+    public void addVoteRole(@Param("voteId") Integer voteId,@Param("roleId") Integer roleId);
+
 }

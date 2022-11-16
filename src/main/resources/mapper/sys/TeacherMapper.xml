@@ -18,6 +18,12 @@
         SELECT u.user_id,u.user_name,u.gender,u.phone,s.school_name,t.teacher_jobno,t.course
         FROM teacher t, user u ,school s
         WHERE u.user_id = t.user_id AND u.school_id = s.school_id
+        <if test="params.teacherName != null and params.teacherName != '' ">
+            AND u.user_name=#{params.teacherName}
+        </if>
+        <if test="params.number != null and params.number != '' ">
+            AND u.user_id=#{params.number}
+        </if>
     </select>
 
 </mapper>
