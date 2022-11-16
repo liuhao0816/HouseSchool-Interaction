@@ -78,7 +78,6 @@ public class VoteController {
     public Result deleteVote(@RequestParam @ApiIgnore Map<String,String> params){
         Result result = new Result().error();
         System.out.println("-----------params-----" + params);
-
         String userIdstr = params.get("userId");
         int userId = Integer.valueOf(userIdstr);
         String voteIdstr = params.get("voteId");

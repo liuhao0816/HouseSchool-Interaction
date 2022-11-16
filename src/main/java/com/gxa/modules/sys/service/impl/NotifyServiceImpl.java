@@ -165,33 +165,28 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
     @Override
     public Result add(NotifyForm notifyForm) {
 
-        try {
-            //1、添加基本数据到content表
-            if (notifyForm.getStartTime() == null ){
-                notifyForm.setStartTime(new Date());
-            }
-            this.notifyMapper.addNotifyContent(notifyForm);
-            //查询类型的type_id
-            NotifyType type = notifyMapper.getType(notifyForm.getType());
-            //查询content表中的content_id
-            Notify notify = notifyMapper.queryContentByTitle(notifyForm.getTitle());
-            //2、添加到list表
-            notifyMapper.addNotify(type.getId(),notify.getId());
-            //3、添加到scope表
-            String scope = notifyForm.getScope();
-            if ("全校".equals(scope)) {
-                List<ClassForm> classForms = this.notifyMapper.queryAllClass();
-                for (ClassForm classForm : classForms) {
-                    notifyMapper.addScope(notify.getId(),classForm.getClassGradeName());
-                }
-            }else {
-                notifyMapper.addScope(notify.getId(),scope);
-            }
-        }catch (Exception e){
-            log.info("添加通知失败");
-            return new Result().error("添加通知失败");
+        //1、添加基本数据到content表
+        if (notifyForm.getStartTime() == null ){
+            notifyForm.setStartTime(new Date());
         }
-            return new Result().ok("添加成功");
+        this.notifyMapper.addNotifyContent(notifyForm);
+        //查询类型的type_id
+        NotifyType type = notifyMapper.getType(notifyForm.getType());
+        //查询content表中的content_id
+        Notify notify = notifyMapper.queryContentByTitle(notifyForm.getTitle());
+        //2、添加到list表
+        notifyMapper.addNotify(type.getId(),notify.getId());
+        //3、添加到scope表
+        String scope = notifyForm.getScope();
+        if ("全校".equals(scope)) {
+            List<ClassForm> classForms = this.notifyMapper.queryAllClass();
+            for (ClassForm classForm : classForms) {
+                notifyMapper.addScope(notify.getId(),classForm.getClassGradeName());
+            }
+        }else {
+            notifyMapper.addScope(notify.getId(),scope);
+        }
+        return new Result().ok("添加成功");
     }
 
 
