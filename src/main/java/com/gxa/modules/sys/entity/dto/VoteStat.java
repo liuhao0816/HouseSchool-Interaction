@@ -21,7 +21,7 @@ public class VoteStat {
     @ApiModelProperty(value = "标题",name = "voteTitle")
     private String voteTitle;
 
-    @ApiModelProperty(value = "状态  1-进行中/2-已结束",name = "voteStatus")
+       @ApiModelProperty(value = "状态  1-进行中/2-已结束",name = "voteStatus")
     private int voteStatus;
 
     @ApiModelProperty(value = "发送范围",name = "voteScope")

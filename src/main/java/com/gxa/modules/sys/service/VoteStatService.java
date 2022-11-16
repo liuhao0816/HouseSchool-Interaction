@@ -5,9 +5,7 @@ package com.gxa.modules.sys.service;/**
  */
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.gxa.common.utils.Result;
 import com.gxa.modules.sys.entity.dto.VoteStat;
-import com.gxa.modules.sys.form.NewsForm;
 
 import java.util.List;
 
@@ -19,6 +17,4 @@ import java.util.List;
 public interface VoteStatService extends IService<VoteStat> {
     //查询全部
     List selectAll();
-
-    Result selectNewsList();
 }

@@ -31,8 +31,6 @@ public class NOtifyContent {
     /**附件*/
     private String picture;
     /**图片*/
-    private Integer scope_id;
-    /**范围Id*/
     private String release_time;
     /**发布时间*/
     @TableLogic
