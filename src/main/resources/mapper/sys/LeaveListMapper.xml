@@ -5,9 +5,24 @@
 <mapper namespace="com.gxa.modules.sys.mapper.LeaveListMapper">
     <update id="updateById">
         UPDATE leave_list
-        SET remarks="已通过"
+        SET teacher_approve="已审核"
         WHERE leave_list.id=#{id}
     </update>
+    <update id="updateByIdP">
+        UPDATE leave_list
+        SET parents_confirm="已审核"
+        WHERE leave_list.id=#{id}
+    </update>
+    <update id="updateStatus">
+        UPDATE leave_list
+        SET remarks="已审核"
+        WHERE parents_confirm="已审核" AND teacher_approve="已审核"
+    </update>
+    <select id="queryRole" resultType="java.lang.Integer">
+        SELECT role_id
+        FROM  user_role
+        WHERE user_id=#{user_id}
+    </select>
 
     <select id="queryLeaveListAll1" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
      SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks

@@ -43,7 +43,7 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
     @Override
     public List<AllLeaveListDto> queryLeaveListBy(LeaveListDto leaveListDto) {
 
-
+        this.baseMapper.updateStatus();
         List<AllLeaveListDto> allLeaveListDtos = baseMapper.queryLeaveListBy(leaveListDto);
 
 
@@ -79,12 +79,18 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
     }
 
     @Override
-    public  Result updateById(Integer id){
+    public  Result updateByIdAll(Integer id,Integer user_id) {
+        List<Integer> integers = this.baseMapper.queryRole(user_id);
+        for (int i=0;i<integers.size();i++){
+            Integer aa = integers.get(i);
+            if (aa==2){
+                this.baseMapper.updateById(id);
+            }
+            if (aa==3){
+                this.baseMapper.updateByIdP(id);
+            }
+        }
 
-    this.baseMapper.updateById(id);
-    return null;
+        return new Result<>().ok();
     }
-
-
-
 }
