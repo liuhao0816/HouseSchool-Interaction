@@ -27,7 +27,7 @@ public class StudentParentController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query",name = "page",value ="当前是第几页",dataType ="int"),
             @ApiImplicitParam(paramType = "query",name = "limit",value ="每页显示多少条",dataType ="int"),
-            @ApiImplicitParam(paramType = "query",name = "studentParentName",value ="老师姓名",dataType ="String"),
+            @ApiImplicitParam(paramType = "query",name = "studentParentName",value ="家长姓名",dataType ="String"),
             @ApiImplicitParam(paramType = "query",name = "number",value ="账号",dataType ="int"),
     })
     @GetMapping("/studentParent/list")

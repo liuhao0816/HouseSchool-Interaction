@@ -22,5 +22,7 @@ public interface VoteService extends IService<VoteList> {
     public void deleteVote(Integer voteId);
     //根据用户ID查询该用户发表的投票
     public List<VoteList> queryVoteByUserId(Integer userId);
+    //发布通知
+    public Result addVoteTable(VoteList voteList);
 
 }
