@@ -11,10 +11,10 @@ public interface UserService extends IService<User> {
 
     /**
      * 根据用户名查询用户
-     * @param username
+     * @param userId
      * @return
      */
-    User queryByUsername(String username);
+    User queryByUserId(int userId);
 
     /**
      * 用户带条件分页查询

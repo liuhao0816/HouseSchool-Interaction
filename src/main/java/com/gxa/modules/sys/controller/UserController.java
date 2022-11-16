@@ -1,30 +1,34 @@
 package com.gxa.modules.sys.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.gxa.common.utils.AssertUtils;
-import com.gxa.common.utils.ErrorCode;
-import com.gxa.common.utils.PageUtils;
-import com.gxa.common.utils.Result;
-import com.gxa.common.validator.ValidatorUtils;
-import com.gxa.common.validator.group.AddGroup;
+import com.gxa.common.utils.*;
 import com.gxa.modules.sys.entity.User;
 import com.gxa.modules.sys.entity.UserPower;
 import com.gxa.modules.sys.entity.UserStatistics;
 import com.gxa.modules.sys.form.UserForm;
+import com.gxa.modules.sys.form.VerificationCodeForm;
 import com.gxa.modules.sys.service.UserService;
 import com.gxa.modules.sys.service.UserStatisticsService;
 import com.gxa.modules.sys.service.UserTokenService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Api(tags = "用户接口")
 @RestController
@@ -39,14 +43,58 @@ public class UserController {
     @Autowired
     private UserStatisticsService userStatisticsService;
 
+    @ApiOperation("验证码接口")
+    @GetMapping("/sys/validateCode")
+    public Result validateCode() throws IOException {
+        Result result = new Result();
+
+        ValidateCode validateCode = new ValidateCode();
+        Map<String, Object> map = validateCode.validateCode();
+
+        String resultValue = (String)map.get("resultValue");
+        RenderedImage image =(RenderedImage) map.get("image");
+
+
+        String  uuid = this.userTokenService.verificationCodeNo(resultValue);
+
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();//新建流。
+        ImageIO.write(image,"JPEG", os);//利用ImageIO类提供的write方法，将bi以jpeg图片的数据模式写入流。
+        byte bs[] = os.toByteArray();//从流中获取数据数组。
+
+        String encode = Base64Utils.encode(bs);
+
+        Map<String,Object> hashMap = new HashMap<>();
+
+        hashMap.put("image",encode);
+        hashMap.put("uuid",uuid);
+        result.ok(hashMap);
+
+        return result;
+    }
+
 
     @ApiOperation(value="用户登录接口")
     @PostMapping("/sys/login")
     public Result login(@RequestBody UserForm userFrom){
 
-        log.info("user------->{}",userFrom);
+
+        String uuid = userFrom.getUuid();
+        String captch = userFrom.getCaptch();
+
+        String resultValue = userTokenService.queryByCaptch(uuid);
+
+        if (resultValue == null){
+            return new Result().error(ErrorCode.VERIFICATION_CODE_ERROR,"验证码过期");
+        }
+
+        if (!resultValue.equals(captch)){
+            return new Result().error(ErrorCode.VERIFICATION_CODE_ERROR,"验证码错误");
+        }
+
+
         //1、拿着用户名去 查询用户信息
-        User user = this.userService.queryByUsername(userFrom.getUsername());
+        User user = this.userService.queryByUserId(userFrom.getUserId());
         if(user == null){
             return new Result().error(ErrorCode.ACCOUNT_PASSWORD_ERROR,"用户名或密码不正确");
         }

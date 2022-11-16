@@ -3,13 +3,11 @@ package com.gxa.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.gxa.common.validator.group.AddGroup;
-import com.gxa.common.validator.group.UpdateGroup;
+import com.gxa.modules.sys.entity.dto.School;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Data
@@ -30,6 +28,7 @@ public class User implements Serializable {
     @ApiModelProperty(value = "用户电话",name = "phone")
     private String phone;
 
+    @TableField(exist = false)
     @ApiModelProperty(value = "用户所属学校",name = "school")
     private School school;
 

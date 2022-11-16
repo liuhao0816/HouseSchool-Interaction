@@ -12,6 +12,7 @@ import com.gxa.modules.sys.mapper.UserMapper;
 import com.gxa.modules.sys.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -21,10 +22,12 @@ import java.util.Map;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
 
+
     @Override
-    public User queryByUsername(String username) {
-        User user = baseMapper.selectOne(new QueryWrapper<User>().eq("username", username));
+    public User queryByUserId(int userId) {
+        User user = baseMapper.selectOne(new QueryWrapper<User>().eq("user_id", userId));
         return user;
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.gxa.modules.sys.entity;/**
+package com.gxa.modules.sys.entity.dto;/**
  * @author ${RenMuQiao}.
  * adate 2022/11/11
  * atime 16:33.
