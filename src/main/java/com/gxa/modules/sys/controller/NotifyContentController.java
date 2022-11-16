@@ -4,18 +4,11 @@ package com.gxa.modules.sys.controller;/**
  * atime 8:54.
  */
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.gxa.common.utils.JsonResult;
-import com.gxa.common.utils.Result;
-import com.gxa.modules.sys.entity.dto.NOtifyContent;
-import com.gxa.modules.sys.form.NotifyTypeForm;
-import com.gxa.modules.sys.mapper.NotifyTypeMapper;
 import com.gxa.modules.sys.service.NotifyContentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

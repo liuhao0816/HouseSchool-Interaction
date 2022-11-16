@@ -6,8 +6,7 @@ package com.gxa.modules.sys.service;/**
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gxa.common.utils.Result;
-import com.gxa.modules.sys.entity.dto.VoteStat;
-import com.gxa.modules.sys.form.NewsForm;
+import com.gxa.modules.sys.entity.VoteStat;
 
 import java.util.List;
 

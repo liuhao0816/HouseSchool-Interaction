@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.gxa.common.utils.PageUtils;
 import com.gxa.modules.sys.entity.ClassGrade;
 import com.gxa.modules.sys.entity.Healthy;
-import com.gxa.modules.sys.entity.HealthyDto;
+import com.gxa.modules.sys.entity.dto.HealthyDto;
 import com.gxa.modules.sys.entity.User;
 
 import java.util.List;

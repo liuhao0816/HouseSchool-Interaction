@@ -143,11 +143,4 @@ public class NotifyTypeServiceImpl extends ServiceImpl<NotifyTypeMapper, NotifyT
         return new Result().error("通知类型添加失败。");
     }
 
-    @Override
-    public Map selectByType() {
-        Map<Object, Object> hashMap = new HashMap<>();
-        int selectByType = notifyTypeMapper.selectByType().size();
-        hashMap.put("selectByType", selectByType);
-        return hashMap;
-    }
 }

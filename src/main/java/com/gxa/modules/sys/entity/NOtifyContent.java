@@ -1,4 +1,4 @@
-package com.gxa.modules.sys.entity.dto;/**
+package com.gxa.modules.sys.entity;/**
  * @author ${RenMuQiao}.
  * adate 2022/11/15
  * atime 9:04.
@@ -31,8 +31,6 @@ public class NOtifyContent {
     /**附件*/
     private String picture;
     /**图片*/
-    private Integer scope_id;
-    /**范围Id*/
     private String release_time;
     /**发布时间*/
     @TableLogic
