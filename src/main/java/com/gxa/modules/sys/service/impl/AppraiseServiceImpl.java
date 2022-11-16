@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Query;
-import com.gxa.modules.sys.entity.dto.AppraiseDto;
 import com.gxa.modules.sys.entity.*;
 import com.gxa.modules.sys.mapper.AppraiseMapper;
 import com.gxa.modules.sys.service.AppraiseService;

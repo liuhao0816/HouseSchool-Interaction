@@ -1,7 +1,6 @@
 package com.gxa.modules.sys.controller;
 
 import com.gxa.common.utils.PageUtils;
-import com.gxa.modules.sys.entity.dto.AppraiseDto;
 import com.gxa.modules.sys.entity.*;
 import com.gxa.modules.sys.service.AppPermissionsService;
 import com.gxa.modules.sys.service.AppraiseService;
