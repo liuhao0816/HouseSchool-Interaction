@@ -5,7 +5,7 @@ package com.gxa.modules.sys.service.impl;/**
  */
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gxa.modules.sys.entity.dto.AppraiseStat;
+import com.gxa.modules.sys.entity.AppraiseStat;
 import com.gxa.modules.sys.mapper.AppraiseStatMapper;
 import com.gxa.modules.sys.service.AppraiseStatService;
 import org.springframework.stereotype.Service;

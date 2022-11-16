@@ -6,13 +6,11 @@ package com.gxa.modules.sys.controller;/**
 
 
 
-import com.alipay.api.domain.Article;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gxa.common.utils.JsonResult;
-import com.gxa.modules.sys.entity.dto.School;
-import com.gxa.modules.sys.mapper.SchoolMapper;
+import com.gxa.modules.sys.entity.School;
 import com.gxa.modules.sys.service.SchoolService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

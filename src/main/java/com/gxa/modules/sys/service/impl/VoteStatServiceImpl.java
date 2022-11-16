@@ -3,10 +3,8 @@ package com.gxa.modules.sys.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gxa.common.utils.Result;
 import com.gxa.modules.sys.entity.NotifyType;
-import com.gxa.modules.sys.entity.dto.VoteStat;
+import com.gxa.modules.sys.entity.VoteStat;
 import com.gxa.modules.sys.form.NewsForm;
-import com.gxa.modules.sys.form.NotifyTypeForm;
-import com.gxa.modules.sys.form.ReadForm;
 import com.gxa.modules.sys.mapper.VoteStatMapper;
 import com.gxa.modules.sys.service.NotifyTypeService;
 import com.gxa.modules.sys.service.VoteStatService;
@@ -16,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 
