@@ -84,4 +84,10 @@
         FROM teacher t,teacher_class tc,student s,class_grade cg,student_parent sp,user u
         WHERE t.teacher_jobno=tc.teacher_jobno AND tc.class_id=s.class_id AND tc.class_id=cg.class_id AND s.student_id=sp.student_id AND sp.user_id=u.user_id AND t.user_id=#{userId} And tc.class_id=#{classId}
     </select>
+
+    <select id="queryXAllStudentName" resultMap="queryXAllStudentResult">
+        SELECT student_id,student_name
+        FROM student
+        WHERE class_id=#{classId}
+    </select>
 </mapper>

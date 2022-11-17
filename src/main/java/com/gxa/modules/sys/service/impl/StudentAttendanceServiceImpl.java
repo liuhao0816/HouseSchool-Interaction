@@ -102,8 +102,11 @@ public class StudentAttendanceServiceImpl extends ServiceImpl<StudentAttendanceM
 
                 PageHelper.startPage(page,limit);
                 List<StudentAttendance> studentAttendances = this.baseMapper.queryMeStudentBy(studentStartAttFrom);
-
-
+                for(int i = 0;i < studentAttendances.size();i++){
+                    StudentAttendance studentAttendance = studentAttendances.get(i);
+                    studentAttendance.setDueStudents(studentAttendances.size());
+                    studentAttendance.setPracticalStudents(studentAttendances.size());
+                }
                 PageInfo<StudentAttendance> pageInfo = new PageInfo<>(studentAttendances);
                 long total = pageInfo.getTotal();
 
@@ -130,6 +133,12 @@ public class StudentAttendanceServiceImpl extends ServiceImpl<StudentAttendanceM
     @Override
     public List<Student> queryXAllStudent(Integer userId, Integer classId) {
         List<Student> students = this.baseMapper.queryXAllStudent(userId, classId);
+        return students;
+    }
+
+    @Override
+    public List<Student> queryXAllStudentName(Integer classId) {
+        List<Student> students = this.baseMapper.queryXAllStudentName(classId);
         return students;
     }
 }

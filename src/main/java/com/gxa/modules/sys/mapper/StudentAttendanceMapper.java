@@ -27,4 +27,5 @@ public interface StudentAttendanceMapper extends BaseMapper<StudentAttendance> {
     public List<StudentAttendance> queryMeStudentBy(StudentStartAttFrom studentStartAttFrom);
     public void updateStudentStatus(StudentAttStatusForm studentAttStatusForm);
     public List<Student> queryXAllStudent(@Param("userId") Integer userId,@Param("classId") Integer classId);
+    public List<Student> queryXAllStudentName(Integer classId);
 }

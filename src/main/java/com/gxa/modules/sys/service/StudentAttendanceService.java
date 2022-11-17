@@ -23,6 +23,7 @@ public interface StudentAttendanceService extends IService<StudentAttendance> {
     public Result updateStudentStatus(StudentAttStatusForm studentAttStatusForm);
     //根据当前登录用户ID，和班级ID，查询该班级所有学生
     public List<Student> queryXAllStudent(Integer userId,Integer classId);
+    public List<Student> queryXAllStudentName(Integer classId);
 
 
 }
