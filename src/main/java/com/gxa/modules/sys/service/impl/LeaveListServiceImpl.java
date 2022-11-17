@@ -41,14 +41,49 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
     }
 
     @Override
-    public List<AllLeaveListDto> queryLeaveListBy(LeaveListDto leaveListDto) {
+    public Result<List<AllLeaveListDto>> queryLeaveListBy(LeaveListDto leaveListDto) {
 
+        this.baseMapper.updateStatusA();
         this.baseMapper.updateStatus();
-        List<AllLeaveListDto> allLeaveListDtos = baseMapper.queryLeaveListBy(leaveListDto);
+
+        Integer page=leaveListDto.getPage();
+        Integer limit=leaveListDto.getLimit();
+        PageHelper.startPage(page,limit);
 
 
+        List<AllLeaveListDto> allLeaveListDtos = this.baseMapper.queryLeaveListBy(leaveListDto);
 
-        return allLeaveListDtos;
+        Integer userId = leaveListDto.getUserId();
+        List<Integer> integers = this.baseMapper.queryRole(userId);
+        for (int i=0;i<integers.size();i++){
+            Integer aa = integers.get(i);
+            if (aa==2){
+                for (int j=0;j<allLeaveListDtos.size();j++){
+                    AllLeaveListDto allLeaveListDto1 = allLeaveListDtos.get(j);
+                    allLeaveListDto1.setAbsence(baseMapper.queryAbsence());
+                    allLeaveListDto1.setSick(baseMapper.querySick());
+                }
+                PageInfo<AllLeaveListDto> pageInfo = new PageInfo<>(allLeaveListDtos);
+                long total = pageInfo.getTotal();
+
+                return new Result<List<AllLeaveListDto>>().ok(allLeaveListDtos,total);
+            }
+            if (aa==3){
+                for (int j=0;j<allLeaveListDtos.size();j++){
+                    AllLeaveListDto allLeaveListDto1 = allLeaveListDtos.get(j);
+                    allLeaveListDto1.setAbsence(baseMapper.queryAbsence());
+                    allLeaveListDto1.setSick(baseMapper.querySick());
+                }
+                PageInfo<AllLeaveListDto> pageInfo = new PageInfo<>(allLeaveListDtos);
+                long total = pageInfo.getTotal();
+
+                return new Result<List<AllLeaveListDto>>().ok(allLeaveListDtos,total);
+
+            }
+
+        }
+
+        return null;
     }
 
     @Override
@@ -79,7 +114,7 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
     }
 
     @Override
-    public  Result updateByIdAll(Integer id,Integer user_id) {
+    public  Result updateByIdAllT(Integer id,Integer user_id) {
         List<Integer> integers = this.baseMapper.queryRole(user_id);
         for (int i=0;i<integers.size();i++){
             Integer aa = integers.get(i);
@@ -93,4 +128,21 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
 
         return new Result<>().ok();
     }
+
+    @Override
+    public Result updateByIdAllF(Integer id, Integer user_id) {
+        List<Integer> integers = this.baseMapper.queryRole(user_id);
+        for (int i=0;i<integers.size();i++){
+            Integer aa = integers.get(i);
+            if (aa==2){
+                this.baseMapper.updateByIdT(id);
+            }
+            if (aa==3){
+                this.baseMapper.updateByIdPa(id);
+            }
+        }
+
+        return new Result<>().ok();
+    }
+
 }

@@ -99,7 +99,7 @@ public class VoteController {
         return result;
     }
 
-//    @RequiresPermissions("sys:vote:add")
+    @RequiresPermissions("teacher")
     @ApiOperation(value = "投票管理-发起投票")
     @PostMapping(value = "/sys/vote/add")
     public Result addVote(@RequestBody VoteList voteList){

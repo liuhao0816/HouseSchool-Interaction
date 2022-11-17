@@ -1,9 +1,12 @@
 package com.gxa.modules.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.gxa.common.utils.Result;
 import com.gxa.modules.sys.dto.StudentAttInitializeDto;
+import com.gxa.modules.sys.entity.Student;
 import com.gxa.modules.sys.entity.StudentAttendance;
 import com.gxa.modules.sys.entity.StudentClass;
+import com.gxa.modules.sys.form.StudentAttStatusForm;
 import com.gxa.modules.sys.form.StudentStartAttFrom;
 import com.gxa.modules.sys.form.StudentTodayForm;
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +25,7 @@ public interface StudentAttendanceMapper extends BaseMapper<StudentAttendance> {
     public void insertAllStudentStatus(StudentAttInitializeDto studentAttInitializeDto);
     //根据条件获取当前该班所有学生初始化考勤状态
     public List<StudentAttendance> queryMeStudentBy(StudentStartAttFrom studentStartAttFrom);
+    public void updateStudentStatus(StudentAttStatusForm studentAttStatusForm);
+    public List<Student> queryXAllStudent(@Param("userId") Integer userId,@Param("classId") Integer classId);
+    public List<Student> queryXAllStudentName(Integer classId);
 }

@@ -18,6 +18,21 @@
         SET remarks="已审核"
         WHERE parents_confirm="已审核" AND teacher_approve="已审核"
     </update>
+    <update id="updateByIdT">
+        UPDATE leave_list
+        SET teacher_approve="未通过"
+        WHERE leave_list.id=#{id}
+    </update>
+    <update id="updateByIdPa">
+        UPDATE leave_list
+        SET parents_confirm="未通过"
+        WHERE leave_list.id=#{id}
+    </update>
+    <update id="updateStatusA">
+        UPDATE leave_list
+        SET remarks="未通过"
+        WHERE parents_confirm="未通过" OR teacher_approve="未通过"
+    </update>
     <select id="queryRole" resultType="java.lang.Integer">
         SELECT role_id
         FROM  user_role
@@ -31,7 +46,7 @@
     </select>
 
     <select id="queryById" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
-        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks
+        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks,u.user_name
         FROM leave_list l,student s,class_grade c
         WHERE l.student_id=s.student_id AND s.class_id=c.class_id AND l.is_deleted=1
         <if test="id!=null">
@@ -67,6 +82,27 @@
             <if test="classGradeName!=null and classGradeName!='' ">
                 AND  c.class_grade_name=#{classGradeName}
             </if>
+        <if test="studentName!=null and studentName!='' ">
+            AND  c.studentName=#{studentName}
+        </if>
+    </select>
+    <select id="queryLeaveListP" resultType="com.gxa.modules.sys.dto.AllLeaveListDto">
+        SELECT l.id,s.student_name,c.class_grade_name,l.leave_type,l.start_time,l.end_time,l.reason,l.teacher_approve,l.parents_confirm,l.sponsor,l.launch_time,l.remarks
+        FROM leave_list l,student_parent sp,student s,class_grade c
+        WHERE l.student_id=sp.student_id AND l.student_id=s.student_id AND s.class_id=c.class_id AND l.is_deleted=1
+        <if test="userId!=null and userId!='' ">
+            AND sp.user_id=#{userId}
+        </if>
+    </select>
+    <select id="queryAbsence" resultType="java.lang.Integer">
+        SELECT COUNT(leave_type)
+        FROM leave_list
+        WHERE leave_type='事假' AND TO_DAYS(launch_time) = TO_DAYS(NOW())
+    </select>
+    <select id="querySick" resultType="java.lang.Integer">
+        SELECT COUNT(leave_type)
+        FROM leave_list
+        WHERE leave_type='病假' AND TO_DAYS(launch_time) = TO_DAYS(NOW())
     </select>
 
 

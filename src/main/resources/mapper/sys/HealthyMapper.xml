@@ -33,7 +33,7 @@
                 and grade_class like concat('%',#{gradeClass},'%')
             </if>
             <if test="createTime !=null and createTime !=''" >
-                and create_time &gt;= #{firstTime} and create_time &lt;= #{lastTime}
+                and create_time &gt;= #{firstDateTime} and create_time &lt;= #{lastDateTime}
             </if>
         </where>
     </select>

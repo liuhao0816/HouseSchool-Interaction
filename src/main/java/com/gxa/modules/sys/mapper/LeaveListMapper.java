@@ -21,10 +21,23 @@ public interface LeaveListMapper extends BaseMapper<LeaveList> {
 
     //判断角色
     List<Integer> queryRole(Integer user_id);
-
+    //审核状态确认已审核
     void updateById(Integer id);
 
     void updateByIdP(Integer id);
 
     void updateStatus();
+    //通过user_id查询家长的孩子的请假信息；
+    List<AllLeaveListDto> queryLeaveListP(LeaveListDto leaveListDto);
+    //审核状态确认 未通过
+    void updateByIdT(Integer id);
+
+    void updateByIdPa(Integer id);
+
+    void updateStatusA();
+    //事假数量
+    Integer queryAbsence();
+    //病假数量
+    Integer querySick();
+
 }
