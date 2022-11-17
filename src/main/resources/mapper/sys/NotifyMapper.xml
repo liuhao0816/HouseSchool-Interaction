@@ -6,7 +6,6 @@
 
     <resultMap id="pageMap" type="notify">
         <id column="id" property="id"/>
-        <result column="type" property="notifyType.type"/>
         <result column="title" property="content.title"/>
         <result column="writer" property="content.writer"/>
         <result column="release_time" property="content.releaseTime"/>
@@ -18,10 +17,10 @@
     </update>
 
     <select id="queryByPage" resultMap="pageMap">
-        select l.id,t.type,c.title,c.writer,c.release_time
-        from notify_list l,notify_type t,notify_content c,notify_scope s
+        select c.id,c.title,c.writer,c.release_time
+        from notify_content c
         <where>
-            l.type_id = t.id and l.content_id = c.id and c.id = s.content_id
+            c.is_delete = 1
             <if test="notifyForm != null">
                 <if test="notifyForm.startTime != null">
                     and c.release_time &gt; #{notifyForm.startTime}
@@ -31,18 +30,17 @@
                     and c.release_time &lt; #{notifyForm.endTime}
                 </if>
 
-                <if test="notifyForm.type != null and notifyForm.type != '' ">
-                    and t.type=#{notifyForm.type}
+                <if test="notifyForm.id != null">
+                    and c.id=#{id}
                 </if>
-                <if test="notifyForm.scope != null and notifyForm.scope != '' ">
-                    and s.notify_scope=#{notifyForm.scope}
+                <if test="notifyForm.title != null and notifyForm.title != '' ">
+                    and c.title=#{notifyForm.title}
                 </if>
 
                 <if test="notifyForm.publisher != null and notifyForm.publisher != '' ">
                     and c.writer=#{notifyForm.publisher}
                 </if>
             </if>
-            and l.is_delete=1
             LIMIT #{page},#{limit}
         </where>
 
@@ -75,13 +73,12 @@
 
 
     <select id="queryNotifyByUser" resultMap="pageMap">
-        select c.id,t.type,c.title,c.writer,c.release_time
-        from notify_list l,notify_type t,notify_content c,notify_scope s
-        where l.type_id = t.id and l.content_id = c.id and c.id = s.content_id
+        select c.id,c.title,c.writer,c.release_time
+        from notify_content c
+        where c.is_delete = 1
         <if test="userName != null and userName!=''">
             and c.writer=#{userName}
         </if>
-        and l.is_delete=1
     </select>
 
     <select id="readList" resultType="com.gxa.modules.sys.form.ReadForm">
@@ -98,6 +95,12 @@
         select cs.content_id,cs.student_name
         from content_student cs
         where cs.content_id = #{contentId} and cs.student_name=#{studentName}
+    </select>
+
+    <select id="getTypeByContentId" resultType="com.gxa.modules.sys.entity.NotifyType">
+        SELECT t.type
+        FROM notify_type t , notify_list l
+        WHERE l.type_id=t.id and l.content_id=3
     </select>
 
 

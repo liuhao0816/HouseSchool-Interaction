@@ -1,4 +1,3 @@
-
 package com.gxa.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;

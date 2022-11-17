@@ -3,6 +3,7 @@ package com.gxa.modules.sys.service;
 import com.github.pagehelper.PageInfo;
 import com.gxa.modules.sys.entity.UserPower;
 import com.gxa.modules.sys.entity.UserStatistics;
+import com.gxa.modules.sys.form.UserPowerFrom;
 import com.gxa.modules.sys.form.UserRoleForm;
 
 import java.util.Map;
@@ -29,7 +30,7 @@ public interface UserStatisticsService{
    * @param userRoleForm
    * @return
    */
-  UserPower userPowerByUserIdAndRoleId(UserRoleForm userRoleForm);
+  UserPowerFrom userPowerFromByUserIdAndRoleId(UserRoleForm userRoleForm);
 
 
 }

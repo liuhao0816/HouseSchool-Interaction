@@ -17,7 +17,7 @@
 
     <delete id="queryByPublisherTime" parameterType="com.gxa.modules.sys.entity.Appraise">
         delete from appraise
-        where publisher = #{publisher} and appraise_time = #{appraiseTime}
+        where id = #{id}
     </delete>
 
     <select id="queryByPublisher01" resultMap="appraiseResultMap" resultType="com.gxa.modules.sys.entity.Appraise">

@@ -12,7 +12,7 @@ public interface AppraiseService extends IService<Appraise>{
     void add(Appraise appraise);
     List<Appraise> queryByPublisher(String publisher,String appraiseTime);
     void update(Appraise appraise);
-    void delete(String publisher,String appraiseTime);
+    void delete(int id);
     List<Appraise> queryByAppraiseDto(String firstDateTime, String lastDateTime, AppraiseDto appraiseDto);
     /**
      * 只是单独的分页，不带查询条件

@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -33,8 +34,8 @@ public class NotifyController {
             @ApiImplicitParam(paramType = "query",name = "limit",value ="每页显示多少条",dataType ="int",required = true),
             @ApiImplicitParam(paramType = "query",name = "startTime",value ="开始日期",dataType ="String"),
             @ApiImplicitParam(paramType = "query",name = "endTime",value ="结束日期",dataType ="String"),
-            @ApiImplicitParam(paramType = "query",name = "type",value ="类型",dataType ="String"),
-            @ApiImplicitParam(paramType = "query",name = "scope",value ="发送范围",dataType ="String"),
+            @ApiImplicitParam(paramType = "query",name = "id",value ="编号",dataType ="int"),
+            @ApiImplicitParam(paramType = "query",name = "title",value ="标题",dataType ="String"),
             @ApiImplicitParam(paramType = "query",name = "publisher",value ="发布者",dataType ="String"),
 
     })
@@ -49,6 +50,7 @@ public class NotifyController {
     }
 
     @ApiOperation("删除接口")
+    @RequiresPermissions("teacher")
     @ApiImplicitParam(paramType = "query",name = "id",value ="id",dataType ="int",required = true)
     @PostMapping("/delete")
     public Result delete(Integer id){
@@ -56,6 +58,7 @@ public class NotifyController {
     }
 
     @ApiOperation("添加接口")
+    @RequiresPermissions("teacher")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query",name = "type",value ="通知类型",dataType ="String"),
             @ApiImplicitParam(paramType = "query",name = "scope",value ="发送范围",dataType ="String"),

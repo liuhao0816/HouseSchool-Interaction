@@ -16,6 +16,6 @@
     <select id="selectType" resultType="com.gxa.modules.sys.entity.NotifyType">
         select id,type
         from notify_type
-        where is_delete=1 and status="启用"
+        where is_delete=1
     </select>
 </mapper>

@@ -78,4 +78,33 @@
         WHERE st.class_id = cg.class_id AND cg.school_id = s.school_id AND sp.student_id = st.student_id AND sp.user_id = #{userId}
     </select>
 
+    <resultMap id="powerResultMap" type="power">
+        <id property="powerId" column="power_id"/>
+        <result property="powerName" column="power_name"/>
+        <result property="powerMark" column="power_mark"/>
+    </resultMap>
+
+    <resultMap id="roleFromResultMap" type="com.gxa.modules.sys.form.RoleFrom">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="schoolName" column="school_name"/>
+        <collection property="powers" javaType="java.util.Set" resultMap="powerResultMap"/>
+    </resultMap>
+
+    <resultMap id="userPowerFromResultMap" type="com.gxa.modules.sys.form.UserPowerFrom">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userAvatar" column="user_avatar"/>
+        <association property="roleFrom" resultMap="roleFromResultMap"/>
+    </resultMap>
+
+
+    <select id="userPowerFromByUserIdAndRoleId" resultMap="userPowerFromResultMap">
+        SELECT u.user_id,u.user_name,u.user_avatar,r.role_id,r.role_name,s.school_name,p.power_id,p.power_name,p.power_mark
+        FROM user u, user_role ur, role r, school s, power p, power_role pr
+        WHERE u.user_id = ur.user_id AND ur.role_id = r.role_id AND u.school_id = s.school_id
+          AND r.role_id = pr.role_id AND pr.power_id = p.power_id
+          AND u.user_id = #{userId} AND r.role_id = #{roleId}
+    </select>
+
 </mapper>
