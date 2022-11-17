@@ -208,12 +208,13 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
             for (Notify notify : notifyList) {
                 NotifyForm notifyForm = new NotifyForm();
                 notifyForm.setId(notify.getId());
-                notifyForm.setType(notify.getNotifyType().getType());
+                NotifyType type = notifyMapper.getTypeByContentId(notify.getId());
+                notifyForm.setType(type.getType());
                 notifyForm.setTitle(notify.getContent().getTitle());
-                notifyForm.setContent(notify.getContent().getContent());
+//                notifyForm.setContent(notify.getContent().getContent());
                 notifyForm.setPublisher(notify.getContent().getWriter());
-                notifyForm.setEnclosure(notify.getContent().getEnclosure());
-                notifyForm.setPicture(notify.getContent().getPicture());
+//                notifyForm.setEnclosure(notify.getContent().getEnclosure());
+//                notifyForm.setPicture(notify.getContent().getPicture());
                 Date releaseTime = notify.getContent().getReleaseTime();
                 notifyForm.setStartTime(releaseTime);
                 //获取消息发布范围
@@ -243,11 +244,11 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
                 }
                 formArrayList.add(notifyForm);
             }
-            LinkedHashSet<NotifyForm> notifyForms = new LinkedHashSet<>(formArrayList);
-            ArrayList<NotifyForm> forms = new ArrayList<>(notifyForms);
+//            LinkedHashSet<NotifyForm> notifyForms = new LinkedHashSet<>(formArrayList);
+//            ArrayList<NotifyForm> forms = new ArrayList<>(notifyForms);
             Result<Object> result = new Result<>();
-            result.setTotal(forms.size());
-            result.setData(forms);
+            result.setTotal(formArrayList.size());
+            result.setData(formArrayList);
             return result.ok();
         }
         return new Result().error("您未发布任何消息");
