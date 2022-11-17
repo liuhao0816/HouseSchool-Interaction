@@ -13,7 +13,7 @@ public interface AppraiseService extends IService<Appraise>{
     List<Appraise> queryByPublisher(String publisher,String appraiseTime);
     void update(Appraise appraise);
     void delete(int id);
-    List<Appraise> queryByAppraiseDto(String firstDateTime, String lastDateTime, AppraiseDto appraiseDto);
+    List<Appraise> queryByAppraiseDto(String firstDateTime, String lastDateTime,String studentName,String gradeClass,String appraiseTime );
     /**
      * 只是单独的分页，不带查询条件
      * @param params
@@ -21,7 +21,7 @@ public interface AppraiseService extends IService<Appraise>{
      */
     PageUtils queryByPage01(Map<String,Object> params);
 
-    List<Appraise> queryByAppraiseDtos(AppraiseDto appraiseDto);
+    List<Appraise> queryByAppraiseDtos(String studentName,String gradeClass);
 
     List<User> queryByPermissionsTeacher();
 
