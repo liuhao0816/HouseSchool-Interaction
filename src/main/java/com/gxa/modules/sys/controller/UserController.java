@@ -193,6 +193,8 @@ public class UserController {
     }
 
 
+
+    @RequiresPermissions("administrators")
     @ApiOperation(value="用户统计")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query",name = "page",value ="当前是第几页",dataType ="int"),
@@ -210,6 +212,5 @@ public class UserController {
         r.ok(userStatistics,total);
         return r;
     }
-
 
 }
