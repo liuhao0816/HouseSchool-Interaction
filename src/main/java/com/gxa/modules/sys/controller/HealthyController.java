@@ -2,7 +2,6 @@ package com.gxa.modules.sys.controller;
 
 import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Result;
-import com.gxa.modules.sys.entity.dto.HealthyDto;
 import com.gxa.modules.sys.entity.*;
 import com.gxa.modules.sys.service.HealthyService;
 import io.swagger.annotations.*;

@@ -6,7 +6,7 @@ import com.gxa.common.utils.PageUtils;
 import com.gxa.common.utils.Query;
 import com.gxa.modules.sys.entity.ClassGrade;
 import com.gxa.modules.sys.entity.Healthy;
-import com.gxa.modules.sys.entity.dto.HealthyDto;
+import com.gxa.modules.sys.entity.HealthyDto;
 import com.gxa.modules.sys.entity.User;
 import com.gxa.modules.sys.mapper.HealthyMapper;
 import com.gxa.modules.sys.service.HealthyService;

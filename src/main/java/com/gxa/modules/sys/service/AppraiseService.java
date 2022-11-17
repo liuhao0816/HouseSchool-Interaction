@@ -2,7 +2,6 @@ package com.gxa.modules.sys.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gxa.common.utils.PageUtils;
-import com.gxa.modules.sys.entity.dto.AppraiseDto;
 import com.gxa.modules.sys.entity.*;
 
 import java.util.List;
