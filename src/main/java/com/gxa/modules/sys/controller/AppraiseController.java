@@ -55,7 +55,7 @@ public class AppraiseController {
         return new Result<>().ok();
     }
 
-    @RequiresPermissions("teacher")
+//    @RequiresPermissions("teacher")
     @PostMapping("/appraise/add")
     @ResponseBody
     @ApiOperation(value = "添加评价",notes = "添加接口",httpMethod = "POST")
@@ -67,6 +67,7 @@ public class AppraiseController {
         DateTime date = new DateTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:dd:ss");
         String datetime = simpleDateFormat.format(date);
+        System.out.println(datetime);
         appraise.setAppraiseTime(datetime);
         try {
             this.appraiseService.add(appraise);
@@ -106,7 +107,7 @@ public class AppraiseController {
         }
         return new Result<>().ok("succes");
     }
-    @RequiresPermissions("teacher")
+//    @RequiresPermissions("teacher")
     @DeleteMapping("/appraise/delete")
     @ApiOperation(value = "评价删除",notes = "删除接口",httpMethod = "DELETE")
     @ApiResponses({
@@ -123,14 +124,17 @@ public class AppraiseController {
         return new  Result<>().ok("succes");
     }
 
-    @PostMapping("/appraise03")
+    @GetMapping("/appraise03")
     @ResponseBody
-    @ApiOperation(value = "搜索查询",notes = "查询接口",httpMethod = "POST")
+    @ApiOperation(value = "搜索查询",notes = "查询接口",httpMethod = "GET")
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok",response = Appraise.class)
     })
-    public Result appraiseSearch(@RequestBody AppraiseDto appraiseDto) {
-        String tollDate = appraiseDto.getAppraiseTime();
+    public Result appraiseSearch(@RequestParam(value = "studentName",required=false) String studentName,
+                                 @RequestParam(value = "gradeClass",required=false) String gradeClass,
+                                 @RequestParam(value = "appraiseTime",required=false) String appraiseTime) {
+
+        String tollDate = appraiseTime;
         System.out.println(tollDate);
         String firstDateTime = null;
         String lastDateTime = null;
@@ -140,7 +144,7 @@ public class AppraiseController {
             firstDateTime = dateTime[0].trim();
             lastDateTime = dateTime[1].trim();
             try {
-                List<Appraise> appraises = this.appraiseService.queryByAppraiseDto(firstDateTime, lastDateTime, appraiseDto);
+                List<Appraise> appraises = this.appraiseService.queryByAppraiseDto(firstDateTime, lastDateTime, studentName,gradeClass,appraiseTime);
                 Map map = new HashMap();
                 map.put("appraises", appraises);
                 return new Result<>().ok(map);
@@ -149,7 +153,7 @@ public class AppraiseController {
                 new Result<>().ok("fail");
             }
         } else {
-            List<Appraise> appraises = this.appraiseService.queryByAppraiseDtos(appraiseDto);
+            List<Appraise> appraises = this.appraiseService.queryByAppraiseDtos(studentName,gradeClass);
             Map map = new HashMap();
             map.put("appraises", appraises);
             return new Result<>().ok(map);

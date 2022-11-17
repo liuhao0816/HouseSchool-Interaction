@@ -15,7 +15,7 @@ public final class OSSFactory {
 
 //    @Autowired
     //获取云存储配置信息
-//    private static StorageConfig storageConfig;
+    private static StorageConfig storageConfig;
 
     public static AbstractStorageService build(){
 
