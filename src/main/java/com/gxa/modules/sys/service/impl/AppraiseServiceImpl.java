@@ -45,17 +45,14 @@ public class AppraiseServiceImpl extends ServiceImpl<AppraiseMapper, Appraise> i
     }
 
     @Override
-    public void delete(String publisher, String appraiseTime) {
-        System.out.println(appraiseTime);
-        System.out.println(publisher);
-        this.baseMapper.queryByPublisherTime(publisher,appraiseTime);
+    public void delete(int id) {
+        this.baseMapper.queryByPublisherTime(id);
     }
 
     @Override
-    public List<Appraise> queryByAppraiseDto(String firstDateTime, String lastDateTime, AppraiseDto appraiseDto) {
-        String studentName = appraiseDto.getStudentName();
-        String gradeClass = appraiseDto.getGradeClass();
-        List<Appraise> appraises = this.baseMapper.queryByAppraiseDto01(firstDateTime,lastDateTime,studentName,gradeClass);
+    public List<Appraise> queryByAppraiseDto(String firstDateTime, String lastDateTime,String studentName,String gradeClass,String appraiseTime ) {
+
+        List<Appraise> appraises = this.baseMapper.queryByAppraiseDto01(firstDateTime,lastDateTime,studentName,gradeClass,appraiseTime);
         return appraises;
     }
 
@@ -67,9 +64,8 @@ public class AppraiseServiceImpl extends ServiceImpl<AppraiseMapper, Appraise> i
     }
 
     @Override
-    public List<Appraise> queryByAppraiseDtos(AppraiseDto appraiseDto) {
-        String studentName = appraiseDto.getStudentName();
-        String gradeClass = appraiseDto.getGradeClass();
+    public List<Appraise> queryByAppraiseDtos(String studentName,String gradeClass) {
+
         List<Appraise> appraises = this.baseMapper.queryByAppraiseDto02(studentName,gradeClass);
         return appraises;
     }

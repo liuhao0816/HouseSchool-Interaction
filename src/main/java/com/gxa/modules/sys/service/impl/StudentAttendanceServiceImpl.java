@@ -3,10 +3,13 @@ package com.gxa.modules.sys.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.gxa.common.utils.ErrorCode;
 import com.gxa.common.utils.Result;
 import com.gxa.modules.sys.dto.StudentAttInitializeDto;
+import com.gxa.modules.sys.entity.Student;
 import com.gxa.modules.sys.entity.StudentAttendance;
 import com.gxa.modules.sys.entity.StudentClass;
+import com.gxa.modules.sys.form.StudentAttStatusForm;
 import com.gxa.modules.sys.form.StudentStartAttFrom;
 import com.gxa.modules.sys.form.StudentTodayForm;
 import com.gxa.modules.sys.mapper.StudentAttendanceMapper;
@@ -34,17 +37,32 @@ public class StudentAttendanceServiceImpl extends ServiceImpl<StudentAttendanceM
     public Result<List<StudentAttendance>> queryAllStudentBy(StudentTodayForm studentTodayFrom) {
         Integer page = studentTodayFrom.getPage();
         Integer limit = studentTodayFrom.getLimit();
+        Result<List<StudentAttendance>> result = new Result<List<StudentAttendance>>().error();
 
         PageHelper.startPage(page,limit);
         List<StudentAttendance> studentAttendances = this.baseMapper.queryAllStudentBy(studentTodayFrom);
-        for (int i = 0;i < studentAttendances.size();i++){
-            StudentAttendance studentAttendance = studentAttendances.get(i);
-            studentAttendance.setStudengAttendanceStatus("正常");
-        }
-        PageInfo<StudentAttendance> pageInfo = new PageInfo<>(studentAttendances);
-        long total = pageInfo.getTotal();
+        if(studentAttendances.size() > 0){
+            int count = 0;
+            int size = studentAttendances.size();
+            for(int j = 0;j < size;j++){
+                StudentAttendance studentAttendance = studentAttendances.get(j);
+                studentAttendance.setDueStudents(studentAttendances.size());
+                if("缺勤".equals(studentAttendance.getStudengAttendanceStatus())){
+                    count++;
+                }
+            }
+            for(int k = 0;k < size;k++){
+                StudentAttendance studentAttendance = studentAttendances.get(k);
+                studentAttendance.setPracticalStudents(size - count);
+            }
+            PageInfo<StudentAttendance> pageInfo = new PageInfo<>(studentAttendances);
+            long total = pageInfo.getTotal();
 
-        Result<List<StudentAttendance>> result = new Result<List<StudentAttendance>>().ok(studentAttendances,total);
+            result = new Result<List<StudentAttendance>>().ok(studentAttendances,total);
+        }else {
+            result = new Result<List<StudentAttendance>>().error(ErrorCode.VERIFICATION_CODE_ERROR,"该班级今日还未考勤，无考勤信息，请开始考勤！");
+        }
+
         return result;
     }
 
@@ -64,22 +82,63 @@ public class StudentAttendanceServiceImpl extends ServiceImpl<StudentAttendanceM
         studentAttInitializeDto.setAttStatus("正常");
         studentAttInitializeDto.setTodayTime(todayTime);
 
+        StudentTodayForm studentTodayForm = new StudentTodayForm();
+        studentTodayForm.setUserId(userId);
+        studentTodayForm.setTodayTime(todayTime);
+        List<StudentAttendance> studentAttendances111 = this.baseMapper.queryAllStudentBy(studentTodayForm);
+        if(studentAttendances111.size() > 0){
+            result = new Result<List<StudentAttendance>>().error(ErrorCode.CAPTCHA_ERROR,"该班今日已考勤，请勿重复考勤！");
+        }else {
+
             //获取该班所有学生的id
             List<Integer> studentIds = this.baseMapper.queryAllStudentId(userId, classId);
-            for(int i = 0;i < studentIds.size();i++){
-                Integer studentId = studentIds.get(i);
-                studentAttInitializeDto.setStudentId(studentId);
-                this.baseMapper.insertAllStudentStatus(studentAttInitializeDto);
+
+            if(studentIds.size() > 0){
+                for(int i = 0;i < studentIds.size();i++){
+                    Integer studentId = studentIds.get(i);
+                    studentAttInitializeDto.setStudentId(studentId);
+                    this.baseMapper.insertAllStudentStatus(studentAttInitializeDto);
+                }
+
+                PageHelper.startPage(page,limit);
+                List<StudentAttendance> studentAttendances = this.baseMapper.queryMeStudentBy(studentStartAttFrom);
+                for(int i = 0;i < studentAttendances.size();i++){
+                    StudentAttendance studentAttendance = studentAttendances.get(i);
+                    studentAttendance.setDueStudents(studentAttendances.size());
+                    studentAttendance.setPracticalStudents(studentAttendances.size());
+                }
+                PageInfo<StudentAttendance> pageInfo = new PageInfo<>(studentAttendances);
+                long total = pageInfo.getTotal();
+
+                result = new Result<List<StudentAttendance>>().ok(studentAttendances,total);
+            }else {
+                result = new Result<List<StudentAttendance>>().error(ErrorCode.UNAUTHORIZED,"您不是该班级的老师，没有权限考勤该班级");
             }
-
-            PageHelper.startPage(page,limit);
-            List<StudentAttendance> studentAttendances = this.baseMapper.queryMeStudentBy(studentStartAttFrom);
-
-            PageInfo<StudentAttendance> pageInfo = new PageInfo<>(studentAttendances);
-            long total = pageInfo.getTotal();
-
-            result = new Result<List<StudentAttendance>>().ok(studentAttendances,total);
-
+        }
         return result;
+    }
+
+    @Override
+    public Result updateStudentStatus(StudentAttStatusForm studentAttStatusForm) {
+        Result result = new Result<>().error();
+        try {
+            this.baseMapper.updateStudentStatus(studentAttStatusForm);
+            result = new Result<>().ok();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public List<Student> queryXAllStudent(Integer userId, Integer classId) {
+        List<Student> students = this.baseMapper.queryXAllStudent(userId, classId);
+        return students;
+    }
+
+    @Override
+    public List<Student> queryXAllStudentName(Integer classId) {
+        List<Student> students = this.baseMapper.queryXAllStudentName(classId);
+        return students;
     }
 }

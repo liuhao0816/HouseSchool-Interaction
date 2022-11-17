@@ -18,5 +18,5 @@ public class StudentAttendanceRate {
     @ApiModelProperty(value = "缺勤人数",name = "actualArrivalStudents")
     private Integer actualArrivalStudents;
     @ApiModelProperty(value = "出勤率",name = "attendanceRate")
-    private Double attendanceRate;
+    private String attendanceRate;
 }

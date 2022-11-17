@@ -26,11 +26,15 @@
         <result property="studentName" column="student_name"/>
         <result property="studentSex" column="gender"/>
         <result property="phoneNumber" column="phone"/>
+        <result property="studengAttendanceStatus" column="attendance_status"/>
     </resultMap>
-    <select id="queryAllStudentBy" resultMap="queryAllStudentByResult">
-        SELECT cg.class_grade_name,s.student_name,s.gender,s.student_id,u.phone
-        FROM teacher t,teacher_class tc,student s,class_grade cg,student_parent sp,user u
-        WHERE t.teacher_jobno=tc.teacher_jobno AND tc.class_id=s.class_id AND tc.class_id=cg.class_id AND s.student_id=sp.student_id AND sp.user_id=u.user_id AND t.user_id=#{userId}
+    <select id="queryAllStudentBy" resultMap="queryAllStudentByResult" parameterType="com.gxa.modules.sys.form.StudentTodayForm">
+        SELECT cg.class_grade_name,s.student_name,s.gender,s.student_id,u.phone,st.attendance_status
+        FROM teacher t,teacher_class tc,student s,class_grade cg,student_parent sp,user u,student_attendance st
+        WHERE t.teacher_jobno=tc.teacher_jobno AND tc.class_id=s.class_id AND tc.class_id=cg.class_id AND s.student_id=sp.student_id AND sp.user_id=u.user_id AND s.student_id=st.student_id AND t.user_id=#{userId}
+        <if test="todayTime != null">
+            <![CDATA[ AND DATE_FORMAT(st.attendance_time,'%Y-%m-%d')=DATE_FORMAT(#{todayTime},'%Y-%m-%d')]]>
+        </if>
     </select>
 
 
@@ -61,4 +65,29 @@
         INSERT INTO student_attendance(student_id,attendance_status,attendance_time)
         values(#{studentId},#{attStatus},#{todayTime})
     </insert>
+
+    <update id="updateStudentStatus" parameterType="com.gxa.modules.sys.form.StudentAttStatusForm">
+        UPDATE student_attendance
+        SET attendance_status=#{studengAttendanceStatus}
+        WHERE student_id=#{studentId}
+            <if test="todayTime != null">
+                <![CDATA[ AND DATE_FORMAT(attendance_time,'%Y-%m-%d')=DATE_FORMAT(#{todayTime},'%Y-%m-%d')]]>
+            </if>
+    </update>
+
+    <resultMap id="queryXAllStudentResult" type="student">
+        <id property="studentId" column="student_id"/>
+        <result property="studentName" column="student_name"/>
+    </resultMap>
+    <select id="queryXAllStudent" resultMap="queryXAllStudentResult">
+        SELECT s.student_id,s.student_name
+        FROM teacher t,teacher_class tc,student s,class_grade cg,student_parent sp,user u
+        WHERE t.teacher_jobno=tc.teacher_jobno AND tc.class_id=s.class_id AND tc.class_id=cg.class_id AND s.student_id=sp.student_id AND sp.user_id=u.user_id AND t.user_id=#{userId} And tc.class_id=#{classId}
+    </select>
+
+    <select id="queryXAllStudentName" resultMap="queryXAllStudentResult">
+        SELECT student_id,student_name
+        FROM student
+        WHERE class_id=#{classId}
+    </select>
 </mapper>

@@ -17,7 +17,7 @@
 
     <delete id="queryByPublisherTime" parameterType="com.gxa.modules.sys.entity.Appraise">
         delete from appraise
-        where publisher = #{publisher} and appraise_time = #{appraiseTime}
+        where id = #{id}
     </delete>
 
     <select id="queryByPublisher01" resultMap="appraiseResultMap" resultType="com.gxa.modules.sys.entity.Appraise">
@@ -35,7 +35,7 @@
                 and grade_class like concat('%',#{gradeClass},'%')
             </if>
             <if test="appraiseTime !=null and appraiseTime !=''" >
-                and appraise_time &gt;= #{firstTime} and appraise_time &lt;= #{lastTime}
+                and appraise_time &gt;= #{firstDateTime} and appraise_time &lt;= #{lastDateTime}
             </if>
         </where>
     </select>
