@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -45,7 +46,7 @@ public class NotifyTypeController {
         return new Result().ok(pageUtils);
     }
 
-
+    @RequiresPermissions("teacher")
     @ApiOperation(value="添加接口")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query",name = "type",value ="类型",dataType ="String"),
@@ -57,6 +58,7 @@ public class NotifyTypeController {
         return notifyTypeService.add(notifyTypeForm);
    }
 
+   @RequiresPermissions("teacher")
    @ApiOperation(value="修改接口")
    @ApiImplicitParams({
            @ApiImplicitParam(paramType = "query",name = "id",value ="序号",dataType ="int",required = true),
@@ -76,7 +78,7 @@ public class NotifyTypeController {
 
 
    }
-
+    @RequiresPermissions("teacher")
     @ApiOperation(value="删除接口")
     @ApiImplicitParam(paramType = "query",name = "id",value ="序号",dataType ="int",required = true)
     @PostMapping("/delete")
@@ -91,6 +93,7 @@ public class NotifyTypeController {
         return this.notifyTypeService.queryTypeName();
     }
 
+    @RequiresPermissions("teacher")
     @ApiOperation(value="修改状态接口")
     @GetMapping("/updateStatus")
     public Result updateStatus(Integer id){
