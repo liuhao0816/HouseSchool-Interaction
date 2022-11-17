@@ -7,6 +7,7 @@ import com.gxa.modules.sys.service.AppraiseService;
 import com.gxa.modules.sys.service.HealthyService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.gxa.common.utils.Result;
@@ -51,6 +52,7 @@ public class AppraiseController {
         return new Result<>().ok();
     }
 
+    @RequiresPermissions("teacher")
     @PostMapping("/appraise/add")
     @ResponseBody
     @ApiOperation(value = "添加评价",notes = "添加接口",httpMethod = "POST")
@@ -58,6 +60,7 @@ public class AppraiseController {
             @ApiResponse(code = 0,message = "ok",response = Appraise.class)
     })
     public Result appraiseAdd(@RequestBody Appraise appraise){
+        appraise.setId(0);
         try {
             this.appraiseService.add(appraise);
         } catch (Exception e) {
@@ -80,7 +83,7 @@ public class AppraiseController {
         map.put("appraises",appraises);
         return new Result<>().ok(map);
     }
-
+    @RequiresPermissions("teacher")
     @PutMapping("/appraise/update")
     @ResponseBody
     @ApiOperation(value = "修改评价",notes = "修改",httpMethod = "PUT")
@@ -96,7 +99,7 @@ public class AppraiseController {
         }
         return new Result<>().ok("succes");
     }
-
+    @RequiresPermissions("teacher")
     @DeleteMapping("/appraise/delete")
     @ApiOperation(value = "评价删除",notes = "删除接口",httpMethod = "DELETE")
     @ApiResponses({
@@ -163,7 +166,7 @@ public class AppraiseController {
         return new Result<PageUtils>().ok(pageUtils);
     }
 
-
+    @RequiresPermissions("administrators")
     @GetMapping("/appraise/PermissionsTeacher")
     @ResponseBody
     @ApiOperation(value = "权限下拉查询全部老师",notes = "查找接口",httpMethod = "GET")
@@ -172,6 +175,7 @@ public class AppraiseController {
 
         return new  Result<>().ok(teacher);
     }
+    @RequiresPermissions("administrators")
     @PutMapping("/appraise/PermissionsLaunch")
     @ResponseBody
     @ApiOperation(value = "评价权限",notes = "修改接口",httpMethod = "PUT")

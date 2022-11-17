@@ -5,9 +5,8 @@ package com.gxa.modules.sys.service;/**
  */
 
 
-import com.alipay.api.domain.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.gxa.modules.sys.entity.dto.School;
+import com.gxa.modules.sys.entity.School;
 
 import java.util.List;
 

@@ -16,7 +16,7 @@
         <result property="voteIsopen" column="vote_isopen"/>
     </resultMap>
     <select id="queryNo" resultMap="queryNoResultMap">
-        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,u.user_id,u.user_name,vt.vote_start_time,vt.vote_type,vt.vote_isopen
+        SELECT vt.vote_id,vt.vote_title,vt.vote_status,vt.vote_scope,u.user_id,u.user_name,vt.vote_start_time,vt.vote_end_time,vt.vote_type,vt.vote_isopen
         FROM vote_table vt,user u
         WHERE vt.vote_user_id=u.user_id AND vt.vote_isdelete=1
     </select>

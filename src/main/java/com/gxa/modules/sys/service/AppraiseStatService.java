@@ -5,7 +5,7 @@ package com.gxa.modules.sys.service;/**
  */
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.gxa.modules.sys.entity.dto.AppraiseStat;
+import com.gxa.modules.sys.entity.AppraiseStat;
 
 import java.util.List;
 

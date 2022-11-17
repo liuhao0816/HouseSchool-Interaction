@@ -5,7 +5,7 @@ package com.gxa.modules.sys.mapper;/**
  */
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.gxa.modules.sys.entity.dto.AppraiseStat;
+import com.gxa.modules.sys.entity.AppraiseStat;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Repository;
 

@@ -6,6 +6,7 @@ import com.gxa.modules.sys.entity.User;
 import com.gxa.modules.sys.entity.UserPower;
 import com.gxa.modules.sys.entity.UserStatistics;
 import com.gxa.modules.sys.form.UserForm;
+import com.gxa.modules.sys.form.UserPowerFrom;
 import com.gxa.modules.sys.form.UserRoleForm;
 import com.gxa.modules.sys.form.VerificationCodeForm;
 import com.gxa.modules.sys.service.UserService;
@@ -13,13 +14,16 @@ import com.gxa.modules.sys.service.UserStatisticsService;
 import com.gxa.modules.sys.service.UserTokenService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -77,7 +81,7 @@ public class UserController {
 
     @ApiOperation(value="用户登录接口")
     @PostMapping("/sys/login")
-    public Result login(@RequestBody UserForm userFrom){
+    public Result<UserPowerFrom> login(@RequestBody UserForm userFrom){
 
 
         String uuid = userFrom.getUuid();
@@ -107,18 +111,64 @@ public class UserController {
             return new Result().error(ErrorCode.ACCOUNT_PASSWORD_ERROR,"用户名或密码不正确");
         }
 
-        UserPower userPower = userStatisticsService.userPowerByUserId(user.getUserId());
 
+        UserRoleForm userRoleForm = new UserRoleForm();
+        userRoleForm.setUserId(userFrom.getUserId());
+        userRoleForm.setRoleId(3);
 
+        UserPowerFrom userPowerFrom = userStatisticsService.userPowerFromByUserIdAndRoleId(userRoleForm);
+
+        if (userPowerFrom == null){
+            userRoleForm.setRoleId(2);
+            userPowerFrom = userStatisticsService.userPowerFromByUserIdAndRoleId(userRoleForm);
+        }
+
+        if (userPowerFrom == null){
+            userRoleForm.setRoleId(1);
+            userPowerFrom = userStatisticsService.userPowerFromByUserIdAndRoleId(userRoleForm);
+        }
 
         //4、一致     生成token 保存redis中 返回Result.ok()
-        Result result = this.userTokenService.createToken(userPower);
-        Map map = new HashMap();
-        map.put("token",result.getData());
-        return new Result().ok(map);
+        Result result = this.userTokenService.createToken(userPowerFrom);
+
+        userPowerFrom.setToken((String) result.getData());
+
+        return new Result().ok(userPowerFrom);
     }
 
-//    @RequiresPermissions("sys:user:list")
+    @ApiOperation(value="用户角色切换接口")
+    @PostMapping("/sys/role")
+    public Result<UserPowerFrom> login(@RequestBody UserRoleForm userRoleForm){
+
+        UserPowerFrom userPowerFrom = userStatisticsService.userPowerFromByUserIdAndRoleId(userRoleForm);
+        //4、一致     生成token 保存redis中 返回Result.ok()
+        Result result = this.userTokenService.createToken(userPowerFrom);
+
+        userPowerFrom.setToken((String) result.getData());
+
+        return new Result().ok(userPowerFrom);
+    }
+
+    @ApiOperation(value="用户退出登录接口")
+    @GetMapping("/sys/logout")
+    public Result logout(HttpServletRequest request){
+
+        String token = request.getHeader("token");
+        if(token == null){
+            token = request.getParameter("token");
+        }
+
+        userTokenService.deleteToken(token);
+
+        request.getSession().invalidate();
+        Result r = new Result();
+        r.ok();
+        r.setMsg("退出成功");
+        return r;
+    }
+
+
+    //    @RequiresPermissions("sys:user:list")
     @ApiOperation(value="用户分页查询接口")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query",name = "page",value ="当前是第几页",dataType ="int"),
@@ -132,6 +182,7 @@ public class UserController {
         return new Result<PageUtils>().ok(pageUtils);
     }
 
+//    @RequiresPermissions("sys:user:role")
     @ApiOperation(value="根据用户账号查询用户角色信息")
     @GetMapping("/user/role")
     public Result<UserPower> list(@RequestParam("userId")  int userId){

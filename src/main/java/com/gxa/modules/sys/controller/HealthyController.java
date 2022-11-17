@@ -69,6 +69,7 @@ public class HealthyController {
             @ApiResponse(code = 0,message = "ok",response = Healthy.class)
     })
     public Result healthyAdd(@RequestBody Healthy healthy){
+        healthy.setId(0);
         try {
             this.healthyService.add(healthy);
         } catch (Exception e) {

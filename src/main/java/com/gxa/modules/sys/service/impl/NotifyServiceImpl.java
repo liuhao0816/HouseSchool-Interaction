@@ -43,6 +43,8 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
 
         page =(page-1)*limit;
         List<Notify> notifyList = notifyMapper.queryByPage(page, limit, noForm);
+
+
         ArrayList<NotifyForm> notifyFormArrayList = new ArrayList<NotifyForm>();
 
 
@@ -50,21 +52,28 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
             NotifyForm notifyForm = new NotifyForm();
 
             notifyForm.setId(notify.getId());
-            notifyForm.setType(notify.getNotifyType().getType());
+            //获取类型
+            NotifyType type = notifyMapper.getTypeByContentId(notify.getId());
+            notifyForm.setType(type.getType());
             notifyForm.setTitle(notify.getContent().getTitle());
 
-            //获取消息发布范围
-            List<Scope> scopeList = notifyMapper.queryScopeById(notify.getId());
-            StringBuilder builder = new StringBuilder();
-            for (Scope scope : scopeList) {
-                builder.append(scope.getNotifyScope());
-                builder.append(" ");
-            }
-            notifyForm.setScope(String.valueOf(builder));
             notifyForm.setPublisher(notify.getContent().getWriter());
             Date releaseTime = notify.getContent().getReleaseTime();
 
             notifyForm.setStartTime(releaseTime);
+
+            //获取消息发布范围
+            List<Scope> scopeList = notifyMapper.queryScopeById(notify.getId());
+            StringBuilder builder = new StringBuilder();
+            if (scopeList.size()!=6){
+                for (Scope scope : scopeList){
+                    builder.append(scope.getNotifyScope());
+                    builder.append(" ");
+                }
+            }else {
+                builder.append("全校");
+            }
+            notifyForm.setScope(String.valueOf(builder));
             long now = System.currentTimeMillis();
             try {
                 long time = releaseTime.getTime();
@@ -78,11 +87,8 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
             }
             notifyFormArrayList.add(notifyForm);
         }
-//        去重
-        LinkedHashSet<NotifyForm> notifyForms = new LinkedHashSet<>(notifyFormArrayList);
-        ArrayList<NotifyForm> formArrayList = new ArrayList<>(notifyForms);
 
-        return formArrayList;
+        return notifyFormArrayList;
     }
 
     @Override
@@ -101,9 +107,13 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
         //获取消息发布范围
         List<Scope> scopeList = notifyMapper.queryScopeById(notify.getId());
         StringBuilder builder = new StringBuilder();
-        for (Scope scope : scopeList) {
-            builder.append(scope.getNotifyScope());
-            builder.append(" ");
+        if (scopeList.size()!=6){
+            for (Scope scope : scopeList){
+                builder.append(scope.getNotifyScope());
+                builder.append(" ");
+            }
+        }else {
+            builder.append("全校");
         }
         notifyForm.setScope(String.valueOf(builder));
         //获取当前时间
@@ -198,21 +208,27 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
             for (Notify notify : notifyList) {
                 NotifyForm notifyForm = new NotifyForm();
                 notifyForm.setId(notify.getId());
-                notifyForm.setType(notify.getNotifyType().getType());
+                NotifyType type = notifyMapper.getTypeByContentId(notify.getId());
+                notifyForm.setType(type.getType());
                 notifyForm.setTitle(notify.getContent().getTitle());
-                notifyForm.setContent(notify.getContent().getContent());
+//                notifyForm.setContent(notify.getContent().getContent());
                 notifyForm.setPublisher(notify.getContent().getWriter());
-                notifyForm.setEnclosure(notify.getContent().getEnclosure());
-                notifyForm.setPicture(notify.getContent().getPicture());
+//                notifyForm.setEnclosure(notify.getContent().getEnclosure());
+//                notifyForm.setPicture(notify.getContent().getPicture());
                 Date releaseTime = notify.getContent().getReleaseTime();
                 notifyForm.setStartTime(releaseTime);
                 //获取消息发布范围
                 List<Scope> scopeList = notifyMapper.queryScopeById(notify.getId());
                 StringBuilder builder = new StringBuilder();
-                for (Scope scope : scopeList) {
-                    builder.append(scope.getNotifyScope());
-                    builder.append(" ");
+                if (scopeList.size()!=6){
+                    for (Scope scope : scopeList){
+                        builder.append(scope.getNotifyScope());
+                        builder.append(" ");
+                    }
+                }else {
+                    builder.append("全校");
                 }
+
                 notifyForm.setScope(String.valueOf(builder));
                 //获取当前时间
                 long now = System.currentTimeMillis();
@@ -228,11 +244,11 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
                 }
                 formArrayList.add(notifyForm);
             }
-            LinkedHashSet<NotifyForm> notifyForms = new LinkedHashSet<>(formArrayList);
-            ArrayList<NotifyForm> forms = new ArrayList<>(notifyForms);
+//            LinkedHashSet<NotifyForm> notifyForms = new LinkedHashSet<>(formArrayList);
+//            ArrayList<NotifyForm> forms = new ArrayList<>(notifyForms);
             Result<Object> result = new Result<>();
-            result.setTotal(forms.size());
-            result.setData(forms);
+            result.setTotal(formArrayList.size());
+            result.setData(formArrayList);
             return result.ok();
         }
         return new Result().error("您未发布任何消息");

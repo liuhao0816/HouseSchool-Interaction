@@ -5,6 +5,7 @@ import com.gxa.common.utils.Result;
 import com.gxa.common.utils.TokenGenerator;
 import com.gxa.modules.sys.entity.User;
 import com.gxa.modules.sys.entity.UserPower;
+import com.gxa.modules.sys.form.UserPowerFrom;
 import com.gxa.modules.sys.redis.SysUserRedis;
 import com.gxa.modules.sys.service.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,10 @@ public class UserTokenServiceImpl  implements UserTokenService {
     private SysUserRedis sysUserRedis;
 
     @Override
-    public Result createToken(UserPower userPower) {
+    public Result createToken(UserPowerFrom userPowerFrom) {
         //生成token
         String uuid = TokenGenerator.generateValue();
-        String token = sysUserRedis.addToken(uuid, userPower);
+        String token = sysUserRedis.addToken(uuid, userPowerFrom);
         String encodeToken = Base64Utils.encode(token);
         return new Result().ok(encodeToken);
     }
@@ -47,9 +48,15 @@ public class UserTokenServiceImpl  implements UserTokenService {
     }
 
     @Override
-    public User validateToken(String token) {
+    public void deleteToken(String token) {
         String decodeToken = Base64Utils.decode(token);
-        User user = sysUserRedis.getUserByToken(decodeToken);
-        return user;
+        sysUserRedis.deleteToken(decodeToken);
+    }
+
+    @Override
+    public UserPowerFrom validateToken(String token) {
+        String decodeToken = Base64Utils.decode(token);
+        UserPowerFrom userPowerFrom = sysUserRedis.getUserByToken(decodeToken);
+        return userPowerFrom;
     }
 }
