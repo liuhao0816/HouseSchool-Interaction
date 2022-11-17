@@ -65,9 +65,15 @@ public class AllLeaveListDto {
     @TableField("remarks")
     private String remarks;
 
-    @ApiModelProperty("家长名字")
-    @TableField("user_name")
-    private String userName;
+    @ApiModelProperty("用户id")
+    @TableField("user_id")
+    private Integer userId;
+
+    @ApiModelProperty("病假")
+    private Integer sick;
+
+    @ApiModelProperty("事假")
+    private Integer absence;
 
     @TableLogic
     private Integer isDeleted;

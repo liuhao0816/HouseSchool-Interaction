@@ -35,7 +35,21 @@ public class LeaveListDto {
     @TableField("remarks")
     private String remarks;
 
+    @ApiModelProperty("学生姓名")
+    @TableField("student_name")
+    private String studentName;
+
     @ApiModelProperty("年假班级")
     @TableField("class_grade_name")
     private String classGradeName;
+
+    @ApiModelProperty("用户id")
+    @TableField("user_id")
+    private Integer userId;
+
+    @ApiModelProperty("病假")
+    private Integer sick;
+
+    @ApiModelProperty("事假")
+    private Integer absence;
 }

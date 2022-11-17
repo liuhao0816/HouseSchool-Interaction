@@ -38,15 +38,8 @@ public class LeaveListController {
     @PostMapping("/leaveList")
     @ApiOperation("多条件查询")
     public Result<List<AllLeaveListDto>> queryLeaveListBy(@RequestBody LeaveListDto leaveListDto) {
-        Integer page = leaveListDto.getPage();
-        Integer limit = leaveListDto.getLimit();
 
-        PageHelper.startPage(page,limit);
-        List<AllLeaveListDto> allLeaveListDtos = leaveListService.queryLeaveListBy(leaveListDto);
-
-        PageInfo<AllLeaveListDto> pageInfo = new PageInfo<>(allLeaveListDtos);
-        long total = pageInfo.getTotal();
-        Result<List<AllLeaveListDto>> result = new Result().ok(allLeaveListDtos,total);
+        Result<List<AllLeaveListDto>> result = this.leaveListService.queryLeaveListBy(leaveListDto);
         return result;
     }
 
@@ -90,11 +83,18 @@ public class LeaveListController {
     }
 
 
-    @PutMapping("/leaveLists/{id}/{user_id}/")
-    @ApiOperation("审核")
-    public Result updateByIdAll(@PathVariable("id") Integer id,@PathVariable("user_id") Integer user_id) {
-        this.leaveListService.updateByIdAll(id,user_id);
+    @PutMapping("/leaveLists")
+    @ApiOperation("审核已审核")
+    public Result updateByIdAll(@RequestParam Integer id,@RequestParam Integer user_id) {
+        this.leaveListService.updateByIdAllT(id,user_id);
         return new Result<>().ok("审核通过");
+    }
+
+    @PutMapping("/leaveListsF")
+    @ApiOperation("审核未通过")
+    public Result updateByIdAllF(@RequestParam Integer id,@RequestParam Integer user_id) {
+        this.leaveListService.updateByIdAllF(id,user_id);
+        return new Result<>().ok();
     }
 
 }

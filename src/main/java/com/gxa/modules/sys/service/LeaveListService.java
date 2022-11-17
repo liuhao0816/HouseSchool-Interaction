@@ -15,7 +15,7 @@ public interface LeaveListService  extends IService<LeaveList> {
     //查询所有
     List<AllLeaveListDto> queryLeaveListAll1();
     //多条件查询
-    List<AllLeaveListDto> queryLeaveListBy(LeaveListDto leaveListDto);
+    Result<List<AllLeaveListDto>> queryLeaveListBy(LeaveListDto leaveListDto);
     //根据id查询
     List<AllLeaveListDto> queryById(Integer id);
     //根据userid查询学生id和姓名
@@ -24,8 +24,8 @@ public interface LeaveListService  extends IService<LeaveList> {
     List<LeaveList> addLeaveList(LeaveList leaveList);
     //根据id删除
     Result delete(Integer id);
-    //审核
-    Result updateByIdAll(Integer id,Integer user_id);
-
-
+    //审核 确认
+    Result updateByIdAllT(Integer id,Integer user_id);
+    //审核 确认
+    Result updateByIdAllF(Integer id,Integer user_id);
 }
