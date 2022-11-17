@@ -1,5 +1,6 @@
 package com.gxa.modules.sys.controller;
 
+import cn.hutool.core.date.DateTime;
 import com.gxa.common.utils.PageUtils;
 import com.gxa.modules.sys.entity.*;
 import com.gxa.modules.sys.service.AppPermissionsService;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import com.gxa.common.utils.Result;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +64,10 @@ public class AppraiseController {
     })
     public Result appraiseAdd(@RequestBody Appraise appraise){
         appraise.setId(0);
+        DateTime date = new DateTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:dd:ss");
+        String datetime = simpleDateFormat.format(date);
+        appraise.setAppraiseTime(datetime);
         try {
             this.appraiseService.add(appraise);
         } catch (Exception e) {
