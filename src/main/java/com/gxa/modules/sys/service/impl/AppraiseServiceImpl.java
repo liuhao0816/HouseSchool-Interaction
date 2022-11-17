@@ -45,10 +45,8 @@ public class AppraiseServiceImpl extends ServiceImpl<AppraiseMapper, Appraise> i
     }
 
     @Override
-    public void delete(String publisher, String appraiseTime) {
-        System.out.println(appraiseTime);
-        System.out.println(publisher);
-        this.baseMapper.queryByPublisherTime(publisher,appraiseTime);
+    public void delete(int id) {
+        this.baseMapper.queryByPublisherTime(id);
     }
 
     @Override

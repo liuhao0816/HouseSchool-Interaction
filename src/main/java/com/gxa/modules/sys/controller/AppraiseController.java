@@ -105,11 +105,10 @@ public class AppraiseController {
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok")
     })
-    public Result appraiseDelete(@RequestParam String publisher,String appraiseTime){
+    public Result appraiseDelete(@RequestParam int id){
         try {
-            System.out.println(publisher);
-            System.out.println(appraiseTime);
-            this.appraiseService.delete(publisher,appraiseTime);
+
+            this.appraiseService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
             new Result<>().ok("fail");
