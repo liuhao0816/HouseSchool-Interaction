@@ -55,7 +55,7 @@ public class AppraiseController {
         return new Result<>().ok();
     }
 
-//    @RequiresPermissions("teacher")
+    @RequiresPermissions("teacher")
     @PostMapping("/appraise/add")
     @ResponseBody
     @ApiOperation(value = "添加评价",notes = "添加接口",httpMethod = "POST")
@@ -107,7 +107,7 @@ public class AppraiseController {
         }
         return new Result<>().ok("succes");
     }
-//    @RequiresPermissions("teacher")
+    @RequiresPermissions("teacher")
     @DeleteMapping("/appraise/delete")
     @ApiOperation(value = "评价删除",notes = "删除接口",httpMethod = "DELETE")
     @ApiResponses({

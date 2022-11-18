@@ -83,23 +83,25 @@ public class HealthyController {
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok")
     })
-    public Result healthyDelete(@RequestParam String userName,String createTime){
+    public Result healthyDelete(@RequestParam int id){
         try {
-            this.healthyService.delete(userName,createTime);
+            this.healthyService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
             new Result<>().ok("fail");
         }
         return new  Result<>().ok("succes");
     }
-    @PostMapping("/healthy/search")
+    @GetMapping("/healthy/search")
     @ResponseBody
-    @ApiOperation(value = "搜索查询",notes = "查询接口",httpMethod = "POST")
+    @ApiOperation(value = "搜索查询",notes = "查询接口",httpMethod = "GET")
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok",response = Healthy.class)
     })
-    public Result healthySearch(@RequestBody HealthyDto healthyDto){
-        String tollDate = healthyDto.getCreateTime();
+    public Result healthySearch(@RequestParam(value = "studentName",required=false) String studentName,
+                                @RequestParam(value = "gradeClass",required=false) String gradeClass,
+                                @RequestParam(value = "createTime",required=false) String createTime){
+        String tollDate = createTime;
         System.out.println(tollDate);
         String firstDateTime =null;
         String lastDateTime = null;
@@ -109,7 +111,7 @@ public class HealthyController {
             firstDateTime = dateTime[0].trim();
             lastDateTime =  dateTime[1].trim();
             try {
-                List<Healthy> healthyList = this.healthyService.queryByHealthyDto(firstDateTime,lastDateTime,healthyDto);
+                List<Healthy> healthyList = this.healthyService.queryByHealthyDto(firstDateTime,lastDateTime,createTime,studentName,gradeClass);
                 Map map = new HashMap();
                 map.put("healthyList",healthyList);
                 return new Result<>().ok(map);
@@ -118,7 +120,7 @@ public class HealthyController {
                 new Result<>().ok("fail");
             }
         } else {
-            List<Healthy> healthyList = this.healthyService.queryByHealthyDtos(healthyDto);
+            List<Healthy> healthyList = this.healthyService.queryByHealthyDtos(studentName,gradeClass);
             Map map = new HashMap();
             map.put("healthyList",healthyList);
             return new Result<>().ok(map);

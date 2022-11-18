@@ -17,7 +17,7 @@
 
     <delete id="queryByPublisherTime" parameterType="healthy">
         delete from healthy
-        where user_name = #{userName} and create_time = #{createTime}
+        where id = #{id}
     </delete>
     <select id="queryByPublisher01" resultMap="healthyResultMap" resultType="com.gxa.modules.sys.entity.Healthy">
         SELECT * FROM healthy
