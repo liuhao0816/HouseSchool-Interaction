@@ -102,7 +102,7 @@ public class HealthyController {
             @ApiResponse(code = 0,message = "ok",response = Healthy.class)
     })
     public Result healthySearch(@RequestParam(value = "studentName",required=false) String studentName,
-                                @RequestParam(value = "gradeClass",required=false) String gradeClass,
+                                @RequestParam(value = "classGradeName",required=false) String classGradeName,
                                 @RequestParam(value = "createTime",required=false) String createTime){
         String tollDate = createTime;
         System.out.println(tollDate);
@@ -114,7 +114,7 @@ public class HealthyController {
             firstDateTime = dateTime[0].trim();
             lastDateTime =  dateTime[1].trim();
             try {
-                List<Healthy> healthyList = this.healthyService.queryByHealthyDto(firstDateTime,lastDateTime,createTime,studentName,gradeClass);
+                List<Healthy> healthyList = this.healthyService.queryByHealthyDto(firstDateTime,lastDateTime,createTime,studentName,classGradeName);
                 Map map = new HashMap();
                 map.put("healthyList",healthyList);
                 return new Result<>().ok(map);
@@ -123,7 +123,7 @@ public class HealthyController {
                 new Result<>().ok("fail");
             }
         } else {
-            List<Healthy> healthyList = this.healthyService.queryByHealthyDtos(studentName,gradeClass);
+            List<Healthy> healthyList = this.healthyService.queryByHealthyDtos(studentName,classGradeName);
             Map map = new HashMap();
             map.put("healthyList",healthyList);
             return new Result<>().ok(map);
