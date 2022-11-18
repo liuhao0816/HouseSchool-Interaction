@@ -49,8 +49,8 @@ public class HealthyServiceImpl extends ServiceImpl<HealthyMapper, Healthy> impl
     }
 
     @Override
-    public List<Healthy> queryByHealthyDtos (String studentName, String gradeClass) {
-        List<Healthy> healthyList = this.baseMapper.queryByHealthyDto02(studentName,gradeClass);
+    public List<Healthy> queryByHealthyDtos (String studentName, String classGradeName) {
+        List<Healthy> healthyList = this.baseMapper.queryByHealthyDto02(studentName,classGradeName);
         return healthyList;
     }
 
@@ -67,9 +67,9 @@ public class HealthyServiceImpl extends ServiceImpl<HealthyMapper, Healthy> impl
     }
 
     @Override
-    public List<Healthy> queryByHealthyDto(String firstDateTime, String lastDateTime, String createTime, String studentName, String gradeClass) {
+    public List<Healthy> queryByHealthyDto(String firstDateTime, String lastDateTime, String createTime, String studentName, String classGradeName) {
 
-        List<Healthy> healthyList = this.baseMapper.queryByHealthyDto01(firstDateTime,lastDateTime,studentName,gradeClass,createTime);
+        List<Healthy> healthyList = this.baseMapper.queryByHealthyDto01(firstDateTime,lastDateTime,studentName,classGradeName,createTime);
         return healthyList;
     }
 }

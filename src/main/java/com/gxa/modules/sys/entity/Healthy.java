@@ -19,8 +19,8 @@ public class Healthy {
     private Integer id;
     @ApiModelProperty(name = "studentName",value = "学生姓名")
     private String studentName;
-    @ApiModelProperty(name = "gradeClass",value = "年级班级")
-    private String gradeClass;
+    @ApiModelProperty(name = "classGradeName",value = "年级班级")
+    private String classGradeName;
     @ApiModelProperty(name = "content",value = "带药提醒")
     private String content;
     @ApiModelProperty(name = "healthyTime",value = "用药时间")

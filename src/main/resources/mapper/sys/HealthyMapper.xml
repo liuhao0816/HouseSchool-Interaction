@@ -6,7 +6,7 @@
     <resultMap id="healthyResultMap" type="com.gxa.modules.sys.entity.Healthy">
         <id property="id" column="id"/>
         <result property="studentName" column="student_name"/>
-        <result property="gradeClass" column="grade_class"/>
+        <result property="classGradeName" column="class_grade_name"/>
         <result property="content" column="content"/>
         <result property="healthyTime" column="healthy_time"/>
         <result property="userName" column="user_name"/>
@@ -30,7 +30,7 @@
                 and  student_name like concat('%',#{studentName},'%')
             </if>
             <if test="gradeClass !=null and gradeClass !=''">
-                and grade_class like concat('%',#{gradeClass},'%')
+                and class_grade_name like concat('%',#{classGradeName},'%')
             </if>
             <if test="createTime !=null and createTime !=''" >
                 and create_time &gt;= #{firstDateTime} and create_time &lt;= #{lastDateTime}
@@ -44,7 +44,7 @@
                 and  student_name like concat('%',#{studentName},'%')
             </if>
             <if test="gradeClass !=null and gradeClass !=''">
-                and grade_class like concat('%',#{gradeClass},'%')
+                and class_grade_name like concat('%',#{classGradeName},'%')
             </if>
         </where>
     </select>

@@ -23,11 +23,11 @@ public interface HealthyService extends IService<Healthy> {
      */
     PageUtils queryByPage01(Map<String,Object> params);
 
-    List<Healthy> queryByHealthyDtos(String studentName, String gradeClass);
+    List<Healthy> queryByHealthyDtos(String studentName, String classGradeName);
 
     List<ClassGrade> queryByHealthyClass(int userId);
 
     List<User> queryByHealthyTeacher(int classId);
 
-    List<Healthy> queryByHealthyDto(String firstDateTime, String lastDateTime, String createTime, String studentName, String gradeClass);
+    List<Healthy> queryByHealthyDto(String firstDateTime, String lastDateTime, String createTime, String studentName, String classGradeName);
 }
