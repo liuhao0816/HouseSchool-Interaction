@@ -22,7 +22,7 @@
 
     <select id="queryByPublisher01" resultMap="appraiseResultMap" resultType="com.gxa.modules.sys.entity.Appraise">
         SELECT * FROM appraise
-        WHERE publisher = #{publisher} and appraise_time = #{appraiseTime}
+        WHERE id = #{id}
     </select>
 
     <select id="queryByAppraiseDto01" resultMap="appraiseResultMap" parameterType="appraise">

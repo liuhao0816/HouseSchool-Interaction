@@ -10,7 +10,7 @@ import java.util.Map;
 public interface AppraiseService extends IService<Appraise>{
     List<Appraise> queryAll();
     void add(Appraise appraise);
-    List<Appraise> queryByPublisher(String publisher,String appraiseTime);
+    List<Appraise> queryByPublisher(int id);
     void update(Appraise appraise);
     void delete(int id);
     List<Appraise> queryByAppraiseDto(String firstDateTime, String lastDateTime,String studentName,String gradeClass,String appraiseTime );

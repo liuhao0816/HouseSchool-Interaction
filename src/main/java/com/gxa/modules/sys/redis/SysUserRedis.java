@@ -22,7 +22,7 @@ public class SysUserRedis {
 
         String loginCaptchaKey = RedisKeys.getLoginCaptchaKey(uuid);
 
-        this.redisUtils.set(loginCaptchaKey,resultValue,600);
+        this.redisUtils.set(loginCaptchaKey,resultValue,60);
 
 
         return loginCaptchaKey;

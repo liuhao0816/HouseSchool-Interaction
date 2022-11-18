@@ -35,17 +35,11 @@ public class HealthyServiceImpl extends ServiceImpl<HealthyMapper, Healthy> impl
     }
 
     @Override
-    public void delete(String userName, String createTime) {
-        this.baseMapper.queryByPublisherTime(userName,createTime);
+    public void delete(int id) {
+        this.baseMapper.queryByPublisherTime(id);
     }
 
-    @Override
-    public List<Healthy> queryByHealthyDto(String firstDateTime, String lastDateTime, HealthyDto healthyDto) {
-        String studentName = healthyDto.getStudentName();
-        String gradeClass = healthyDto.getGradeClass();
-        List<Healthy> healthyList = this.baseMapper.queryByHealthyDto01(firstDateTime,lastDateTime,studentName,gradeClass);
-        return healthyList;
-    }
+
 
     @Override
     public PageUtils queryByPage01(Map<String, Object> params) {
@@ -55,10 +49,8 @@ public class HealthyServiceImpl extends ServiceImpl<HealthyMapper, Healthy> impl
     }
 
     @Override
-    public List<Healthy> queryByHealthyDtos(HealthyDto healthyDto) {
-        String studentName = healthyDto.getStudentName();
-        String gradeClass = healthyDto.getGradeClass();
-        List<Healthy> healthyList = this.baseMapper.queryByHealthyDto02(studentName,gradeClass);
+    public List<Healthy> queryByHealthyDtos (String studentName, String classGradeName) {
+        List<Healthy> healthyList = this.baseMapper.queryByHealthyDto02(studentName,classGradeName);
         return healthyList;
     }
 
@@ -72,5 +64,12 @@ public class HealthyServiceImpl extends ServiceImpl<HealthyMapper, Healthy> impl
     public List<User> queryByHealthyTeacher(int classId) {
         List<User> healthyTeacher = this.baseMapper.queryByHealthyTeacher(classId);
         return healthyTeacher;
+    }
+
+    @Override
+    public List<Healthy> queryByHealthyDto(String firstDateTime, String lastDateTime, String createTime, String studentName, String classGradeName) {
+
+        List<Healthy> healthyList = this.baseMapper.queryByHealthyDto01(firstDateTime,lastDateTime,studentName,classGradeName,createTime);
+        return healthyList;
     }
 }

@@ -14,8 +14,8 @@ public interface HealthyService extends IService<Healthy> {
     List<Healthy> queryAll();
     List<Healthy> queryByPublisher(String userName,String createTime);
     void add(Healthy healthy);
-    void delete(String userName,String createTime);
-    List<Healthy> queryByHealthyDto(String firstDateTime, String lastDateTime, HealthyDto healthyDto);
+    void delete(int id);
+
     /**
      * 只是单独的分页，不带查询条件
      * @param params
@@ -23,9 +23,11 @@ public interface HealthyService extends IService<Healthy> {
      */
     PageUtils queryByPage01(Map<String,Object> params);
 
-    List<Healthy> queryByHealthyDtos(HealthyDto healthyDto);
+    List<Healthy> queryByHealthyDtos(String studentName, String classGradeName);
 
     List<ClassGrade> queryByHealthyClass(int userId);
 
     List<User> queryByHealthyTeacher(int classId);
+
+    List<Healthy> queryByHealthyDto(String firstDateTime, String lastDateTime, String createTime, String studentName, String classGradeName);
 }
