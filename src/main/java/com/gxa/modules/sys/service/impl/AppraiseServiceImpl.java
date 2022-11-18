@@ -32,8 +32,8 @@ public class AppraiseServiceImpl extends ServiceImpl<AppraiseMapper, Appraise> i
     }
 
     @Override
-    public List<Appraise> queryByPublisher(String publisher, String appraiseTime) {
-        List<Appraise> appraises = this.baseMapper.queryByPublisher01(publisher,appraiseTime);
+    public List<Appraise> queryByPublisher(int id) {
+        List<Appraise> appraises = this.baseMapper.queryByPublisher01(id);
         return appraises;
     }
 

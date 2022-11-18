@@ -81,12 +81,12 @@ public class AppraiseController {
 
     @GetMapping("/appraise02")
     @ResponseBody
-    @ApiOperation(value = "评价修改前的遍历查询",notes = "查找接口",httpMethod = "GET")
+    @ApiOperation(value = "评价id查询",notes = "查找接口",httpMethod = "GET")
     @ApiResponses({
             @ApiResponse(code = 0,message = "ok",response = Appraise.class)
     })
-    public Result appraiseUpdateList(@RequestParam String publisher,String appraiseTime){
-        List<Appraise> appraises = this.appraiseService.queryByPublisher(publisher,appraiseTime);
+    public Result appraiseUpdateList(@RequestParam int id){
+        List<Appraise> appraises = this.appraiseService.queryByPublisher(id);
         Map map = new HashMap();
         map.put("appraises",appraises);
         return new Result<>().ok(map);

@@ -48,9 +48,12 @@ public class HealthyController {
     @GetMapping("/healthy/recipient01")
     @ResponseBody
     @ApiOperation(value = "添加处查询用户孩子班级",notes = "查找接口",httpMethod = "GET")
+    @ApiResponses({
+            @ApiResponse(code = 0,message = "ok",response = ClassGrade.class)
+    })
     public Result healthyRecipient01(@RequestParam int userId){
-        List<ClassGrade> healthyClass = this.healthyService.queryByHealthyClass(userId);
 
+        List<ClassGrade> healthyClass = this.healthyService.queryByHealthyClass(userId);
         return new  Result<>().ok(healthyClass);
     }
     @GetMapping("/healthy/recipient02")
