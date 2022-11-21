@@ -29,7 +29,7 @@
             <if test="studentName !=null and studentName !=''" >
                 and  student_name like concat('%',#{studentName},'%')
             </if>
-            <if test="gradeClass !=null and gradeClass !=''">
+            <if test="classGradeName !=null and classGradeName !=''">
                 and class_grade_name like concat('%',#{classGradeName},'%')
             </if>
             <if test="createTime !=null and createTime !=''" >
@@ -43,7 +43,7 @@
             <if test="studentName !=null and studentName !=''" >
                 and  student_name like concat('%',#{studentName},'%')
             </if>
-            <if test="gradeClass !=null and gradeClass !=''">
+            <if test="classGradeName !=null and classGradeName !=''">
                 and class_grade_name like concat('%',#{classGradeName},'%')
             </if>
         </where>
