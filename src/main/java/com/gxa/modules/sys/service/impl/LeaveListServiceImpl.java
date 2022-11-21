@@ -51,14 +51,14 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
         PageHelper.startPage(page,limit);
 
 
-//        List<AllLeaveListDto> allLeaveListDtos = this.baseMapper.queryLeaveListBy(leaveListDto);
+        List<AllLeaveListDto> allLeaveListDtos = this.baseMapper.queryLeaveListBy(leaveListDto);
 
         Integer userId = leaveListDto.getUserId();
         List<Integer> integers = this.baseMapper.queryRole(userId);
         for (int i=0;i<integers.size();i++){
             Integer aa = integers.get(i);
             if (aa==2){
-                List<AllLeaveListDto> allLeaveListDtos = this.baseMapper.queryLeaveListBy(leaveListDto);
+//                List<AllLeaveListDto> allLeaveListDtos = this.baseMapper.queryLeaveListBy(leaveListDto);
                 for (int j=0;j<allLeaveListDtos.size();j++){
                     AllLeaveListDto allLeaveListDto1 = allLeaveListDtos.get(j);
                     allLeaveListDto1.setAbsence(baseMapper.queryAbsence());
@@ -69,15 +69,15 @@ public class LeaveListServiceImpl extends ServiceImpl<LeaveListMapper,LeaveList>
                 return new Result<List<AllLeaveListDto>>().ok(allLeaveListDtos,total);
             }
             if (aa==3){
-                List<AllLeaveListDto> allLeaveListDtos = baseMapper.queryLeaveListP(leaveListDto);
-                for (int nn=0;nn<allLeaveListDtos.size();nn++){
-                    AllLeaveListDto allLeaveListDto1 = allLeaveListDtos.get(nn);
+                List<AllLeaveListDto> allLeaveListDtos1 = baseMapper.queryLeaveListP(leaveListDto);
+                for (int nn=0;nn<allLeaveListDtos1.size();nn++){
+                    AllLeaveListDto allLeaveListDto1 = allLeaveListDtos1.get(nn);
                     allLeaveListDto1.setAbsence(baseMapper.queryAbsence());
                     allLeaveListDto1.setSick(baseMapper.querySick());
                 }
-                PageInfo<AllLeaveListDto> pageInfo = new PageInfo<>(allLeaveListDtos);
+                PageInfo<AllLeaveListDto> pageInfo = new PageInfo<>(allLeaveListDtos1);
                 long total = pageInfo.getTotal();
-                return new Result<List<AllLeaveListDto>>().ok(allLeaveListDtos,total);
+                return new Result<List<AllLeaveListDto>>().ok(allLeaveListDtos1,total);
 
             }
 

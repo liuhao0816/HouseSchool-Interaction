@@ -83,7 +83,7 @@
                 AND  c.class_grade_name=#{classGradeName}
             </if>
             <if test="studentName!=null and studentName!='' ">
-            AND  c.studentName=#{studentName}
+            AND  s.student_name=#{studentName}
              </if>
 
     </select>
