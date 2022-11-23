@@ -31,7 +31,7 @@
                 </if>
 
                 <if test="notifyForm.id != null">
-                    and c.id=#{id}
+                    and c.id=#{notifyForm.id}
                 </if>
                 <if test="notifyForm.title != null and notifyForm.title != '' ">
                     and c.title=#{notifyForm.title}
