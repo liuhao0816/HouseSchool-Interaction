@@ -164,7 +164,7 @@ public class NotifyServiceImpl extends ServiceImpl<NotifyMapper, Notify> impleme
 
     @Override
     public Result delete(Integer id) {
-        int result = this.baseMapper.deleteById(id);
+        int result = this.notifyMapper.deleteById(id);
         if (result != 0){
             return new Result().ok("通知删除成功。");
         }

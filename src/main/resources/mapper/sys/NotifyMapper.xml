@@ -13,14 +13,14 @@
 
 
     <update id="deleteById">
-        update notify_list set is_delete=2 where id=#{id} and is_delete = 1
+        update notify_content set is_delete=2 where id=#{id} and is_delete = 1
     </update>
 
     <select id="queryByPage" resultMap="pageMap">
         select c.id,c.title,c.writer,c.release_time
-        from notify_content c
+        from notify_content c,notify_list l
         <where>
-            c.is_delete = 1
+            c.id = l.content_id and c.is_delete =1 and l.is_delete =1
             <if test="notifyForm != null">
                 <if test="notifyForm.startTime != null">
                     and c.release_time &gt; #{notifyForm.startTime}
