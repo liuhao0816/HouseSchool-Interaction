@@ -41,10 +41,10 @@ public class NotifyController {
     })
     @GetMapping("/list")
     public Result list02(Integer page,Integer limit,@ApiIgnore NotifyForm notifyForm){
-
+        int count = notifyService.count();
         List<NotifyForm> notifyForms = notifyService.queryByPage(page, limit, notifyForm);
         Result<Object> result = new Result<>();
-        result.setTotal(notifyForms.size());
+        result.setTotal((int)Math.ceil((double)count/limit));
         result.setData(notifyForms);
         return result.ok();
     }
